@@ -32,8 +32,7 @@ public class CommonPlayerTracker
 			Mekanism.packetHandler.sendTo(new JetpackDataMessage(JetpackPacket.FULL, null, false), (EntityPlayerMP)event.player);
 			Mekanism.packetHandler.sendTo(new ScubaTankDataMessage(ScubaTankPacket.FULL, null, false), (EntityPlayerMP)event.player);
 			Mekanism.packetHandler.sendTo(new SecurityUpdateMessage(SecurityPacket.FULL, null, null), (EntityPlayerMP)event.player);
-
-			Mekanism.logger.info("Sent config to '" + event.player.getDisplayName() + ".'");
+			Mekanism.logger.info(String.format("Sent config to '%s'.", event.player.getDisplayName()));
 		}
 	}
 

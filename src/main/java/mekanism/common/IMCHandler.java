@@ -118,7 +118,7 @@ public class IMCHandler
 					
 					if(!found)
 					{
-						Mekanism.logger.error("[Mekanism] " + msg.getSender() + " sent unknown IMC message with key '" + msg.key + ".'");
+						Mekanism.logger.error(String.format("[Mekanism] %s sent unknown IMC message with key '%s'.", msg.getSender(), msg.key));
 					}
 				} catch(Exception e) {
 					e.printStackTrace();
