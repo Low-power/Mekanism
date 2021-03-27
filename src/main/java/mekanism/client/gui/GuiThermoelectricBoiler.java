@@ -161,7 +161,7 @@ public class GuiThermoelectricBoiler extends GuiMekanism
 			}
 		}
 
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiIndustrialTurbine.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "IndustrialTurbineGui.png"));
 		drawTexturedModalRect(guiWidth + xPos, guiHeight + yPos, 176, 0, 16, 54);
 	}
 }

@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCrusher extends GuiElectricMachine
+public class GuiCrusher extends ElectricMachineGui
 {
 	public GuiCrusher(InventoryPlayer inventory, TileEntityElectricMachine tentity)
 	{

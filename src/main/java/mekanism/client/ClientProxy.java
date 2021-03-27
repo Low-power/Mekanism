@@ -10,51 +10,51 @@ import mekanism.client.SparkleAnimation.INodeChecker;
 import mekanism.client.entity.EntityLaser;
 import mekanism.client.gui.GuiAmbientAccumulator;
 import mekanism.client.gui.GuiBoilerStats;
-import mekanism.client.gui.GuiChemicalCrystallizer;
-import mekanism.client.gui.GuiChemicalDissolutionChamber;
-import mekanism.client.gui.GuiChemicalInfuser;
+import mekanism.client.gui.ChemicalCrystallizerGui;
+import mekanism.client.gui.ChemicalDissolutionChamberGui;
+import mekanism.client.gui.ChemicalInfuserGui;
 import mekanism.client.gui.GuiChemicalInjectionChamber;
-import mekanism.client.gui.GuiChemicalOxidizer;
-import mekanism.client.gui.GuiChemicalWasher;
+import mekanism.client.gui.ChemicalOxidizerGui;
+import mekanism.client.gui.ChemicalWasherGui;
 import mekanism.client.gui.GuiCombiner;
 import mekanism.client.gui.GuiCredits;
 import mekanism.client.gui.GuiCrusher;
 import mekanism.client.gui.GuiDictionary;
-import mekanism.client.gui.GuiDigitalMiner;
+import mekanism.client.gui.DigitalMinerGui;
 import mekanism.client.gui.GuiDynamicTank;
-import mekanism.client.gui.GuiElectricPump;
-import mekanism.client.gui.GuiElectrolyticSeparator;
+import mekanism.client.gui.ElectricPumpGui;
+import mekanism.client.gui.ElectrolyticSeparatorGui;
 import mekanism.client.gui.GuiEnergizedSmelter;
-import mekanism.client.gui.GuiEnergyCube;
+import mekanism.client.gui.EnergyCubeGui;
 import mekanism.client.gui.GuiEnrichmentChamber;
-import mekanism.client.gui.GuiFactory;
+import mekanism.client.gui.FactoryGui;
 import mekanism.client.gui.GuiFluidTank;
-import mekanism.client.gui.GuiFluidicPlenisher;
-import mekanism.client.gui.GuiFormulaicAssemblicator;
+import mekanism.client.gui.FluidicPlenisherGui;
+import mekanism.client.gui.FormulaicAssemblicatorGui;
 import mekanism.client.gui.GuiFuelwoodHeater;
 import mekanism.client.gui.GuiGasTank;
-import mekanism.client.gui.GuiInductionMatrix;
+import mekanism.client.gui.InductionMatrixGui;
 import mekanism.client.gui.GuiLaserAmplifier;
 import mekanism.client.gui.GuiLaserTractorBeam;
-import mekanism.client.gui.GuiMatrixStats;
-import mekanism.client.gui.GuiMetallurgicInfuser;
+import mekanism.client.gui.MatrixStatsGui;
+import mekanism.client.gui.MetallurgicInfuserGui;
 import mekanism.client.gui.GuiOredictionificator;
 import mekanism.client.gui.GuiOsmiumCompressor;
-import mekanism.client.gui.GuiPRC;
+import mekanism.client.gui.PRCGui;
 import mekanism.client.gui.GuiPersonalChest;
 import mekanism.client.gui.GuiPrecisionSawmill;
 import mekanism.client.gui.GuiPurificationChamber;
 import mekanism.client.gui.GuiQuantumEntangloporter;
-import mekanism.client.gui.GuiResistiveHeater;
+import mekanism.client.gui.ResistiveHeaterGui;
 import mekanism.client.gui.GuiRobitCrafting;
 import mekanism.client.gui.GuiRobitInventory;
 import mekanism.client.gui.GuiRobitMain;
 import mekanism.client.gui.GuiRobitRepair;
 import mekanism.client.gui.GuiRobitSmelting;
-import mekanism.client.gui.GuiRotaryCondensentrator;
+import mekanism.client.gui.RotaryCondensentratorGui;
 import mekanism.client.gui.GuiSecurityDesk;
 import mekanism.client.gui.GuiSeismicReader;
-import mekanism.client.gui.GuiSeismicVibrator;
+import mekanism.client.gui.SeismicVibratorGui;
 import mekanism.client.gui.GuiSideConfiguration;
 import mekanism.client.gui.GuiSolarNeutronActivator;
 import mekanism.client.gui.GuiTeleporter;
@@ -242,25 +242,25 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void openPersonalChest(EntityPlayer entityplayer, int id, int windowId, boolean isBlock, int x, int y, int z)
+	public void openPersonalChest(EntityPlayer player, int id, int windowId, boolean isBlock, int x, int y, int z)
 	{
-		TileEntityPersonalChest tileEntity = (TileEntityPersonalChest)entityplayer.worldObj.getTileEntity(x, y, z);
+		TileEntityPersonalChest tileEntity = (TileEntityPersonalChest)player.worldObj.getTileEntity(x, y, z);
 
 		if(id == 0)
 		{
 			if(isBlock)
 			{
-				FMLClientHandler.instance().displayGuiScreen(entityplayer, new GuiPersonalChest(entityplayer.inventory, tileEntity));
-				entityplayer.openContainer.windowId = windowId;
+				FMLClientHandler.instance().displayGuiScreen(player, new GuiPersonalChest(player.inventory, tileEntity));
+				player.openContainer.windowId = windowId;
 			}
 			else {
-				ItemStack stack = entityplayer.getCurrentEquippedItem();
+				ItemStack stack = player.getCurrentEquippedItem();
 
 				if(MachineType.get(stack) == MachineType.PERSONAL_CHEST)
 				{
-					InventoryPersonalChest inventory = new InventoryPersonalChest(entityplayer);
-					FMLClientHandler.instance().displayGuiScreen(entityplayer, new GuiPersonalChest(entityplayer.inventory, inventory));
-					entityplayer.openContainer.windowId = windowId;
+					InventoryPersonalChest inventory = new InventoryPersonalChest(player);
+					FMLClientHandler.instance().displayGuiScreen(player, new GuiPersonalChest(player.inventory, inventory));
+					player.openContainer.windowId = windowId;
 				}
 			}
 		}
@@ -383,7 +383,7 @@ public class ClientProxy extends CommonProxy
 			case 1:
 				return new GuiCredits();
 			case 2:
-				return new GuiDigitalMiner(player.inventory, (TileEntityDigitalMiner)tileEntity);
+				return new DigitalMinerGui(player.inventory, (TileEntityDigitalMiner)tileEntity);
 			case 3:
 				return new GuiEnrichmentChamber(player.inventory, (TileEntityElectricMachine)tileEntity);
 			case 4:
@@ -393,17 +393,17 @@ public class ClientProxy extends CommonProxy
 			case 6:
 				return new GuiCrusher(player.inventory, (TileEntityElectricMachine)tileEntity);
 			case 7:
-				return new GuiRotaryCondensentrator(player.inventory, (TileEntityRotaryCondensentrator)tileEntity);
+				return new RotaryCondensentratorGui(player.inventory, (TileEntityRotaryCondensentrator)tileEntity);
 			case 8:
-				return new GuiEnergyCube(player.inventory, (TileEntityEnergyCube)tileEntity);
+				return new EnergyCubeGui(player.inventory, (TileEntityEnergyCube)tileEntity);
 			case 9:
 				return new GuiSideConfiguration(player, (ISideConfiguration)tileEntity);
 			case 10:
 				return new GuiGasTank(player.inventory, (TileEntityGasTank)tileEntity);
 			case 11:
-				return new GuiFactory(player.inventory, (TileEntityFactory)tileEntity);
+				return new FactoryGui(player.inventory, (TileEntityFactory)tileEntity);
 			case 12:
-				return new GuiMetallurgicInfuser(player.inventory, (TileEntityMetallurgicInfuser)tileEntity);
+				return new MetallurgicInfuserGui(player.inventory, (TileEntityMetallurgicInfuser)tileEntity);
 			case 13:
 				return new GuiTeleporter(player.inventory, (TileEntityTeleporter)tileEntity);
 			case 14:
@@ -418,7 +418,7 @@ public class ClientProxy extends CommonProxy
 			case 16:
 				return new GuiEnergizedSmelter(player.inventory, (TileEntityElectricMachine)tileEntity);
 			case 17:
-				return new GuiElectricPump(player.inventory, (TileEntityElectricPump)tileEntity);
+				return new ElectricPumpGui(player.inventory, (TileEntityElectricPump)tileEntity);
 			case 18:
 				return new GuiDynamicTank(player.inventory, (TileEntityDynamicTank)tileEntity);
 			//EMPTY 19, 20
@@ -458,23 +458,23 @@ public class ClientProxy extends CommonProxy
 					return new GuiRobitRepair(player.inventory, robit);
 				}
 			case 29:
-				return new GuiChemicalOxidizer(player.inventory, (TileEntityChemicalOxidizer)tileEntity);
+				return new ChemicalOxidizerGui(player.inventory, (TileEntityChemicalOxidizer)tileEntity);
 			case 30:
-				return new GuiChemicalInfuser(player.inventory, (TileEntityChemicalInfuser)tileEntity);
+				return new ChemicalInfuserGui(player.inventory, (TileEntityChemicalInfuser)tileEntity);
 			case 31:
 				return new GuiChemicalInjectionChamber(player.inventory, (TileEntityAdvancedElectricMachine)tileEntity);
 			case 32:
-				return new GuiElectrolyticSeparator(player.inventory, (TileEntityElectrolyticSeparator)tileEntity);
+				return new ElectrolyticSeparatorGui(player.inventory, (TileEntityElectrolyticSeparator)tileEntity);
 			case 33:
 				return new GuiThermalEvaporationController(player.inventory, (TileEntityThermalEvaporationController)tileEntity);
 			case 34:
 				return new GuiPrecisionSawmill(player.inventory, (TileEntityPrecisionSawmill)tileEntity);
 			case 35:
-				return new GuiChemicalDissolutionChamber(player.inventory, (TileEntityChemicalDissolutionChamber)tileEntity);
+				return new ChemicalDissolutionChamberGui(player.inventory, (TileEntityChemicalDissolutionChamber)tileEntity);
 			case 36:
-				return new GuiChemicalWasher(player.inventory, (TileEntityChemicalWasher)tileEntity);
+				return new ChemicalWasherGui(player.inventory, (TileEntityChemicalWasher)tileEntity);
 			case 37:
-				return new GuiChemicalCrystallizer(player.inventory, (TileEntityChemicalCrystallizer)tileEntity);
+				return new ChemicalCrystallizerGui(player.inventory, (TileEntityChemicalCrystallizer)tileEntity);
 			case 38:
 				ItemStack itemStack1 = player.getCurrentEquippedItem().copy();
 
@@ -483,13 +483,13 @@ public class ClientProxy extends CommonProxy
 					return new GuiSeismicReader(world, new Coord4D(player), itemStack1);
 				}
 			case 39:
-				return new GuiSeismicVibrator(player.inventory, (TileEntitySeismicVibrator)tileEntity);
+				return new SeismicVibratorGui(player.inventory, (TileEntitySeismicVibrator)tileEntity);
 			case 40:
-				return new GuiPRC(player.inventory, (TileEntityPRC)tileEntity);
+				return new PRCGui(player.inventory, (TileEntityPRC)tileEntity);
 			case 41:
 				return new GuiFluidTank(player.inventory, (TileEntityFluidTank)tileEntity);
 			case 42:
-				return new GuiFluidicPlenisher(player.inventory, (TileEntityFluidicPlenisher)tileEntity);
+				return new FluidicPlenisherGui(player.inventory, (TileEntityFluidicPlenisher)tileEntity);
 			case 43:
 				return new GuiUpgradeManagement(player.inventory, (IUpgradeTile)tileEntity);
 			case 44:
@@ -503,21 +503,21 @@ public class ClientProxy extends CommonProxy
 			case 48:
 				return new GuiAmbientAccumulator(player, (TileEntityAmbientAccumulator)tileEntity);
 			case 49:
-				return new GuiInductionMatrix(player.inventory, (TileEntityInductionCasing)tileEntity);
+				return new InductionMatrixGui(player.inventory, (TileEntityInductionCasing)tileEntity);
 			case 50:
-				return new GuiMatrixStats(player.inventory, (TileEntityInductionCasing)tileEntity);
+				return new MatrixStatsGui(player.inventory, (TileEntityInductionCasing)tileEntity);
 			case 51:
 				return new GuiTransporterConfig(player, (ISideConfiguration)tileEntity);
 			case 52:
 				return new GuiOredictionificator(player.inventory, (TileEntityOredictionificator)tileEntity);
 			case 53:
-				return new GuiResistiveHeater(player.inventory, (TileEntityResistiveHeater)tileEntity);
+				return new ResistiveHeaterGui(player.inventory, (TileEntityResistiveHeater)tileEntity);
 			case 54:
 				return new GuiThermoelectricBoiler(player.inventory, (TileEntityBoilerCasing)tileEntity);
 			case 55:
 				return new GuiBoilerStats(player.inventory, (TileEntityBoilerCasing)tileEntity);
 			case 56:
-				return new GuiFormulaicAssemblicator(player.inventory, (TileEntityFormulaicAssemblicator)tileEntity);
+				return new FormulaicAssemblicatorGui(player.inventory, (TileEntityFormulaicAssemblicator)tileEntity);
 			case 57:
 				return new GuiSecurityDesk(player.inventory, (TileEntitySecurityDesk)tileEntity);
 			case 58:

@@ -10,7 +10,7 @@ import java.util.List;
 
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiChemicalDissolutionChamber;
+import mekanism.client.gui.ChemicalDissolutionChamberGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.DissolutionRecipe;
@@ -50,13 +50,13 @@ public class ChemicalDissolutionChamberRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiChemicalDissolutionChamber.png";
+		return "mekanism:gui/nei/ChemicalDissolutionChamberGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiChemicalDissolutionChamber.class;
+		return ChemicalDissolutionChamberGui.class;
 	}
 
 	public String getRecipeId()

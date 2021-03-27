@@ -12,7 +12,7 @@ import java.util.Map;
 import mekanism.api.infuse.InfuseObject;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.api.infuse.InfuseType;
-import mekanism.client.gui.GuiMetallurgicInfuser;
+import mekanism.client.gui.MetallurgicInfuserGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
@@ -79,13 +79,13 @@ public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/GuiMetallurgicInfuser.png";
+		return "mekanism:gui/MetallurgicInfuserGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiMetallurgicInfuser.class;
+		return MetallurgicInfuserGui.class;
 	}
 
 	public String getRecipeId()

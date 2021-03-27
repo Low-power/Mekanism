@@ -11,7 +11,7 @@ import java.util.List;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiRotaryCondensentrator;
+import mekanism.client.gui.RotaryCondensentratorGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -48,13 +48,13 @@ public class RotaryCondensentratorRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiRotaryCondensentrator.png";
+		return "mekanism:gui/nei/RotaryCondensentratorGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiRotaryCondensentrator.class;
+		return RotaryCondensentratorGui.class;
 	}
 
 	public String getRecipeId()

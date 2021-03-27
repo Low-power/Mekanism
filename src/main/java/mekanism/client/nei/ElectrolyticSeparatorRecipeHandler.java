@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiElectrolyticSeparator;
+import mekanism.client.gui.ElectrolyticSeparatorGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiGasGauge;
@@ -55,9 +55,9 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void addGuiElements()
 	{
-		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 5, 10));
-		guiElements.add(leftGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 58, 18));
-		guiElements.add(rightGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 100, 18));
+		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
+		guiElements.add(leftGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
+		guiElements.add(rightGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
 		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
@@ -66,10 +66,10 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 164, 15));
 		
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 25, 34));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 58, 51));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 100, 51));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 142, 34).with(SlotOverlay.POWER));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 25, 34));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 51));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 51));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 142, 34).with(SlotOverlay.POWER));
 
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{
@@ -78,7 +78,7 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 			{
 				return 1;
 			}
-		}, ProgressBar.BI, this, MekanismUtils.getResource(ResourceType.GUI, "GuiElectrolyticSeparator.png"), 78, 29));
+		}, ProgressBar.BI, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 78, 29));
 	}
 
 	@Override
@@ -96,13 +96,13 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/GuiElectrolyticSeparator.png";
+		return "mekanism:gui/ElectrolyticSeparatorGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiElectrolyticSeparator.class;
+		return ElectrolyticSeparatorGui.class;
 	}
 
 	public String getRecipeId()

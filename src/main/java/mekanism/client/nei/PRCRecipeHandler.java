@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiPRC;
+import mekanism.client.gui.PRCGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiGasGauge;
@@ -62,9 +62,9 @@ public class PRCRecipeHandler extends BaseRecipeHandler
 		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 140, 18).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 115, 34));
 		
-		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiPRC.png"), 5, 10));
-		guiElements.add(gasInput = GuiGasGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiPRC.png"), 28, 10));
-		guiElements.add(gasOutput = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiPRC.png"), 140, 40));
+		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "PRCGui.png"), 5, 10));
+		guiElements.add(gasInput = GuiGasGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "PRCGui.png"), 28, 10));
+		guiElements.add(gasOutput = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "PRCGui.png"), 140, 40));
 
 		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
 			@Override
@@ -128,7 +128,7 @@ public class PRCRecipeHandler extends BaseRecipeHandler
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiPRC.class;
+		return PRCGui.class;
 	}
 	
 	@Override
@@ -151,7 +151,7 @@ public class PRCRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture() 
 	{
-		return "mekanism:gui/nei/GuiPRC.png";
+		return "mekanism:gui/nei/PRCGui.png";
 	}
 	
 	@Override

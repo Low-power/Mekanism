@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiOsmiumCompressor extends GuiAdvancedElectricMachine
+public class GuiOsmiumCompressor extends AdvancedElectricMachineGui
 {
 	public GuiOsmiumCompressor(InventoryPlayer inventory, TileEntityAdvancedElectricMachine tentity)
 	{

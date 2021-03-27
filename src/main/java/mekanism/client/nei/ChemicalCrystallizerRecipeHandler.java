@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiChemicalCrystallizer;
+import mekanism.client.gui.ChemicalCrystallizerGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.CrystallizerRecipe;
@@ -49,13 +49,13 @@ public class ChemicalCrystallizerRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiChemicalCrystallizer.png";
+		return "mekanism:gui/nei/ChemicalCrystallizerGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiChemicalCrystallizer.class;
+		return ChemicalCrystallizerGui.class;
 	}
 
 	public String getRecipeId()

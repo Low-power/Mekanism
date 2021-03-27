@@ -107,7 +107,7 @@ public final class MekanismUtils
 	/**
 	 * Checks for a new version of Mekanism.
 	 */
-	public static boolean checkForUpdates(EntityPlayer entityplayer)
+	public static boolean checkForUpdates(EntityPlayer player)
 	{
 		try {
 			if(general.updateNotifications && Mekanism.latestVersionNumber != null && Mekanism.recentNews != null)
@@ -126,28 +126,28 @@ public final class MekanismUtils
 
 					if(Version.get(Mekanism.latestVersionNumber).comparedState(Mekanism.versionNumber) == 1 || !list.isEmpty())
 					{
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " -------------"));
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.outdated") + "."));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " -------------"));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.outdated") + "."));
 
 						if(Version.get(Mekanism.latestVersionNumber).comparedState(Mekanism.versionNumber) == 1)
 						{
-							entityplayer.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " Mekanism: " + EnumColor.DARK_RED + Mekanism.versionNumber));
+							player.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " Mekanism: " + EnumColor.DARK_RED + Mekanism.versionNumber));
 						}
 
 						for(IModule module : list)
 						{
-							entityplayer.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " Mekanism" + module.getName() + ": " + EnumColor.DARK_RED + module.getVersion()));
+							player.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " Mekanism" + module.getName() + ": " + EnumColor.DARK_RED + module.getVersion()));
 						}
 
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.consider") + " " + EnumColor.DARK_GREY + Mekanism.latestVersionNumber));
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.newFeatures") + ": " + EnumColor.INDIGO + Mekanism.recentNews));
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.visit") + " " + EnumColor.DARK_GREY + "aidancbrady.com/mekanism" + EnumColor.GREY + " " + LangUtils.localize("update.toDownload") + "."));
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[=======]" + EnumColor.GREY + " -------------"));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.consider") + " " + EnumColor.DARK_GREY + Mekanism.latestVersionNumber));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.newFeatures") + ": " + EnumColor.INDIGO + Mekanism.recentNews));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + " " + LangUtils.localize("update.visit") + " " + EnumColor.DARK_GREY + "aidancbrady.com/mekanism" + EnumColor.GREY + " " + LangUtils.localize("update.toDownload") + "."));
+						player.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[=======]" + EnumColor.GREY + " -------------"));
 						return true;
 					}
 					else if(Version.get(Mekanism.latestVersionNumber).comparedState(Mekanism.versionNumber) == -1)
 					{
-						entityplayer.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism] " + EnumColor.GREY + LangUtils.localize("update.devBuild") + " " + EnumColor.DARK_GREY + Mekanism.versionNumber));
+						player.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism] " + EnumColor.GREY + LangUtils.localize("update.devBuild") + " " + EnumColor.DARK_GREY + Mekanism.versionNumber));
 						return true;
 					}
 				}
@@ -244,28 +244,14 @@ public final class MekanismUtils
 	}
 
 	/**
-	 * Checks if Minecraft is running in offline mode.
-	 * @return if mod is running in offline mode.
-	 */
-	public static boolean isOffline()
-	{
-		try {
-			new URL("http://www.apple.com").openConnection().connect();
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-	}
-
-	/**
 	 * Creates a fake explosion at the declared player, with only sounds and effects. No damage is caused to either blocks or the player.
-	 * @param entityplayer - player to explode
+	 * @param player - player to explode
 	 */
-	public static void doFakeEntityExplosion(EntityPlayer entityplayer)
+	public static void doFakeEntityExplosion(EntityPlayer player)
 	{
-		World world = entityplayer.worldObj;
-		world.spawnParticle("hugeexplosion", entityplayer.posX, entityplayer.posY, entityplayer.posZ, 0.0D, 0.0D, 0.0D);
-		world.playSoundAtEntity(entityplayer, "random.explode", 1.0F, 1.0F);
+		World world = player.worldObj;
+		world.spawnParticle("hugeexplosion", player.posX, player.posY, player.posZ, 0.0D, 0.0D, 0.0D);
+		world.playSoundAtEntity(player, "random.explode", 1F, 1F);
 	}
 
 	/**

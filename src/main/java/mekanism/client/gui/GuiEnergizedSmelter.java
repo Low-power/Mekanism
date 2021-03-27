@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiEnergizedSmelter extends GuiElectricMachine
+public class GuiEnergizedSmelter extends ElectricMachineGui
 {
 	public GuiEnergizedSmelter(InventoryPlayer inventory, TileEntityElectricMachine tentity)
 	{

@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiChemicalInfuser;
+import mekanism.client.gui.ChemicalInfuserGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.inputs.ChemicalPairInput;
@@ -48,13 +48,13 @@ public class ChemicalInfuserRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiChemicalInfuser.png";
+		return "mekanism:gui/nei/ChemicalInfuserGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiChemicalInfuser.class;
+		return ChemicalInfuserGui.class;
 	}
 
 	public String getRecipeId()

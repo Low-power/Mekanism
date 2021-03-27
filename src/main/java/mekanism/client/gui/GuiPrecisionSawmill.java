@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiPrecisionSawmill extends GuiChanceMachine
+public class GuiPrecisionSawmill extends ChanceMachineGui
 {
 	public GuiPrecisionSawmill(InventoryPlayer inventory, TileEntityChanceMachine tentity)
 	{

@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiCombiner extends GuiAdvancedElectricMachine
+public class GuiCombiner extends AdvancedElectricMachineGui
 {
 	public GuiCombiner(InventoryPlayer inventory, TileEntityAdvancedElectricMachine tentity)
 	{

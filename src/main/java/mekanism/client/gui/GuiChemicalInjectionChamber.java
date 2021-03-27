@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiChemicalInjectionChamber extends GuiAdvancedElectricMachine
+public class GuiChemicalInjectionChamber extends AdvancedElectricMachineGui
 {
 	public GuiChemicalInjectionChamber(InventoryPlayer inventory, TileEntityAdvancedElectricMachine tentity)
 	{

@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiChemicalOxidizer;
+import mekanism.client.gui.ChemicalOxidizerGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGauge;
@@ -49,11 +49,11 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void addGuiElements()
 	{
-		guiElements.add(gasOutput = GuiGasGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiChemicalOxidizer.png"), 133, 13));
+		guiElements.add(gasOutput = GuiGasGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 133, 13));
 
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiChemicalOxidizer.png"), 154, 4).with(SlotOverlay.POWER));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiChemicalOxidizer.png"), 25, 35));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiChemicalOxidizer.png"), 154, 24).with(SlotOverlay.PLUS));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 154, 4).with(SlotOverlay.POWER));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 25, 35));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 154, 24).with(SlotOverlay.PLUS));
 
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{
@@ -62,7 +62,7 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 			{
 				return ticksPassed >= 20 ? (ticksPassed - 20) % 20 / 20.0F : 0.0F;
 			}
-		}, ProgressBar.LARGE_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiChemicalOxidizer.png"), 62, 39));
+		}, ProgressBar.LARGE_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 62, 39));
 	}
 
 	@Override
@@ -80,13 +80,13 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/GuiChemicalOxidizer.png";
+		return "mekanism:gui/ChemicalOxidizerGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiChemicalOxidizer.class;
+		return ChemicalOxidizerGui.class;
 	}
 
 	public String getRecipeId()
