@@ -1,20 +1,22 @@
 package mekanism.common.voice;
 
+import mekanism.common.Mekanism;
+import mekanism.common.item.ItemWalkieTalkie;
+import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import mekanism.common.Mekanism;
-import mekanism.common.item.ItemWalkieTalkie;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class VoiceConnection extends Thread
 {
@@ -32,6 +34,19 @@ public class VoiceConnection extends Thread
 	public VoiceConnection(Socket s)
 	{
 		socket = s;
+	}
+
+	private static String get_remote_address(EntityPlayerMP player) {
+		SocketAddress sockaddr = player.playerNetServerHandler.netManager.getSocketAddress();
+		if(sockaddr instanceof InetSocketAddress) {
+			InetAddress address = ((InetSocketAddress)sockaddr).getAddress();
+			return address.getHostAddress();
+		}
+		String address = sockaddr.toString();
+		int begin_i = address.indexOf('/') + 1;
+		int end_i = address.lastIndexOf(':');
+		if(end_i < begin_i) end_i = address.length();
+		return address.substring(begin_i, end_i);
 	}
 
 	@Override
@@ -54,18 +69,17 @@ public class VoiceConnection extends Thread
 						{
 							if(obj instanceof EntityPlayerMP)
 							{
-								EntityPlayerMP playerMP = (EntityPlayerMP)obj;
-								String playerIP = playerMP.getPlayerIP();
-
-								if(!server.isDedicatedServer() && playerIP.equals("local") && !Mekanism.voiceManager.foundLocal)
+								EntityPlayerMP player = (EntityPlayerMP)obj;
+								String player_address = get_remote_address(player);
+								if(!server.isDedicatedServer() && player_address.equals("local") && !Mekanism.voiceManager.foundLocal)
 								{
 									Mekanism.voiceManager.foundLocal = true;
-									username = playerMP.getCommandSenderName();
+									username = player.getCommandSenderName();
 									break;
 								}
-								else if(playerIP.equals(socket.getInetAddress().getHostAddress()))
+								else if(player_address.equals(socket.getInetAddress().getHostAddress()))
 								{
-									username = playerMP.getCommandSenderName();
+									username = player.getCommandSenderName();
 									break;
 								}
 							}
@@ -78,13 +92,11 @@ public class VoiceConnection extends Thread
 
 				if(username == null)
 				{
-					Mekanism.logger.error("VoiceServer: Unable to trace connection's IP address.");
+					Mekanism.logger.error("VoiceServer: Unable to trace connection's remote address.");
 					kill();
 					return;
 				}
-				else {
-					Mekanism.logger.info("VoiceServer: Traced IP in " + retryCount + " attempts.");
-				}
+				Mekanism.logger.info(String.format("VoiceServer: Traced remote address in %d attempt%s.", retryCount, retryCount == 1 ? "" : "s"));
 			}
 		} catch(Exception e) {
 			Mekanism.logger.error("VoiceServer: Error while starting server-based connection.");
@@ -92,7 +104,7 @@ public class VoiceConnection extends Thread
 			open = false;
 		}
 
-		//Main client listen thread
+		// Main client listen thread
 		new Thread(new Runnable()
 		{
 			@Override
@@ -114,10 +126,7 @@ public class VoiceConnection extends Thread
 					}
 				}
 
-				if(!open)
-				{
-					kill();
-				}
+				kill();
 			}
 		}).start();
 	}

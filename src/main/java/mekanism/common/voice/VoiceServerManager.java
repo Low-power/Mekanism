@@ -1,13 +1,13 @@
 package mekanism.common.voice;
 
+import mekanism.api.MekanismConfig.general;
+import mekanism.common.Mekanism;
+import org.apache.logging.log4j.Level;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.HashSet;
 import java.util.Set;
-
-import mekanism.api.MekanismConfig.general;
-import mekanism.common.Mekanism;
 
 public class VoiceServerManager
 {
@@ -29,7 +29,9 @@ public class VoiceServerManager
 			running = true;
 			serverSocket = new ServerSocket(general.VOICE_PORT);
 			(listenThread = new ListenThread()).start();
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			Mekanism.logger.log(Level.ERROR, "VoiceServer: Error while starting server.", e);
+		}
 	}
 
 	public void stop()
@@ -37,19 +39,12 @@ public class VoiceServerManager
 		try {
 			Mekanism.logger.info("VoiceServer: Shutting down server...");
 
-			try {
-				listenThread.interrupt();
-			} catch(Exception e) {}
-
+			listenThread.interrupt();
 			foundLocal = false;
-
-			try {
-				serverSocket.close();
-				serverSocket = null;
-			} catch(Exception e) {}
+			serverSocket.close();
+			serverSocket = null;
 		} catch(Exception e) {
-			Mekanism.logger.error("VoiceServer: Error while shutting down server.");
-			e.printStackTrace();
+			Mekanism.logger.log(Level.ERROR, "VoiceServer: Error while shutting down server.", e);
 		}
 
 		running = false;
@@ -63,7 +58,6 @@ public class VoiceServerManager
 		}
 
 		int channel = connection.getCurrentChannel();
-
 		if(channel == 0)
 		{
 			return;
@@ -101,10 +95,8 @@ public class VoiceServerManager
 
 					Mekanism.logger.info("VoiceServer: Accepted new connection.");
 				} catch(SocketException e) {
-				} catch(NullPointerException e) {
 				} catch(Exception e) {
-					Mekanism.logger.error("VoiceServer: Error while accepting connection.");
-					e.printStackTrace();
+					Mekanism.logger.log(Level.ERROR, "VoiceServer: Error while accepting connection.", e);
 				}
 			}
 		}
