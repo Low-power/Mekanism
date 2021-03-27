@@ -80,8 +80,7 @@ task coreJar(type: Jar) {
     baseName = 'Mekanism'
 
     manifest {
-        attributes 'FMLCorePlugin': 'mekanism.common.asm.LoadingHook'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
+		attributes "Class-Path":"libs/CodeChickenLib-${config.minecraft_version}-${config.CCLIB_version}-universal.jar"
     }
 
     from('etc/core') {
