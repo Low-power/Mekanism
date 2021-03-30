@@ -82,6 +82,8 @@ task coreJar(type: Jar) {
 		attributes "Class-Path":"libs/CodeChickenLib-${config.minecraft_version}-${config.CCLIB_version}-universal.jar"
 	}
 
+	from file("COPYING")
+
 	from('etc/core') {
 		include '*.info'
 		expand 'version': config.mod_version, 'mc_version': config.minecraft_version, 'fmp_version': config.FMP_version
@@ -96,6 +98,8 @@ task coreJar(type: Jar) {
 task toolsJar(type: Jar) {
 	baseName = 'MekanismTools'
 
+	from file("COPYING")
+
 	from('etc/tools') {
 		include '*.info'
 		expand 'version':config.mod_version,'mc_version':config.minecraft_version,'fmp_version':config.FMP_version
@@ -108,6 +112,8 @@ task toolsJar(type: Jar) {
 
 task generatorsJar(type: Jar) {
 	baseName = 'MekanismGenerators'
+
+	from file("COPYING")
 
 	from('etc/generators') {
 		include '*.info'
