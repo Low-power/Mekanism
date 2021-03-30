@@ -1155,7 +1155,7 @@ public class Mekanism
 			Recipe.ENERGIZED_SMELTER.put(recipe);
 		}
 
-		event.registerServerCommand(new CommandMekanism());
+		event.registerServerCommand(new MekanismCommand());
 	}
 
 	@EventHandler

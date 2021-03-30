@@ -60,6 +60,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -105,7 +106,7 @@ public final class MekanismUtils
 	/**
 	 * Checks for a new version of Mekanism.
 	 */
-	public static boolean checkForUpdates(EntityPlayer player)
+	public static boolean checkForUpdates(ICommandSender player)
 	{
 		try {
 			if(general.updateNotifications && Mekanism.latestVersionNumber != null && Mekanism.recentNews != null)
