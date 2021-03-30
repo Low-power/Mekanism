@@ -107,6 +107,7 @@ task toolsJar(type: Jar) {
 
 	from zipTree(jar.outputs.getFiles().getSingleFile()).matching {
 		include 'mekanism/tools/**'
+		include "logo.png"
 	}
 }
 
@@ -122,6 +123,7 @@ task generatorsJar(type: Jar) {
 
 	from zipTree(jar.outputs.getFiles().getSingleFile()).matching {
 		include 'mekanism/generators/**'
+		include "logo.png"
 	}
 }
 
