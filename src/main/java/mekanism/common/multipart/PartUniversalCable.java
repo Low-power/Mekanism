@@ -12,7 +12,7 @@ import mekanism.api.energy.ICableOutputter;
 import mekanism.api.energy.IStrictEnergyAcceptor;
 import mekanism.api.energy.IStrictEnergyStorage;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.EnergyNetwork;
 import mekanism.common.Tier;
 import mekanism.common.Tier.BaseTier;
@@ -232,7 +232,7 @@ public class PartUniversalCable extends PartTransmitter<EnergyAcceptorWrapper, E
 	{
 		if(pass == 0 && !client.opaqueTransmitters)
 		{
-			RenderPartTransmitter.getInstance().renderContents(this, pos);
+			TransmitterPartRenderer.getInstance().renderContents(this, pos);
 		}
 	}
 

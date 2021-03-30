@@ -1,7 +1,7 @@
 package mekanism.client.gui;
 
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
-import mekanism.common.tile.TileEntityChanceMachine;
+import mekanism.common.tile.ChanceMachineTileEntity;
 import net.minecraft.entity.player.InventoryPlayer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -9,7 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiPrecisionSawmill extends ChanceMachineGui
 {
-	public GuiPrecisionSawmill(InventoryPlayer inventory, TileEntityChanceMachine tentity)
+	public GuiPrecisionSawmill(InventoryPlayer inventory, ChanceMachineTileEntity tentity)
 	{
 		super(inventory, tentity);
 	}

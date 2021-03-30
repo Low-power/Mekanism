@@ -1,8 +1,8 @@
 package mekanism.client.gui;
 
 import mekanism.client.gui.element.GuiSecurityTab;
-import mekanism.common.inventory.container.ContainerPersonalChest;
-import mekanism.common.tile.TileEntityPersonalChest;
+import mekanism.common.inventory.container.PersonalChestContainer;
+import mekanism.common.tile.PersonalChestTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -17,11 +17,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiPersonalChest extends GuiMekanism
 {
-	public TileEntityPersonalChest tileEntity;
+	public PersonalChestTileEntity tileEntity;
 
-	public GuiPersonalChest(InventoryPlayer inventory, TileEntityPersonalChest tentity)
+	public GuiPersonalChest(InventoryPlayer inventory, PersonalChestTileEntity tentity)
 	{
-		super(tentity, new ContainerPersonalChest(inventory, tentity, null, true));
+		super(tentity, new PersonalChestContainer(inventory, tentity, null, true));
 
 		xSize+=26;
 		ySize+=64;
@@ -32,7 +32,7 @@ public class GuiPersonalChest extends GuiMekanism
 
 	public GuiPersonalChest(InventoryPlayer inventory, IInventory inv)
 	{
-		super(new ContainerPersonalChest(inventory, null, inv, false));
+		super(new PersonalChestContainer(inventory, null, inv, false));
 
 		xSize+=26;
 		ySize+=64;

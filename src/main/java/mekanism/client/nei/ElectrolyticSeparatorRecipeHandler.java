@@ -1,19 +1,11 @@
 package mekanism.client.nei;
 
-import static codechicken.lib.gui.GuiDraw.changeTexture;
-import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.GasStack;
 import mekanism.client.gui.ElectrolyticSeparatorGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiGasGauge;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
 import mekanism.client.gui.element.GuiProgress;
@@ -30,42 +22,45 @@ import mekanism.common.recipe.outputs.ChemicalPairOutput;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraftforge.fluids.FluidStack;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import org.lwjgl.opengl.GL11;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.List;
+import static codechicken.lib.gui.GuiDraw.changeTexture;
+import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 
 public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 {
 	private int ticksPassed;
-	
+
 	public GuiFluidGauge fluidInput;
 	public GuiGasGauge leftGas;
 	public GuiGasGauge rightGas;
 
 	public static int xOffset = 5;
 	public static int yOffset = 9;
-	
+
 	@Override
 	public void addGuiElements()
 	{
-		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
-		guiElements.add(leftGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
-		guiElements.add(rightGas = GuiGasGauge.getDummy(GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
+		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
+		guiElements.add(leftGas = GuiGasGauge.getDummy(GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
+		guiElements.add(rightGas = GuiGasGauge.getDummy(GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
 		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
 			{
-				return ticksPassed <= 20 ? ticksPassed / 20.0F : 1.0F;
+				return ticksPassed <= 20 ? ticksPassed / 20F : 1F;
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 164, 15));
-		
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 25, 34));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 51));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 51));
@@ -118,10 +113,9 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(-1, 0, 4, yOffset, 167, 62);
-		
 		for(GuiElement e : guiElements)
 		{
 			e.renderBackground(0, 0, -xOffset, -yOffset);

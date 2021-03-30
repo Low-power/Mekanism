@@ -10,7 +10,7 @@ import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityInductionCell extends TileEntityBasicBlock implements IStrictEnergyStorage
+public class TileEntityInductionCell extends BasicBlockTileEntity implements IStrictEnergyStorage
 {
 	public InductionCellTier tier = InductionCellTier.BASIC;
 	

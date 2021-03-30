@@ -2,10 +2,10 @@ package mekanism.common;
 
 import mekanism.common.item.ItemAlloy;
 import mekanism.common.item.ItemAtomicDisassembler;
-import mekanism.common.item.ItemBalloon;
+import mekanism.common.item.BalloonItem;
 import mekanism.common.item.ItemClump;
-import mekanism.common.item.ItemConfigurationCard;
-import mekanism.common.item.ItemConfigurator;
+import mekanism.common.item.ConfigurationCard;
+import mekanism.common.item.Configurator;
 import mekanism.common.item.ItemControlCircuit;
 import mekanism.common.item.ItemCraftingFormula;
 import mekanism.common.item.ItemCrystal;
@@ -27,7 +27,7 @@ import mekanism.common.item.ItemNetworkReader;
 import mekanism.common.item.ItemOtherDust;
 import mekanism.common.item.ItemPortableTeleporter;
 import mekanism.common.item.ItemProxy;
-import mekanism.common.item.ItemRobit;
+import mekanism.common.item.RobitItem;
 import mekanism.common.item.ItemScubaTank;
 import mekanism.common.item.ItemSeismicReader;
 import mekanism.common.item.ItemShard;
@@ -71,10 +71,10 @@ public class MekanismItems
 	public static final Item GasUpgrade = new ItemUpgrade(Upgrade.GAS).setUnlocalizedName("GasUpgrade");
 	public static final Item TierInstaller = new ItemTierInstaller().setUnlocalizedName("FactoryInstaller");
 	public static final ItemEnergized EnergyTablet = (ItemEnergized)new ItemEnergized(1000000).setUnlocalizedName("EnergyTablet");
-	public static final ItemRobit Robit = (ItemRobit)new ItemRobit().setUnlocalizedName("Robit");
+	public static final RobitItem Robit = (RobitItem)(new RobitItem().setUnlocalizedName("Robit"));
 	public static final ItemAtomicDisassembler AtomicDisassembler = (ItemAtomicDisassembler)new ItemAtomicDisassembler().setUnlocalizedName("AtomicDisassembler");
 	public static final ItemPortableTeleporter PortableTeleporter = (ItemPortableTeleporter)new ItemPortableTeleporter().setUnlocalizedName("PortableTeleporter");
-	public static final ItemConfigurator Configurator = (ItemConfigurator)new ItemConfigurator().setUnlocalizedName("Configurator");
+	public static final Configurator Configurator = (Configurator)(new Configurator().setUnlocalizedName("Configurator"));
 	public static final ItemNetworkReader NetworkReader = (ItemNetworkReader)new ItemNetworkReader().setUnlocalizedName("NetworkReader");
 	public static final Item WalkieTalkie = new ItemWalkieTalkie().setUnlocalizedName("WalkieTalkie");
 	public static final ItemElectricBow ElectricBow = (ItemElectricBow)new ItemElectricBow().setUnlocalizedName("ElectricBow");
@@ -82,7 +82,7 @@ public class MekanismItems
 	public static final ItemSeismicReader SeismicReader = (ItemSeismicReader)new ItemSeismicReader().setUnlocalizedName("SeismicReader");
 	public static final Item Dictionary = new ItemDictionary().setUnlocalizedName("Dictionary");
 	public static final ItemGaugeDropper GaugeDropper = (ItemGaugeDropper)new ItemGaugeDropper().setUnlocalizedName("GaugeDropper");
-	public static final Item ConfigurationCard = new ItemConfigurationCard().setUnlocalizedName("ConfigurationCard");
+	public static final Item ConfigurationCard = new ConfigurationCard().setUnlocalizedName("ConfigurationCard");
 	public static final Item CraftingFormula = new ItemCraftingFormula().setUnlocalizedName("CraftingFormula");
 	public static final Item PartTransmitter = new ItemPartTransmitter().setUnlocalizedName("MultipartTransmitter");
 	public static final Item GlowPanel = new ItemGlowPanel().setUnlocalizedName("GlowPanel");
@@ -91,7 +91,7 @@ public class MekanismItems
 	public static final ItemJetpack Jetpack = (ItemJetpack)new ItemJetpack().setUnlocalizedName("Jetpack");
 	public static final ItemJetpack ArmoredJetpack = (ItemJetpack)new ItemJetpack().setUnlocalizedName("ArmoredJetpack");
 	public static final ItemFreeRunners FreeRunners = (ItemFreeRunners)new ItemFreeRunners().setUnlocalizedName("FreeRunners");
-	public static final Item Balloon = new ItemBalloon().setUnlocalizedName("Balloon");
+	public static final Item Balloon = new BalloonItem().setUnlocalizedName("Balloon");
 
 	//Multi-ID Items
 	public static final Item OtherDust = new ItemOtherDust();

@@ -6,7 +6,7 @@ import mekanism.client.gui.IGuiWrapper;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiNumberGauge extends GuiGauge
+public class GuiNumberGauge extends GaugeGui
 {
 	INumberInfoHandler infoHandler;
 

@@ -16,7 +16,7 @@ import mekanism.common.Mekanism;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.PacketHandler;
 import mekanism.common.base.IRedstoneControl;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.chunkloading.IChunkLoader;
 import mekanism.common.frequency.Frequency;
 import mekanism.common.frequency.FrequencyManager;

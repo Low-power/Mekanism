@@ -6,7 +6,7 @@ import mekanism.common.PacketHandler;
 import mekanism.common.Upgrade;
 import mekanism.common.base.IUpgradeTile;
 import mekanism.common.network.PacketRemoveUpgrade.RemoveUpgradeMessage;
-import mekanism.common.tile.TileEntityBasicBlock;
+import mekanism.common.tile.BasicBlockTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -21,7 +21,7 @@ public class PacketRemoveUpgrade implements IMessageHandler<RemoveUpgradeMessage
 		EntityPlayer player = PacketHandler.getPlayer(context);
 		TileEntity tileEntity = message.coord4D.getTileEntity(player.worldObj);
 		
-		if(tileEntity instanceof IUpgradeTile && tileEntity instanceof TileEntityBasicBlock)
+		if(tileEntity instanceof IUpgradeTile && tileEntity instanceof BasicBlockTileEntity)
 		{
 			IUpgradeTile upgradeTile = (IUpgradeTile)tileEntity;
 			Upgrade upgrade = Upgrade.values()[message.upgradeType];

@@ -5,14 +5,14 @@ import mekanism.api.gas.GasTank;
 import mekanism.common.recipe.inputs.FluidInput;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.outputs.GasOutput;
-import mekanism.common.tile.TileEntityChemicalWasher;
+import mekanism.common.tile.ChemicalWasherTileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 
 public class WasherRecipe extends MachineRecipe<GasInput, GasOutput, WasherRecipe>
 {
-	public FluidInput waterInput = new FluidInput(new FluidStack(FluidRegistry.WATER, TileEntityChemicalWasher.WATER_USAGE));
+	public FluidInput waterInput = new FluidInput(new FluidStack(FluidRegistry.WATER, ChemicalWasherTileEntity.WATER_USAGE));
 
 	public WasherRecipe(GasInput input, GasOutput output)
 	{

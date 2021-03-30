@@ -8,7 +8,7 @@ import mekanism.api.util.UnitDisplayUtils.EnergyType;
 import mekanism.common.Mekanism;
 import mekanism.common.Tier;
 import mekanism.common.base.IModule;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.network.PacketConfigSync.ConfigSyncMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;

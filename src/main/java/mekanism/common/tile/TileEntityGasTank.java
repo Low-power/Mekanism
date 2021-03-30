@@ -25,8 +25,8 @@ import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.ITierUpgradeable;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
+import mekanism.common.tile.component.ConfigTileComponent;
+import mekanism.common.tile.component.EjectorTileComponent;
 import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.InventoryUtils;
 import mekanism.common.util.LangUtils;
@@ -38,7 +38,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityGasTank extends TileEntityContainerBlock implements IGasHandler, ITubeConnection, IRedstoneControl, ISideConfiguration, ISecurityTile, ITierUpgradeable
+public class TileEntityGasTank extends ContainerTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, ISideConfiguration, ISecurityTile, ITierUpgradeable
 {
 	public enum GasMode
 	{
@@ -61,15 +61,15 @@ public class TileEntityGasTank extends TileEntityContainerBlock implements IGasH
 	/** This machine's current RedstoneControl type. */
 	public RedstoneControl controlType;
 	
-	public TileComponentEjector ejectorComponent;
-	public TileComponentConfig configComponent;
+	public EjectorTileComponent ejectorComponent;
+	public ConfigTileComponent configComponent;
 	public TileComponentSecurity securityComponent;
 
 	public TileEntityGasTank()
 	{
 		super("GasTank");
 		
-		configComponent = new TileComponentConfig(this, TransmissionType.GAS, TransmissionType.ITEM);
+		configComponent = new ConfigTileComponent(this, TransmissionType.GAS, TransmissionType.ITEM);
 		
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("None", EnumColor.GREY, InventoryUtils.EMPTY));
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("Fill", EnumColor.DARK_BLUE, new int[] {0}));
@@ -85,7 +85,7 @@ public class TileEntityGasTank extends TileEntityContainerBlock implements IGasH
 		dumping = GasMode.IDLE;
 		controlType = RedstoneControl.DISABLED;
 		
-		ejectorComponent = new TileComponentEjector(this);
+		ejectorComponent = new EjectorTileComponent(this);
 		
 		securityComponent = new TileComponentSecurity(this);
 	}
@@ -370,13 +370,13 @@ public class TileEntityGasTank extends TileEntityContainerBlock implements IGasH
 	}
 
 	@Override
-	public TileComponentEjector getEjector()
+	public EjectorTileComponent getEjector()
 	{
 		return ejectorComponent;
 	}
 	
 	@Override
-	public TileComponentConfig getConfig()
+	public ConfigTileComponent getConfig()
 	{
 		return configComponent;
 	}

@@ -10,7 +10,7 @@ import mekanism.api.Coord4D;
 import mekanism.api.Range4D;
 import mekanism.common.Mekanism;
 import mekanism.common.base.IFluidContainerManager;
-import mekanism.common.block.BlockBasic;
+import mekanism.common.block.BasicBlock;
 import mekanism.common.content.tank.SynchronizedTankData;
 import mekanism.common.content.tank.SynchronizedTankData.ValveData;
 import mekanism.common.content.tank.TankCache;
@@ -160,7 +160,7 @@ public class TileEntityDynamicTank extends TileEntityMultiblock<SynchronizedTank
 	{
 		if(!player.isSneaking() && structure != null)
 		{
-			if(!BlockBasic.manageInventory(player, this))
+			if(!BasicBlock.manageInventory(player, this))
 			{
 				Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(this), getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(this)));
 				player.openGui(Mekanism.instance, 18, worldObj, xCoord, yCoord, zCoord);

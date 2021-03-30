@@ -4,8 +4,8 @@ import java.util.List;
 
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.entity.EntityRobit;
-import mekanism.common.inventory.container.ContainerRobitRepair;
+import mekanism.common.entity.Robit;
+import mekanism.common.inventory.container.RobitRepairContainer;
 import mekanism.common.network.PacketRobit.RobitMessage;
 import mekanism.common.network.PacketRobit.RobitPacketType;
 import mekanism.common.util.LangUtils;
@@ -30,18 +30,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiRobitRepair extends GuiMekanism implements ICrafting
 {
-	private EntityRobit robit;
+	private Robit robit;
 	private ContainerRepair repairContainer;
 	private GuiTextField itemNameField;
 	private InventoryPlayer playerInventory;
 
-	public GuiRobitRepair(InventoryPlayer inventory, EntityRobit entity)
+	public GuiRobitRepair(InventoryPlayer inventory, Robit entity)
 	{
-		super(new ContainerRobitRepair(inventory, entity));
+		super(new RobitRepairContainer(inventory, entity));
 		robit = entity;
 		xSize += 25;
 		playerInventory = inventory;
-		repairContainer = (ContainerRobitRepair)inventorySlots;
+		repairContainer = (RobitRepairContainer)inventorySlots;
 	}
 
 	@Override

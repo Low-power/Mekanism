@@ -2,8 +2,8 @@ package mekanism.client.gui;
 
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.entity.EntityRobit;
-import mekanism.common.inventory.container.ContainerRobitMain;
+import mekanism.common.entity.Robit;
+import mekanism.common.inventory.container.RobitMainContainer;
 import mekanism.common.network.PacketRobit.RobitMessage;
 import mekanism.common.network.PacketRobit.RobitPacketType;
 import mekanism.common.util.LangUtils;
@@ -22,16 +22,16 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiRobitMain extends GuiMekanism
 {
-	public EntityRobit robit;
+	public Robit robit;
 
 	public boolean displayNameChange;
 
 	private GuiTextField nameChangeField;
 	private GuiButton confirmName;
 
-	public GuiRobitMain(InventoryPlayer inventory, EntityRobit entity)
+	public GuiRobitMain(InventoryPlayer inventory, Robit entity)
 	{
-		super(new ContainerRobitMain(inventory, entity));
+		super(new RobitMainContainer(inventory, entity));
 		xSize += 25;
 		robit = entity;
 	}

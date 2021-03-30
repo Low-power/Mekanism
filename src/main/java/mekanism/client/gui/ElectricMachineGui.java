@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
@@ -17,25 +15,24 @@ import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.common.inventory.container.ContainerElectricMachine;
-import mekanism.common.tile.TileEntityElectricMachine;
+import mekanism.common.inventory.container.ElectricMachineContainer;
+import mekanism.common.tile.ElectricMachineTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ElectricMachineGui extends GuiMekanism
 {
-	public TileEntityElectricMachine tileEntity;
+	public ElectricMachineTileEntity tileEntity;
 
-	public ElectricMachineGui(InventoryPlayer inventory, TileEntityElectricMachine tentity)
+	public ElectricMachineGui(InventoryPlayer inventory, ElectricMachineTileEntity tentity)
 	{
-		super(tentity, new ContainerElectricMachine(inventory, tentity));
+		super(tentity, new ElectricMachineContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, tileEntity.guiLocation));
@@ -66,7 +63,7 @@ public class ElectricMachineGui extends GuiMekanism
 			}
 		}, getProgressType(), this, tileEntity.guiLocation, 77, 37));
 	}
-	
+
 	public ProgressBar getProgressType()
 	{
 		return ProgressBar.BLUE;
@@ -85,7 +82,7 @@ public class ElectricMachineGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(tileEntity.guiLocation);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

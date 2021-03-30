@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -9,7 +7,7 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
@@ -18,26 +16,25 @@ import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.common.inventory.container.ContainerChemicalDissolutionChamber;
-import mekanism.common.tile.TileEntityChemicalDissolutionChamber;
+import mekanism.common.inventory.container.ChemicalDissolutionChamberContainer;
+import mekanism.common.tile.ChemicalDissolutionChamberTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ChemicalDissolutionChamberGui extends GuiMekanism
 {
-	public TileEntityChemicalDissolutionChamber tileEntity;
+	public ChemicalDissolutionChamberTileEntity tileEntity;
 
-	public ChemicalDissolutionChamberGui(InventoryPlayer inventory, TileEntityChemicalDissolutionChamber tentity)
+	public ChemicalDissolutionChamberGui(InventoryPlayer inventory, ChemicalDissolutionChamberTileEntity tentity)
 	{
-		super(tentity, new ContainerChemicalDissolutionChamber(inventory, tentity));
+		super(tentity, new ChemicalDissolutionChamberContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png")));
@@ -57,14 +54,14 @@ public class ChemicalDissolutionChamberGui extends GuiMekanism
 			{
 				return tileEntity.injectTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 5, 4));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 5, 4));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.outputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 133, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 133, 13));
 
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 154, 4).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 25, 35));
@@ -101,11 +98,10 @@ public class ChemicalDissolutionChamberGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
-		
 		int displayInt;
 
 		displayInt = tileEntity.getScaledEnergyLevel(52);

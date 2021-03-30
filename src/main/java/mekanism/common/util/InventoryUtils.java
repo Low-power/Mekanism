@@ -5,15 +5,15 @@ import mekanism.api.util.StackUtils;
 import mekanism.common.base.ISideConfiguration;
 import mekanism.common.content.transporter.Finder;
 import mekanism.common.content.transporter.InvStack;
-import mekanism.common.tile.TileEntityBin;
+import mekanism.common.tile.BinTileEntity;
 import mekanism.common.tile.TileEntityLogisticalSorter;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public final class InventoryUtils
 {
@@ -95,12 +95,10 @@ public final class InventoryUtils
 					{
 						inventory.setInventorySlotContents(i, toInsert);
 						inventory.markDirty();
-						
 						return null;
 					}
 					else {
 						int rejects = toInsert.stackSize - inventory.getInventoryStackLimit();
-						
 						ItemStack toSet = toInsert.copy();
 						toSet.stackSize = inventory.getInventoryStackLimit();
 
@@ -116,7 +114,6 @@ public final class InventoryUtils
 				else if(areItemsStackable(toInsert, inSlot) && inSlot.stackSize < Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit()))
 				{
 					int max = Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit());
-					
 					if(inSlot.stackSize + toInsert.stackSize <= max)
 					{
 						ItemStack toSet = toInsert.copy();
@@ -124,7 +121,6 @@ public final class InventoryUtils
 
 						inventory.setInventorySlotContents(i, toSet);
 						inventory.markDirty();
-						
 						return null;
 					}
 					else {
@@ -150,7 +146,7 @@ public final class InventoryUtils
 
 			if(slots != null && slots.length != 0)
 			{
-				if(force && sidedInventory instanceof TileEntityBin && ForgeDirection.OPPOSITES[side] == 0)
+				if(force && sidedInventory instanceof BinTileEntity && ForgeDirection.OPPOSITES[side] == 0)
 				{
 					slots = sidedInventory.getAccessibleSlotsFromSide(1);
 				}
@@ -175,12 +171,10 @@ public final class InventoryUtils
 						{
 							inventory.setInventorySlotContents(slotID, toInsert);
 							inventory.markDirty();
-							
 							return null;
 						}
 						else {
 							int rejects = toInsert.stackSize - inventory.getInventoryStackLimit();
-							
 							ItemStack toSet = toInsert.copy();
 							toSet.stackSize = inventory.getInventoryStackLimit();
 
@@ -196,7 +190,6 @@ public final class InventoryUtils
 					else if(areItemsStackable(toInsert, inSlot) && inSlot.stackSize < Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit()))
 					{
 						int max = Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit());
-						
 						if(inSlot.stackSize + toInsert.stackSize <= max)
 						{
 							ItemStack toSet = toInsert.copy();
@@ -204,7 +197,6 @@ public final class InventoryUtils
 
 							inventory.setInventorySlotContents(slotID, toSet);
 							inventory.markDirty();
-							
 							return null;
 						}
 						else {
@@ -229,9 +221,8 @@ public final class InventoryUtils
 		return toInsert;
 	}
 
-	public static boolean areItemsStackable(ItemStack toInsert, ItemStack inSlot) 
-	{
-    	return inSlot.isItemEqual(toInsert) && ItemStack.areItemStackTagsEqual(inSlot, toInsert);
+	public static boolean areItemsStackable(ItemStack toInsert, ItemStack inSlot) {
+		return inSlot.isItemEqual(toInsert) && ItemStack.areItemStackTagsEqual(inSlot, toInsert);
   	}
 
   	public static InvStack takeTopItem(IInventory inventory, int side, int amount)
@@ -450,7 +441,6 @@ public final class InventoryUtils
 					}
 					else {
 						int rejects = itemStack.stackSize - inventory.getInventoryStackLimit();
-						
 						if(rejects < itemStack.stackSize)
 						{
 							return true;
@@ -460,7 +450,6 @@ public final class InventoryUtils
 				else if(areItemsStackable(itemStack, inSlot) && inSlot.stackSize < Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit()))
 				{
 					int max = Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit());
-					
 					if(inSlot.stackSize + itemStack.stackSize <= max)
 					{
 						return true;
@@ -482,7 +471,7 @@ public final class InventoryUtils
 
 			if(slots != null && slots.length != 0)
 			{
-				if(force && sidedInventory instanceof TileEntityBin && ForgeDirection.OPPOSITES[side] == 0)
+				if(force && sidedInventory instanceof BinTileEntity && ForgeDirection.OPPOSITES[side] == 0)
 				{
 					slots = sidedInventory.getAccessibleSlotsFromSide(1);
 				}
@@ -509,7 +498,6 @@ public final class InventoryUtils
 						}
 						else {
 							int rejects = itemStack.stackSize - inventory.getInventoryStackLimit();
-							
 							if(rejects < itemStack.stackSize)
 							{
 								return true;
@@ -519,7 +507,6 @@ public final class InventoryUtils
 					else if(areItemsStackable(itemStack, inSlot) && inSlot.stackSize < Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit()))
 					{
 						int max = Math.min(inSlot.getMaxStackSize(), inventory.getInventoryStackLimit());
-						
 						if(inSlot.stackSize + itemStack.stackSize <= max)
 						{
 							return true;

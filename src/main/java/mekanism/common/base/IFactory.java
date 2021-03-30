@@ -1,12 +1,10 @@
 package mekanism.common.base;
 
-import java.util.Map;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasStack;
 import mekanism.api.util.StackUtils;
 import mekanism.common.InfuseStorage;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.inputs.AdvancedMachineInput;
@@ -16,12 +14,13 @@ import mekanism.common.recipe.machines.AdvancedMachineRecipe;
 import mekanism.common.recipe.machines.BasicMachineRecipe;
 import mekanism.common.recipe.machines.MachineRecipe;
 import mekanism.common.recipe.machines.MetallurgicInfuserRecipe;
-import mekanism.common.tile.TileEntityAdvancedElectricMachine;
+import mekanism.common.tile.AdvancedElectricMachineTileEntity;
 import mekanism.common.util.LangUtils;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.ForgeDirection;
+import java.util.Map;
 
 /**
  * Internal interface for managing various Factory types.
@@ -61,7 +60,7 @@ public interface IFactory
 		private boolean usesFuel;
 		private boolean fuelSpeed;
 		private Recipe recipe;
-		private TileEntityAdvancedElectricMachine cacheTile;
+		private AdvancedElectricMachineTileEntity cacheTile;
 
 		public BasicMachineRecipe getRecipe(ItemStackInput input)
 		{
@@ -82,12 +81,12 @@ public interface IFactory
 		{
 			return getRecipe(new AdvancedMachineInput(input, gas));
 		}
-		
+
 		public MetallurgicInfuserRecipe getRecipe(InfusionInput input)
 		{
 			return RecipeHandler.getMetallurgicInfuserRecipe(input);
 		}
-		
+
 		public MetallurgicInfuserRecipe getRecipe(ItemStack input, InfuseStorage storage)
 		{
 			return getRecipe(new InfusionInput(storage, input));
@@ -110,7 +109,6 @@ public interface IFactory
 					{
 						Map.Entry entry = (Map.Entry)obj;
 						InfusionInput input = (InfusionInput)entry.getKey();
-						
 						if(input.inputStack.isItemEqual(slotStack))
 						{
 							return (MetallurgicInfuserRecipe)entry.getValue();
@@ -118,7 +116,6 @@ public interface IFactory
 					}
 				}
 			}
-			
 			return getRecipe(slotStack);
 		}
 
@@ -197,12 +194,12 @@ public interface IFactory
 			return false;
 		}
 
-		public TileEntityAdvancedElectricMachine getTile()
+		public AdvancedElectricMachineTileEntity getTile()
 		{
 			if(cacheTile == null)
 			{
 				MachineType type = MachineType.get(Block.getBlockFromItem(getStack().getItem()), getStack().getItemDamage());
-				cacheTile = (TileEntityAdvancedElectricMachine)type.create();
+				cacheTile = (AdvancedElectricMachineTileEntity)type.create();
 			}
 
 			return cacheTile;
@@ -217,7 +214,7 @@ public interface IFactory
 		{
 			return stack;
 		}
-		
+
 		public String getUnlocalizedName()
 		{
 			return name;
@@ -237,27 +234,24 @@ public interface IFactory
 		{
 			return usesFuel;
 		}
-		
+
 		public boolean fuelEnergyUpgrades()
 		{
 			return fuelSpeed;
 		}
-		
+
 		public static RecipeType getFromMachine(Block block, int meta)
 		{
 			RecipeType type = null;
-			
 			for(RecipeType iterType : RecipeType.values())
 			{
 				ItemStack machineStack = iterType.getStack();
-				
 				if(Block.getBlockFromItem(machineStack.getItem()) == block && machineStack.getItemDamage() == meta)
 				{
 					type = iterType;
 					break;
 				}
 			}
-			
 			return type;
 		}
 

@@ -22,7 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class TileEntityMultiblock<T extends SynchronizedData<T>> extends TileEntityContainerBlock implements IMultiblock<T>
+public abstract class TileEntityMultiblock<T extends SynchronizedData<T>> extends ContainerTileEntity implements IMultiblock<T>
 {
 	/** The multiblock data for this structure. */
 	public T structure;

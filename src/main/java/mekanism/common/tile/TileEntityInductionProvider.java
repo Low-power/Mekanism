@@ -9,7 +9,7 @@ import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntityInductionProvider extends TileEntityBasicBlock
+public class TileEntityInductionProvider extends BasicBlockTileEntity
 {
 	public InductionProviderTier tier = InductionProviderTier.BASIC;
 	

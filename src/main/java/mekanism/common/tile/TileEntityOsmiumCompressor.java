@@ -6,13 +6,13 @@ import mekanism.api.MekanismConfig.usage;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.OsmiumCompressorRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class TileEntityOsmiumCompressor extends TileEntityAdvancedElectricMachine<OsmiumCompressorRecipe>
+public class TileEntityOsmiumCompressor extends AdvancedElectricMachineTileEntity<OsmiumCompressorRecipe>
 {
 	public TileEntityOsmiumCompressor()
 	{

@@ -1,8 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -22,27 +19,27 @@ import mekanism.client.gui.element.GuiUpgradeTab;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerMetallurgicInfuser;
+import mekanism.common.inventory.container.MetallurgicInfuserContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityMetallurgicInfuser;
+import mekanism.common.tile.MetallurgicInfuserTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class MetallurgicInfuserGui extends GuiMekanism
 {
-	public TileEntityMetallurgicInfuser tileEntity;
+	public MetallurgicInfuserTileEntity tileEntity;
 
-	public MetallurgicInfuserGui(InventoryPlayer inventory, TileEntityMetallurgicInfuser tentity)
+	public MetallurgicInfuserGui(InventoryPlayer inventory, MetallurgicInfuserTileEntity tentity)
 	{
-		super(tentity, new ContainerMetallurgicInfuser(inventory, tentity));
+		super(tentity, new MetallurgicInfuserContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "MetallurgicInfuserGui.png")));
@@ -96,7 +93,7 @@ public class MetallurgicInfuserGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "MetallurgicInfuserGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
@@ -124,7 +121,7 @@ public class MetallurgicInfuserGui extends GuiMekanism
 			if(xAxis > 148 && xAxis < 168 && yAxis > 73 && yAxis < 82)
 			{
 				ArrayList data = new ArrayList();
-				data.add(0);
+				data.add(Integer.valueOf(0));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 				SoundHandler.playSound("gui.button.press");

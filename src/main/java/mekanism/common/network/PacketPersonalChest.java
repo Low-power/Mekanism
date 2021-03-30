@@ -4,10 +4,10 @@ import io.netty.buffer.ByteBuf;
 import mekanism.api.Coord4D;
 import mekanism.common.Mekanism;
 import mekanism.common.PacketHandler;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.inventory.InventoryPersonalChest;
 import mekanism.common.network.PacketPersonalChest.PersonalChestMessage;
-import mekanism.common.tile.TileEntityPersonalChest;
+import mekanism.common.tile.PersonalChestTileEntity;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,7 +28,7 @@ public class PacketPersonalChest implements IMessageHandler<PersonalChestMessage
 			try {
 				if(message.isBlock)
 				{
-					TileEntityPersonalChest tileEntity = (TileEntityPersonalChest)message.coord4D.getTileEntity(player.worldObj);
+					PersonalChestTileEntity tileEntity = (PersonalChestTileEntity)message.coord4D.getTileEntity(player.worldObj);
 					MekanismUtils.openPersonalChestGui((EntityPlayerMP)player, tileEntity, null, true);
 				}
 				else {

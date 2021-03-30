@@ -1,7 +1,7 @@
 package mekanism.common.recipe;
 
 import mekanism.common.MekanismItems;
-import mekanism.common.block.BlockBasic.BasicType;
+import mekanism.common.block.BasicBlock.BasicType;
 import mekanism.common.inventory.InventoryBin;
 import mekanism.common.item.ItemProxy;
 import net.minecraft.inventory.IInventory;
@@ -16,7 +16,7 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 public class BinRecipe implements IRecipe
 {
 	private static boolean registered;
-	
+
 	public BinRecipe()
 	{
 		if(!registered)
@@ -99,7 +99,6 @@ public class BinRecipe implements IRecipe
 			}
 
 			binInv.add(addStack);
-			
 			return bin;
 		}
 		else {

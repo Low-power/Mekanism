@@ -10,7 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import codechicken.lib.vec.Rectangle4i;
 
-public class GuiEnergyGauge extends GuiGauge
+public class GuiEnergyGauge extends GaugeGui
 {
 	IEnergyInfoHandler infoHandler;
 

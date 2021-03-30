@@ -3,7 +3,7 @@ package mekanism.client.gui;
 import mekanism.api.gas.GasTank;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
@@ -47,14 +47,14 @@ public class GuiSolarNeutronActivator extends GuiMekanism
 			{
 				return tileEntity.inputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 25, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 25, 13));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.outputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 133, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 133, 13));
 
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{

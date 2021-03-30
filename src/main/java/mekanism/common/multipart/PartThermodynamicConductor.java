@@ -6,7 +6,7 @@ import mekanism.api.Coord4D;
 import mekanism.api.IHeatTransfer;
 import mekanism.api.MekanismConfig.client;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.HeatNetwork;
 import mekanism.common.Tier;
 import mekanism.common.Tier.BaseTier;
@@ -126,7 +126,7 @@ public class PartThermodynamicConductor extends PartTransmitter<IHeatTransfer, H
 	{
 		if(pass == 0 && !client.opaqueTransmitters)
 		{
-			RenderPartTransmitter.getInstance().renderContents(this, pos);
+			TransmitterPartRenderer.getInstance().renderContents(this, pos);
 		}
 	}
 

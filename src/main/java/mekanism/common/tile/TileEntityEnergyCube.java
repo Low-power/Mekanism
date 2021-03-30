@@ -19,8 +19,8 @@ import mekanism.common.base.ITierUpgradeable;
 import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
+import mekanism.common.tile.component.ConfigTileComponent;
+import mekanism.common.tile.component.EjectorTileComponent;
 import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.CableUtils;
 import mekanism.common.util.ChargeUtils;
@@ -45,8 +45,8 @@ public class TileEntityEnergyCube extends TileEntityElectricBlock implements ICo
 
 	public int prevScale;
 	
-	public TileComponentEjector ejectorComponent;
-	public TileComponentConfig configComponent;
+	public EjectorTileComponent ejectorComponent;
+	public ConfigTileComponent configComponent;
 	public TileComponentSecurity securityComponent;
 
 	/**
@@ -56,7 +56,7 @@ public class TileEntityEnergyCube extends TileEntityElectricBlock implements ICo
 	{
 		super("EnergyCube", 0);
 		
-		configComponent = new TileComponentConfig(this, TransmissionType.ENERGY, TransmissionType.ITEM);
+		configComponent = new ConfigTileComponent(this, TransmissionType.ENERGY, TransmissionType.ITEM);
 		
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("None", EnumColor.GREY, InventoryUtils.EMPTY));
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("Charge", EnumColor.DARK_BLUE, new int[] {0}));
@@ -70,7 +70,7 @@ public class TileEntityEnergyCube extends TileEntityElectricBlock implements ICo
 		inventory = new ItemStack[2];
 		controlType = RedstoneControl.DISABLED;
 		
-		ejectorComponent = new TileComponentEjector(this);
+		ejectorComponent = new EjectorTileComponent(this);
 		
 		securityComponent = new TileComponentSecurity(this);
 	}
@@ -309,13 +309,13 @@ public class TileEntityEnergyCube extends TileEntityElectricBlock implements ICo
 	}
 
 	@Override
-	public TileComponentEjector getEjector()
+	public EjectorTileComponent getEjector()
 	{
 		return ejectorComponent;
 	}
 	
 	@Override
-	public TileComponentConfig getConfig()
+	public ConfigTileComponent getConfig()
 	{
 		return configComponent;
 	}

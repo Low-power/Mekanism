@@ -1,7 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.util.List;
-
 import mekanism.api.MekanismConfig.general;
 import mekanism.api.util.ListUtils;
 import mekanism.api.util.UnitDisplayUtils;
@@ -11,7 +9,7 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
-import mekanism.client.gui.element.GuiGauge.Type;
+import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiHeatInfo;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
@@ -22,24 +20,23 @@ import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.common.inventory.container.ContainerHeatGenerator;
-import mekanism.generators.common.tile.TileEntityHeatGenerator;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fluids.FluidTank;
-
-import org.lwjgl.opengl.GL11;
-
+import mekanism.generators.common.inventory.container.HeatGeneratorContainer;
+import mekanism.generators.common.tile.HeatGeneratorTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class HeatGeneratorGui extends GuiMekanism
 {
-	public TileEntityHeatGenerator tileEntity;
+	public HeatGeneratorTileEntity tileEntity;
 
-	public HeatGeneratorGui(InventoryPlayer inventory, TileEntityHeatGenerator tentity)
+	public HeatGeneratorGui(InventoryPlayer inventory, HeatGeneratorTileEntity tentity)
 	{
-		super(new ContainerHeatGenerator(inventory, tentity));
+		super(new HeatGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png")));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png")));
@@ -88,7 +85,7 @@ public class HeatGeneratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

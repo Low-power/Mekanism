@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 
-public class GuiGasGauge extends GuiGauge<Gas>
+public class GuiGasGauge extends GaugeGui<Gas>
 {
 	IGasInfoHandler infoHandler;
 

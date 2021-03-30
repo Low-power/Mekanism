@@ -10,7 +10,7 @@ import mekanism.api.gas.GasTank;
 import mekanism.api.gas.GasTransmission;
 import mekanism.api.gas.IGasHandler;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.Tier;
 import mekanism.common.Tier.BaseTier;
 import mekanism.common.Tier.TubeTier;
@@ -236,7 +236,7 @@ public class PartPressurizedTube extends PartTransmitter<IGasHandler, GasNetwork
 	{
 		if(pass == 0 && !client.opaqueTransmitters)
 		{
-			RenderPartTransmitter.getInstance().renderContents(this, pos);
+			TransmitterPartRenderer.getInstance().renderContents(this, pos);
 		}
 	}
 

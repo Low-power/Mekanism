@@ -16,7 +16,7 @@ import mekanism.common.recipe.machines.AmbientGasRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityAmbientAccumulator extends TileEntityContainerBlock implements IGasHandler, ITubeConnection
+public class TileEntityAmbientAccumulator extends ContainerTileEntity implements IGasHandler, ITubeConnection
 {
 	public GasTank collectedGas = new GasTank(1000);
 

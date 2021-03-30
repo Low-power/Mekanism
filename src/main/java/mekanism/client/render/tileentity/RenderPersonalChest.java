@@ -1,6 +1,6 @@
 package mekanism.client.render.tileentity;
 
-import mekanism.common.tile.TileEntityPersonalChest;
+import mekanism.common.tile.PersonalChestTileEntity;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import net.minecraft.client.model.ModelChest;
@@ -20,10 +20,10 @@ public class RenderPersonalChest extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		renderAModelAt((TileEntityPersonalChest)tileEntity, x, y, z, partialTick);
+		renderAModelAt((PersonalChestTileEntity)tileEntity, x, y, z, partialTick);
 	}
 
-	private void renderAModelAt(TileEntityPersonalChest tileEntity, double x, double y, double z, float partialTick)
+	private void renderAModelAt(PersonalChestTileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x, (float)y + 1.0F, (float)z);

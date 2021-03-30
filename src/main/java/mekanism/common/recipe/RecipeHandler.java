@@ -1,15 +1,10 @@
 package mekanism.common.recipe;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasStack;
 import mekanism.api.infuse.InfuseType;
 import mekanism.api.util.StackUtils;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.inputs.AdvancedMachineInput;
 import mekanism.common.recipe.inputs.ChemicalPairInput;
 import mekanism.common.recipe.inputs.FluidInput;
@@ -49,10 +44,14 @@ import mekanism.common.recipe.outputs.GasOutput;
 import mekanism.common.recipe.outputs.ItemStackOutput;
 import mekanism.common.recipe.outputs.MachineOutput;
 import mekanism.common.recipe.outputs.PressurizedOutput;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Class used to handle machine recipes. This is used for both adding and fetching recipes.
@@ -241,12 +240,12 @@ public final class RecipeHandler
 	{
 		addRecipe(Recipe.PRESSURIZED_REACTION_CHAMBER, new PressurizedRecipe(inputSolid, inputFluid, inputGas, outputSolid, outputGas, extraEnergy, ticks));
 	}
-	
+
 	public static void addThermalEvaporationRecipe(FluidStack inputFluid, FluidStack outputFluid)
 	{
 		addRecipe(Recipe.THERMAL_EVAPORATION_PLANT, new ThermalEvaporationRecipe(inputFluid, outputFluid));
 	}
-	
+
 	public static void addSolarNeutronRecipe(GasStack inputGas, GasStack outputGas)
 	{
 		addRecipe(Recipe.SOLAR_NEUTRON_ACTIVATOR, new SolarNeutronRecipe(inputGas, outputGas));
@@ -432,30 +431,26 @@ public final class RecipeHandler
 
 		return null;
 	}
-	
+
 	public static ThermalEvaporationRecipe getThermalEvaporationRecipe(FluidInput input)
 	{
 		if(input.isValid())
 		{
 			HashMap<FluidInput, ThermalEvaporationRecipe> recipes = Recipe.THERMAL_EVAPORATION_PLANT.get();
-			
 			ThermalEvaporationRecipe recipe = recipes.get(input);
 			return recipe == null ? null : recipe.copy();
 		}
-		
 		return null;
 	}
-	
+
 	public static SolarNeutronRecipe getSolarNeutronRecipe(GasInput input)
 	{
 		if(input.isValid())
 		{
 			HashMap<GasInput, SolarNeutronRecipe> recipes = Recipe.SOLAR_NEUTRON_ACTIVATOR.get();
-			
 			SolarNeutronRecipe recipe = recipes.get(input);
 			return recipe == null ? null : recipe.copy();
 		}
-		
 		return null;
 	}
 
@@ -476,7 +471,6 @@ public final class RecipeHandler
 	{
 		HashMap<IntegerInput, AmbientGasRecipe> recipes = Recipe.AMBIENT_ACCUMULATOR.get();
 		AmbientGasRecipe recipe = recipes.get(input);
-		
 		return recipe == null ? null : recipe.copy();
 	}
 
@@ -528,12 +522,10 @@ public final class RecipeHandler
 	public static <RECIPE extends MachineRecipe<ItemStackInput, ?, RECIPE>> RECIPE getRecipeTryWildcard(ItemStackInput input, Map<ItemStackInput, RECIPE> recipes)
 	{
 		RECIPE recipe = recipes.get(input);
-		
 		if(recipe == null)
 		{
 			recipe = recipes.get(input.wildCopy());
 		}
-		
 		return recipe;
 	}
 
@@ -561,7 +553,7 @@ public final class RecipeHandler
 
 		private HashMap recipes;
 		private String recipeName;
-		
+
 		private Class<? extends MachineInput> inputClass;
 		private Class<? extends MachineOutput> outputClass;
 		private Class<? extends MachineRecipe> recipeClass;
@@ -569,11 +561,9 @@ public final class RecipeHandler
 		private <INPUT extends MachineInput<INPUT>, OUTPUT extends MachineOutput<OUTPUT>, RECIPE extends MachineRecipe<INPUT, ?, RECIPE>> Recipe(String name, Class<INPUT> input, Class<OUTPUT> output, Class<RECIPE> recipe)
 		{
 			recipeName = name;
-			
 			inputClass = input;
 			outputClass = output;
 			recipeClass = recipe;
-			
 			recipes = new HashMap<INPUT, RECIPE>();
 		}
 
@@ -586,30 +576,28 @@ public final class RecipeHandler
 		{
 			recipes.remove(recipe.getInput());
 		}
-		
+
 		public String getRecipeName()
 		{
 			return recipeName;
 		}
-		
+
 		public <INPUT> INPUT createInput(NBTTagCompound nbtTags)
 		{
 			try {
 				MachineInput input = inputClass.newInstance();
 				input.load(nbtTags);
-				
 				return (INPUT)input;
 			} catch(Exception e) {
 				return null;
 			}
 		}
-		
+
 		public <RECIPE, INPUT> RECIPE createRecipe(INPUT input, NBTTagCompound nbtTags)
 		{
 			try {
 				MachineOutput output = outputClass.newInstance();
 				output.load(nbtTags);
-				
 				Constructor<? extends MachineRecipe> construct = recipeClass.getDeclaredConstructor(inputClass, outputClass);
 				return (RECIPE)construct.newInstance(input, output);
 			} catch(Exception e) {
@@ -677,29 +665,22 @@ public final class RecipeHandler
 			return false;
 		}
 
-        public boolean containsRecipe(Gas input)
-        {
-            for(Object obj : get().entrySet())
-            {
-                if(obj instanceof Map.Entry)
-                {
-                    Map.Entry entry = (Map.Entry)obj;
+		public boolean containsRecipe(Gas input) {
+			for(Object obj : get().entrySet()) {
+				if(obj instanceof Map.Entry) {
+					Map.Entry entry = (Map.Entry)obj;
+					if(entry.getKey() instanceof GasInput) {
+						if(((GasInput)entry.getKey()).ingredient.getGas() == input) {
+							return true;
+						}
+					}
+				}
+			}
 
-                    if(entry.getKey() instanceof GasInput)
-                    {
-                        if(((GasInput)entry.getKey()).ingredient.getGas() == input)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
+			return false;
+		}
 
-            return false;
-        }
-
-		public HashMap get()
-		{
+		public HashMap get() {
 			return recipes;
 		}
 	}

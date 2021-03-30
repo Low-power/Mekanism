@@ -3,13 +3,13 @@ package mekanism.common.tile;
 import java.util.Map;
 
 import mekanism.api.MekanismConfig.usage;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.EnrichmentRecipe;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityEnrichmentChamber extends TileEntityElectricMachine<EnrichmentRecipe>
+public class TileEntityEnrichmentChamber extends ElectricMachineTileEntity<EnrichmentRecipe>
 {
 	public TileEntityEnrichmentChamber()
 	{

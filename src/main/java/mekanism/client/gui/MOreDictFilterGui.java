@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.client.sound.SoundHandler;
@@ -9,7 +7,7 @@ import mekanism.common.Mekanism;
 import mekanism.common.OreDictCache;
 import mekanism.common.content.miner.MOreDictFilter;
 import mekanism.common.content.transporter.TransporterFilter;
-import mekanism.common.inventory.container.ContainerFilter;
+import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
 import mekanism.common.network.PacketEditFilter.EditFilterMessage;
@@ -18,6 +16,8 @@ import mekanism.common.tile.TileEntityDigitalMiner;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -25,12 +25,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class MOreDictFilterGui extends GuiMekanism
@@ -59,7 +56,7 @@ public class MOreDictFilterGui extends GuiMekanism
 
 	public MOreDictFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity, int index)
 	{
-		super(tentity, new ContainerFilter(player.inventory, tentity));
+		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
 
 		origFilter = (MOreDictFilter)tileEntity.filters.get(index);
@@ -70,7 +67,7 @@ public class MOreDictFilterGui extends GuiMekanism
 
 	public MOreDictFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity)
 	{
-		super(tentity, new ContainerFilter(player.inventory, tentity));
+		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
 
 		isNew = true;
@@ -174,7 +171,7 @@ public class MOreDictFilterGui extends GuiMekanism
 				GL11.glPopMatrix();
 			} catch(Exception e) {}
 		}
-		
+
 		if(filter.replaceStack != null)
 		{
 			GL11.glPushMatrix();
@@ -183,7 +180,7 @@ public class MOreDictFilterGui extends GuiMekanism
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glPopMatrix();
 		}
-		
+
 		if(xAxis >= 148 && xAxis <= 162 && yAxis >= 45 && yAxis <= 59)
 		{
 			drawCreativeTabHoveringText(LangUtils.localize("gui.digitalMiner.requireReplace") + ": " + LangUtils.transYesNo(filter.requireStack), xAxis, yAxis);
@@ -221,7 +218,7 @@ public class MOreDictFilterGui extends GuiMekanism
 		else {
 			drawTexturedModalRect(guiWidth + 131, guiHeight + 47, 176 + 11, 12, 12, 12);
 		}
-		
+
 		if(xAxis >= 148 && xAxis <= 162 && yAxis >= 45 && yAxis <= 59)
 		{
 			drawTexturedModalRect(guiWidth + 148, guiHeight + 45, 176 + 23, 0, 14, 14);
@@ -229,7 +226,7 @@ public class MOreDictFilterGui extends GuiMekanism
 		else {
 			drawTexturedModalRect(guiWidth + 148, guiHeight + 45, 176 + 23, 14, 14, 14);
 		}
-		
+
 		if(xAxis >= 149 && xAxis <= 165 && yAxis >= 19 && yAxis <= 35)
 		{
 			GL11.glPushMatrix();
@@ -312,13 +309,13 @@ public class MOreDictFilterGui extends GuiMekanism
 				SoundHandler.playSound("gui.button.press");
 				setOreDictKey();
 			}
-			
+
 			if(xAxis >= 148 && xAxis <= 162 && yAxis >= 45 && yAxis <= 59)
 			{
 				SoundHandler.playSound("gui.button.press");
 				filter.requireStack = !filter.requireStack;
 			}
-			
+
 			if(xAxis >= 149 && xAxis <= 165 && yAxis >= 19 && yAxis <= 35)
 			{
 				boolean doNull = false;

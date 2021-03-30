@@ -1,7 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.util.List;
-
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.GuiMekanism;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -15,23 +13,22 @@ import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.common.inventory.container.ContainerSolarGenerator;
-import mekanism.generators.common.tile.TileEntitySolarGenerator;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
+import mekanism.generators.common.inventory.container.SolarGeneratorContainer;
+import mekanism.generators.common.tile.SolarGeneratorTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class SolarGeneratorGui extends GuiMekanism
 {
-	public TileEntitySolarGenerator tileEntity;
+	public SolarGeneratorTileEntity tileEntity;
 
-	public SolarGeneratorGui(InventoryPlayer inventory, TileEntitySolarGenerator tentity)
+	public SolarGeneratorGui(InventoryPlayer inventory, SolarGeneratorTileEntity tentity)
 	{
-		super(new ContainerSolarGenerator(inventory, tentity));
+		super(new SolarGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SolarGeneratorGui.png")));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SolarGeneratorGui.png")));
@@ -68,7 +65,7 @@ public class SolarGeneratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "SolarGeneratorGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

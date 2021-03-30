@@ -2,19 +2,17 @@ package mekanism.client.render.entity;
 
 import mekanism.api.EnumColor;
 import mekanism.client.model.ModelBalloon;
-import mekanism.common.entity.EntityBalloon;
+import mekanism.common.entity.Balloon;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBalloon extends Render
@@ -32,7 +30,7 @@ public class RenderBalloon extends Render
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float f, float partialTick)
 	{
-		EntityBalloon balloon = (EntityBalloon)entity;
+		Balloon balloon = (Balloon)entity;
 
 		if(balloon.isLatchedToEntity())
 		{
@@ -47,7 +45,7 @@ public class RenderBalloon extends Render
 			y += balloon.getAddedHeight();
 		}
 
-		render(((EntityBalloon)entity).color, x, y, z);
+		render(balloon.color, x, y, z);
 	}
 
 	public void render(EnumColor color, double x, double y, double z)

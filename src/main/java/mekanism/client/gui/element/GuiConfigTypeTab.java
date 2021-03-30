@@ -1,7 +1,7 @@
 package mekanism.client.gui.element;
 
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.gui.GuiSideConfiguration;
+import mekanism.client.gui.SideConfigurationGui;
 import mekanism.client.gui.IGuiWrapper;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.util.MekanismUtils;
@@ -113,8 +113,8 @@ public class GuiConfigTypeTab extends GuiElement
 		{
 			if(xAxis >= getLeftBound(true) && xAxis <= getRightBound(true) && yAxis >= yPos+4 && yAxis <= yPos+22)
 			{
-				((GuiSideConfiguration)guiObj).currentType = transmission;
-				((GuiSideConfiguration)guiObj).updateTabs();
+				((SideConfigurationGui)guiObj).currentType = transmission;
+				((SideConfigurationGui)guiObj).updateTabs();
 				SoundHandler.playSound("gui.button.press");
 			}
 		}

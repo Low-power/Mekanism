@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import mekanism.api.Coord4D;
 import mekanism.client.gui.element.GuiAmplifierTab;
-import mekanism.client.gui.element.GuiGauge.Type;
+import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiNumberGauge;
 import mekanism.client.gui.element.GuiNumberGauge.INumberInfoHandler;
 import mekanism.client.gui.element.GuiRedstoneControl;

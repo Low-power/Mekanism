@@ -1,8 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
@@ -11,14 +8,14 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge.Type;
+import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerNull;
-import mekanism.common.network.PacketSimpleGui.SimpleGuiMessage;
+import mekanism.common.inventory.container.NullContainer;
+import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -26,14 +23,14 @@ import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.client.gui.element.GuiHeatTab;
 import mekanism.generators.client.gui.element.GuiStatTab;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
-import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ReactorFuelGui extends GuiMekanism
@@ -44,7 +41,7 @@ public class ReactorFuelGui extends GuiMekanism
 
 	public ReactorFuelGui(InventoryPlayer inventory, final TileEntityReactorController tentity)
 	{
-		super(new ContainerNull(inventory.player, tentity));
+		super(new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
@@ -115,7 +112,7 @@ public class ReactorFuelGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
@@ -192,10 +189,9 @@ public class ReactorFuelGui extends GuiMekanism
 		{
 			int toUse = Math.max(0, Integer.parseInt(injectionRateField.getText()));
 			toUse -= toUse%2;
-			
-			ArrayList data = new ArrayList();
-			data.add(0);
-			data.add(toUse);
+			ArrayList<Integer> data = new ArrayList<Integer>(2);
+			data.add(Integer.valueOf(0));
+			data.add(Integer.valueOf(toUse));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 

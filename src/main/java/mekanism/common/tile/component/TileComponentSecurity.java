@@ -13,14 +13,14 @@ import mekanism.common.frequency.Frequency;
 import mekanism.common.frequency.FrequencyManager;
 import mekanism.common.security.ISecurityTile.SecurityMode;
 import mekanism.common.security.SecurityFrequency;
-import mekanism.common.tile.TileEntityContainerBlock;
+import mekanism.common.tile.ContainerTileEntity;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileComponentSecurity implements ITileComponent
 {
 	/** TileEntity implementing this component. */
-	public TileEntityContainerBlock tileEntity;
+	public ContainerTileEntity tileEntity;
 	
 	private String owner;
 	
@@ -28,7 +28,7 @@ public class TileComponentSecurity implements ITileComponent
 	
 	private SecurityFrequency frequency;
 	
-	public TileComponentSecurity(TileEntityContainerBlock tile)
+	public TileComponentSecurity(ContainerTileEntity tile)
 	{
 		tileEntity = tile;
 		

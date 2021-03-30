@@ -9,7 +9,7 @@ import mekanism.api.gas.GasStack;
 import mekanism.api.gas.GasTransmission;
 import mekanism.api.gas.IGasItem;
 import mekanism.common.MekanismBlocks;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.PurificationRecipe;
 import net.minecraft.block.Block;
@@ -17,7 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityPurificationChamber extends TileEntityAdvancedElectricMachine<PurificationRecipe>
+public class TileEntityPurificationChamber extends AdvancedElectricMachineTileEntity<PurificationRecipe>
 {
 	public TileEntityPurificationChamber()
 	{

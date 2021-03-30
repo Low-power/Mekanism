@@ -2,7 +2,7 @@ package mekanism.common.network;
 
 import io.netty.buffer.ByteBuf;
 import mekanism.common.PacketHandler;
-import mekanism.common.item.ItemBlockMachine;
+import mekanism.common.item.MachineItem;
 import mekanism.common.network.PacketPortableTankState.PortableTankStateMessage;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -16,9 +16,9 @@ public class PacketPortableTankState implements IMessageHandler<PortableTankStat
 	{
 		ItemStack itemstack = PacketHandler.getPlayer(context).getCurrentEquippedItem();
 		
-		if(itemstack != null && itemstack.getItem() instanceof ItemBlockMachine)
+		if(itemstack != null && itemstack.getItem() instanceof MachineItem)
 		{
-			((ItemBlockMachine)itemstack.getItem()).setBucketMode(itemstack, message.bucketMode);
+			((MachineItem)itemstack.getItem()).setBucketMode(itemstack, message.bucketMode);
 		}
 		
 		return null;

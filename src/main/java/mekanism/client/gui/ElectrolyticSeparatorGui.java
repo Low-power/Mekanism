@@ -1,8 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
@@ -12,7 +9,7 @@ import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
@@ -32,13 +29,13 @@ import mekanism.common.tile.TileEntityGasTank;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fluids.FluidTank;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ElectrolyticSeparatorGui extends GuiMekanism
@@ -67,21 +64,21 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 			{
 				return tileEntity.fluidTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.leftTank;
 			}
-		}, GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
+		}, GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.rightTank;
 			}
-		}, GuiGauge.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
+		}, GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 164, 15));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png")));
 
@@ -111,7 +108,7 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 		if(xAxis > 8 && xAxis < 17 && yAxis > 73 && yAxis < 82)
 		{
 			ArrayList data = new ArrayList();
-			data.add((byte)0);
+			data.add(Byte.valueOf((byte)0));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			SoundHandler.playSound("gui.button.press");
@@ -119,7 +116,7 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 		else if(xAxis > 160 && xAxis < 169 && yAxis > 73 && yAxis < 82)
 		{
 			ArrayList data = new ArrayList();
-			data.add((byte)1);
+			data.add(Byte.valueOf((byte)1));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			SoundHandler.playSound("gui.button.press");
@@ -157,7 +154,7 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 	}
-	
+
 	private <T> T chooseByMode(TileEntityGasTank.GasMode dumping, T idleOption, T dumpingOption, T dumpingExcessOption)
 	{
 		if(dumping.equals(TileEntityGasTank.GasMode.IDLE))
@@ -172,7 +169,6 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 		{
 			return dumpingExcessOption;
 		}
-		
 		return idleOption; //should not happen;
 	}
 }

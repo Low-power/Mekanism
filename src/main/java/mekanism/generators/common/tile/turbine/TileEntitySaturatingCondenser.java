@@ -1,8 +1,8 @@
 package mekanism.generators.common.tile.turbine;
 
-import mekanism.common.tile.TileEntityBasicBlock;
+import mekanism.common.tile.BasicBlockTileEntity;
 
-public class TileEntitySaturatingCondenser extends TileEntityBasicBlock
+public class TileEntitySaturatingCondenser extends BasicBlockTileEntity
 {
 	@Override
 	public boolean canUpdate()

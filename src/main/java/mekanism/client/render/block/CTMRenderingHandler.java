@@ -5,8 +5,8 @@ import mekanism.client.ClientProxy;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.common.CTMData;
 import mekanism.common.base.IBlockCTM;
-import mekanism.common.block.BlockMachine.MachineType;
-import mekanism.common.tile.TileEntityBasicBlock;
+import mekanism.common.block.Machine.MachineType;
+import mekanism.common.tile.BasicBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.tileentity.TileEntity;
@@ -32,7 +32,6 @@ public class CTMRenderingHandler implements ISimpleBlockRenderingHandler
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld)
 	{
 		int meta = world.getBlockMetadata(x, y, z);
-		
 		if(block instanceof IBlockCTM && !((IBlockCTM)block).shouldRenderBlock(world, x, y, z, meta))
 		{
 			return false;
@@ -42,12 +41,11 @@ public class CTMRenderingHandler implements ISimpleBlockRenderingHandler
 
 		if(MekanismConfig.client.renderCTM && blockCTM != null)
 		{
-			if(blockCTM.hasFacingOverride() && world.getTileEntity(x, y, z) instanceof TileEntityBasicBlock)
+			if(blockCTM.hasFacingOverride() && world.getTileEntity(x, y, z) instanceof BasicBlockTileEntity)
 			{
-				TileEntityBasicBlock tile = (TileEntityBasicBlock)world.getTileEntity(x, y, z);
+				BasicBlockTileEntity tile = (BasicBlockTileEntity)world.getTileEntity(x, y, z);
 				blockCTM.setFacing(tile.facing);
 			}
-			
 			rendererCTM.blockAccess = world;
 			rendererCTM.renderMaxX = 1.0;
 			rendererCTM.renderMaxY = 1.0;
@@ -59,32 +57,25 @@ public class CTMRenderingHandler implements ISimpleBlockRenderingHandler
 
 			return rendererCTM.renderStandardBlock(block, x, y, z);
 		}
-		
 		if(MachineType.get(block, meta) != null)
 		{
 			TileEntity tile = world.getTileEntity(x, y, z);
-			
 			int prevRotateTop = rendererOld.uvRotateTop;
 			int prevRotateBottom = rendererOld.uvRotateBottom;
-			
-			if(tile instanceof TileEntityBasicBlock)
+			if(tile instanceof BasicBlockTileEntity)
 			{
-				if(((TileEntityBasicBlock)tile).facing >= 2)
+				if(((BasicBlockTileEntity)tile).facing >= 2)
 				{
-					rendererOld.uvRotateTop = MekanismRenderer.directionMap[((TileEntityBasicBlock)tile).facing-2];
-					rendererOld.uvRotateBottom = MekanismRenderer.directionMap[((TileEntityBasicBlock)tile).facing-2];
+					rendererOld.uvRotateTop = MekanismRenderer.directionMap[((BasicBlockTileEntity)tile).facing-2];
+					rendererOld.uvRotateBottom = MekanismRenderer.directionMap[((BasicBlockTileEntity)tile).facing-2];
 				}
 			}
-			
 			rendererOld.renderStandardBlock(block, x, y, z);
 			rendererOld.setRenderBoundsFromBlock(block);
-			
 			rendererOld.uvRotateTop = prevRotateTop;
 			rendererOld.uvRotateBottom = prevRotateBottom;
-			
 			return true;
 		}
-		
 		return rendererOld.renderStandardBlock(block, x, y, z);
 	}
 

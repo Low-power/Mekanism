@@ -25,7 +25,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntitySecurityDesk extends TileEntityContainerBlock implements IBoundingBlock
+public class TileEntitySecurityDesk extends ContainerTileEntity implements IBoundingBlock
 {
 	public String owner;
 	

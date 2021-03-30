@@ -15,7 +15,7 @@ import mekanism.common.Upgrade;
 import mekanism.common.base.ITileComponent;
 import mekanism.common.base.IUpgradeItem;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityContainerBlock;
+import mekanism.common.tile.ContainerTileEntity;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileComponentUpgrade implements ITileComponent
@@ -34,9 +34,9 @@ public class TileComponentUpgrade implements ITileComponent
 	public int upgradeTicks;
 
 	/** TileEntity implementing this component. */
-	public TileEntityContainerBlock tileEntity;
+	public ContainerTileEntity tileEntity;
 
-	public TileComponentUpgrade(TileEntityContainerBlock tile, int slot)
+	public TileComponentUpgrade(ContainerTileEntity tile, int slot)
 	{
 		tileEntity = tile;
 		upgradeSlot = slot;

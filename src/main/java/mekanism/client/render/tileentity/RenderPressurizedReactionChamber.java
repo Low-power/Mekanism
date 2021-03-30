@@ -2,7 +2,7 @@ package mekanism.client.render.tileentity;
 
 import mekanism.client.model.ModelPressurizedReactionChamber;
 import mekanism.client.render.MekanismRenderer;
-import mekanism.common.tile.TileEntityPRC;
+import mekanism.common.tile.PRCTileEntity;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -21,10 +21,10 @@ public class RenderPressurizedReactionChamber extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		renderAModelAt((TileEntityPRC)tileEntity, x, y, z, partialTick);
+		renderAModelAt((PRCTileEntity)tileEntity, x, y, z, partialTick);
 	}
 
-	private void renderAModelAt(TileEntityPRC tileEntity, double x, double y, double z, float partialTick)
+	private void renderAModelAt(PRCTileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);

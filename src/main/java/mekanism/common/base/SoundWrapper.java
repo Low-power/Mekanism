@@ -17,14 +17,16 @@ public class SoundWrapper
 	{
 		try {
 			sound = new TileSound(tile, source);
-		} catch(Throwable t) {}
+		} catch(Exception e) {
+		}
 	}
 	
 	public SoundWrapper(IHasSound tile, ISoundSource source, ResourceLocation location)
 	{
 		try {
 			sound = new TileSound(tile, source, location);
-		} catch(Throwable t) {}
+		} catch(Exception e) {
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

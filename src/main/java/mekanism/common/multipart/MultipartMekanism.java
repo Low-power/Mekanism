@@ -1,10 +1,10 @@
 package mekanism.common.multipart;
 
-import static mekanism.common.block.BlockMachine.MachineBlock.MACHINE_BLOCK_1;
-import static mekanism.common.block.BlockMachine.MachineBlock.MACHINE_BLOCK_2;
+import static mekanism.common.block.Machine.MachineBlock.MACHINE_BLOCK_1;
+import static mekanism.common.block.Machine.MachineBlock.MACHINE_BLOCK_2;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.Tier;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import net.minecraft.item.ItemStack;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.MicroMaterialRegistry;
@@ -30,9 +30,9 @@ public class MultipartMekanism implements IPartFactory
 				"mekanism:mechanical_pipe_elite", "mekanism:mechanical_pipe_ultimate",
 				"mekanism:pressurized_tube_basic", "mekanism:pressurized_tube_advanced",
 				"mekanism:pressurized_tube_elite", "mekanism:pressurized_tube_ultimate",
-				"mekanism:logistical_transporter_basic", "mekanism:logistical_transporter_advanced", 
-				"mekanism:logistical_transporter_elite", "mekanism:logistical_transporter_ultimate", 
-				"mekanism:restrictive_transporter", "mekanism:diversion_transporter", 
+				"mekanism:logistical_transporter_basic", "mekanism:logistical_transporter_advanced",
+				"mekanism:logistical_transporter_elite", "mekanism:logistical_transporter_ultimate",
+				"mekanism:restrictive_transporter", "mekanism:diversion_transporter",
 				"mekanism:thermodynamic_conductor_basic", "mekanism:thermodynamic_conductor_advanced",
 				"mekanism:thermodynamic_conductor_elite", "mekanism:thermodynamic_conductor_ultimate",
 				"mekanism:glow_panel"});
@@ -170,18 +170,15 @@ public class MultipartMekanism implements IPartFactory
 			MicroMaterialRegistry.registerMaterial(new PlasticMicroMaterial(MekanismBlocks.RoadPlasticBlock, i), BlockMicroMaterial.materialKey(MekanismBlocks.RoadPlasticBlock, i));
 
 			FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(MekanismBlocks.BasicBlock, 1, i));
-			
 			if(!MachineType.get(MACHINE_BLOCK_1, i).hasModel)
 			{
 				FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(MekanismBlocks.MachineBlock, 1, i));
 			}
-			
 			if(!MachineType.get(MACHINE_BLOCK_2, i).hasModel)
 			{
 				FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(MekanismBlocks.MachineBlock2, 1, i));
 			}
 		}
-		
 		FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(MekanismBlocks.BasicBlock2, 1, 0));
 		FMLInterModComms.sendMessage("ForgeMicroblock", "microMaterial", new ItemStack(MekanismBlocks.CardboardBox));
 	}

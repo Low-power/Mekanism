@@ -1,26 +1,26 @@
 package mekanism.common;
 
-import static mekanism.common.block.BlockBasic.BasicBlock.BASIC_BLOCK_1;
-import static mekanism.common.block.BlockBasic.BasicBlock.BASIC_BLOCK_2;
-import static mekanism.common.block.BlockMachine.MachineBlock.MACHINE_BLOCK_1;
-import static mekanism.common.block.BlockMachine.MachineBlock.MACHINE_BLOCK_2;
-import static mekanism.common.block.BlockMachine.MachineBlock.MACHINE_BLOCK_3;
-import mekanism.common.block.BlockBasic;
-import mekanism.common.block.BlockBounding;
+import static mekanism.common.block.BasicBlock.BasicBlockType.BASIC_BLOCK_1;
+import static mekanism.common.block.BasicBlock.BasicBlockType.BASIC_BLOCK_2;
+import static mekanism.common.block.Machine.MachineBlock.MACHINE_BLOCK_1;
+import static mekanism.common.block.Machine.MachineBlock.MACHINE_BLOCK_2;
+import static mekanism.common.block.Machine.MachineBlock.MACHINE_BLOCK_3;
+import mekanism.common.block.BasicBlock;
+import mekanism.common.block.BoundingBlock;
 import mekanism.common.block.BlockCardboardBox;
-import mekanism.common.block.BlockEnergyCube;
-import mekanism.common.block.BlockGasTank;
-import mekanism.common.block.BlockMachine;
+import mekanism.common.block.EnergyCube;
+import mekanism.common.block.GasTankBlock;
+import mekanism.common.block.Machine;
 import mekanism.common.block.BlockObsidianTNT;
 import mekanism.common.block.BlockOre;
 import mekanism.common.block.BlockPlastic;
 import mekanism.common.block.BlockPlasticFence;
 import mekanism.common.block.BlockSalt;
-import mekanism.common.item.ItemBlockBasic;
+import mekanism.common.item.BasicBlockItem;
 import mekanism.common.item.ItemBlockCardboardBox;
 import mekanism.common.item.ItemBlockEnergyCube;
 import mekanism.common.item.ItemBlockGasTank;
-import mekanism.common.item.ItemBlockMachine;
+import mekanism.common.item.MachineItem;
 import mekanism.common.item.ItemBlockOre;
 import mekanism.common.item.ItemBlockPlastic;
 import net.minecraft.block.Block;
@@ -30,16 +30,16 @@ import cpw.mods.fml.common.registry.GameRegistry.ObjectHolder;
 @ObjectHolder("Mekanism")
 public class MekanismBlocks
 {
-	public static final Block BasicBlock = new BlockBasic(BASIC_BLOCK_1).setBlockName("BasicBlock");
-	public static final Block BasicBlock2 = new BlockBasic(BASIC_BLOCK_2).setBlockName("BasicBlock2");
-	public static final Block MachineBlock = new BlockMachine(MACHINE_BLOCK_1).setBlockName("MachineBlock");
-	public static final Block MachineBlock2 = new BlockMachine(MACHINE_BLOCK_2).setBlockName("MachineBlock2");
-	public static final Block MachineBlock3 = new BlockMachine(MACHINE_BLOCK_3).setBlockName("MachineBlock3");
+	public static final Block BasicBlock = new BasicBlock(BASIC_BLOCK_1).setBlockName("BasicBlock");
+	public static final Block BasicBlock2 = new BasicBlock(BASIC_BLOCK_2).setBlockName("BasicBlock2");
+	public static final Block MachineBlock = new Machine(MACHINE_BLOCK_1).setBlockName("MachineBlock");
+	public static final Block MachineBlock2 = new Machine(MACHINE_BLOCK_2).setBlockName("MachineBlock2");
+	public static final Block MachineBlock3 = new Machine(MACHINE_BLOCK_3).setBlockName("MachineBlock3");
 	public static final Block OreBlock = new BlockOre().setBlockName("OreBlock");
 	public static final Block ObsidianTNT = new BlockObsidianTNT().setBlockName("ObsidianTNT").setCreativeTab(Mekanism.tabMekanism);
-	public static final Block EnergyCube = new BlockEnergyCube().setBlockName("EnergyCube");
-	public static final Block BoundingBlock = (BlockBounding)new BlockBounding().setBlockName("BoundingBlock");
-	public static final Block GasTank = new BlockGasTank().setBlockName("GasTank");
+	public static final Block EnergyCube = new EnergyCube().setBlockName("EnergyCube");
+	public static final Block BoundingBlock = (BoundingBlock)(new BoundingBlock().setBlockName("BoundingBlock"));
+	public static final Block GasTank = new GasTankBlock().setBlockName("GasTank");
 	public static final Block CardboardBox = new BlockCardboardBox().setBlockName("CardboardBox");
 	public static final Block PlasticBlock = new BlockPlastic().setBlockName("PlasticBlock");
 	public static final Block SlickPlasticBlock = new BlockPlastic().setBlockName("SlickPlasticBlock");
@@ -54,11 +54,11 @@ public class MekanismBlocks
 	 */
 	public static void register()
 	{
-		GameRegistry.registerBlock(BasicBlock, ItemBlockBasic.class, "BasicBlock");
-		GameRegistry.registerBlock(BasicBlock2, ItemBlockBasic.class, "BasicBlock2");
-		GameRegistry.registerBlock(MachineBlock, ItemBlockMachine.class, "MachineBlock");
-		GameRegistry.registerBlock(MachineBlock2, ItemBlockMachine.class, "MachineBlock2");
-		GameRegistry.registerBlock(MachineBlock3, ItemBlockMachine.class, "MachineBlock3");
+		GameRegistry.registerBlock(BasicBlock, BasicBlockItem.class, "BasicBlock");
+		GameRegistry.registerBlock(BasicBlock2, BasicBlockItem.class, "BasicBlock2");
+		GameRegistry.registerBlock(MachineBlock, MachineItem.class, "MachineBlock");
+		GameRegistry.registerBlock(MachineBlock2, MachineItem.class, "MachineBlock2");
+		GameRegistry.registerBlock(MachineBlock3, MachineItem.class, "MachineBlock3");
 		GameRegistry.registerBlock(OreBlock, ItemBlockOre.class, "OreBlock");
 		GameRegistry.registerBlock(EnergyCube, ItemBlockEnergyCube.class, "EnergyCube");
 		GameRegistry.registerBlock(ObsidianTNT, "ObsidianTNT");

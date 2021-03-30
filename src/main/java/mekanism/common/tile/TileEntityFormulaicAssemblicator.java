@@ -15,12 +15,12 @@ import mekanism.common.Upgrade;
 import mekanism.common.base.IRedstoneControl;
 import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.IUpgradeTile;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.content.assemblicator.RecipeFormula;
 import mekanism.common.item.ItemCraftingFormula;
 import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
+import mekanism.common.tile.component.ConfigTileComponent;
+import mekanism.common.tile.component.EjectorTileComponent;
 import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
@@ -55,8 +55,8 @@ public class TileEntityFormulaicAssemblicator extends TileEntityElectricBlock im
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
 	
 	public TileComponentUpgrade upgradeComponent;
-	public TileComponentEjector ejectorComponent;
-	public TileComponentConfig configComponent;
+	public EjectorTileComponent ejectorComponent;
+	public ConfigTileComponent configComponent;
 	public TileComponentSecurity securityComponent;
 	
 	public ItemStack lastFormulaStack;
@@ -66,7 +66,7 @@ public class TileEntityFormulaicAssemblicator extends TileEntityElectricBlock im
 	{
 		super("FormulaicAssemblicator", MachineType.FORMULAIC_ASSEMBLICATOR.baseEnergy);
 		
-		configComponent = new TileComponentConfig(this, TransmissionType.ITEM, TransmissionType.ENERGY);
+		configComponent = new ConfigTileComponent(this, TransmissionType.ITEM, TransmissionType.ENERGY);
 		
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("None", EnumColor.GREY, InventoryUtils.EMPTY));
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("Input", EnumColor.DARK_RED, 
@@ -81,7 +81,7 @@ public class TileEntityFormulaicAssemblicator extends TileEntityElectricBlock im
 		
 		upgradeComponent = new TileComponentUpgrade(this, 0);
 		
-		ejectorComponent = new TileComponentEjector(this);
+		ejectorComponent = new EjectorTileComponent(this);
 		ejectorComponent.setOutputData(TransmissionType.ITEM, configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		
 		securityComponent = new TileComponentSecurity(this);
@@ -693,7 +693,7 @@ public class TileEntityFormulaicAssemblicator extends TileEntityElectricBlock im
 	}
 	
 	@Override
-	public TileComponentConfig getConfig()
+	public ConfigTileComponent getConfig()
 	{
 		return configComponent;
 	}
@@ -711,7 +711,7 @@ public class TileEntityFormulaicAssemblicator extends TileEntityElectricBlock im
 	}
 	
 	@Override
-	public TileComponentEjector getEjector()
+	public EjectorTileComponent getEjector()
 	{
 		return ejectorComponent;
 	}

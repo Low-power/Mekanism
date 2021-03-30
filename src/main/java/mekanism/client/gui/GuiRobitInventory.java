@@ -2,8 +2,8 @@ package mekanism.client.gui;
 
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.entity.EntityRobit;
-import mekanism.common.inventory.container.ContainerRobitInventory;
+import mekanism.common.entity.Robit;
+import mekanism.common.inventory.container.RobitInventoryContainer;
 import mekanism.common.network.PacketRobit.RobitMessage;
 import mekanism.common.network.PacketRobit.RobitPacketType;
 import mekanism.common.util.LangUtils;
@@ -19,11 +19,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiRobitInventory extends GuiMekanism
 {
-	public EntityRobit robit;
+	public Robit robit;
 
-	public GuiRobitInventory(InventoryPlayer inventory, EntityRobit entity)
+	public GuiRobitInventory(InventoryPlayer inventory, Robit entity)
 	{
-		super(new ContainerRobitInventory(inventory, entity));
+		super(new RobitInventoryContainer(inventory, entity));
 		xSize += 25;
 		robit = entity;
 	}

@@ -2,7 +2,7 @@ package mekanism.client.render.tileentity;
 
 import mekanism.api.Coord4D;
 import mekanism.client.render.MekanismRenderer;
-import mekanism.common.tile.TileEntityBin;
+import mekanism.common.tile.BinTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -27,13 +27,13 @@ public class RenderBin extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		renderAModelAt((TileEntityBin)tileEntity, x, y, z, partialTick);
+		renderAModelAt((BinTileEntity)tileEntity, x, y, z, partialTick);
 	}
 
 	@SuppressWarnings("incomplete-switch")
-	private void renderAModelAt(TileEntityBin tileEntity, double x, double y, double z, float partialTick)
+	private void renderAModelAt(BinTileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		if(tileEntity instanceof TileEntityBin)
+		if(tileEntity instanceof BinTileEntity)
 		{
 			String amount = "";
 			ItemStack itemStack = tileEntity.itemType;

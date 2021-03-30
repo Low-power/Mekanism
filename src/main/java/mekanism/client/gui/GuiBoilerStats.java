@@ -13,7 +13,7 @@ import mekanism.client.gui.element.GuiGraph;
 import mekanism.client.gui.element.GuiGraph.GraphDataHandler;
 import mekanism.client.gui.element.GuiHeatInfo;
 import mekanism.common.content.boiler.SynchronizedBoilerData;
-import mekanism.common.inventory.container.ContainerNull;
+import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.tile.TileEntityBoilerCasing;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -35,7 +35,7 @@ public class GuiBoilerStats extends GuiMekanism
 
 	public GuiBoilerStats(InventoryPlayer inventory, TileEntityBoilerCasing tentity)
 	{
-		super(tentity, new ContainerNull(inventory.player, tentity));
+		super(tentity, new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiBoilerTab(this, tileEntity, BoilerTab.MAIN, 6, MekanismUtils.getResource(ResourceType.GUI, "GuiBoilerStats.png")));
 		guiElements.add(new GuiHeatInfo(new IInfoHandler() {

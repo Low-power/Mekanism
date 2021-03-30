@@ -59,9 +59,9 @@ public class TileEntityBoundingBlock extends TileEntity implements ITileNetwork
 	{
 		TileEntity tile = worldObj.getTileEntity(mainX, mainY, mainZ);
 
-		if(tile instanceof TileEntityBasicBlock)
+		if(tile instanceof BasicBlockTileEntity)
 		{
-			TileEntityBasicBlock tileEntity = (TileEntityBasicBlock)tile;
+			BasicBlockTileEntity tileEntity = (BasicBlockTileEntity)tile;
 
 			boolean power = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
 

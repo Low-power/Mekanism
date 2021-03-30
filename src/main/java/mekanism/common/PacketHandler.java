@@ -1,10 +1,5 @@
 package mekanism.common;
 
-import io.netty.buffer.ByteBuf;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.MekanismConfig.general;
 import mekanism.api.Range4D;
 import mekanism.common.network.PacketBoxBlacklist;
@@ -13,8 +8,8 @@ import mekanism.common.network.PacketConfigSync;
 import mekanism.common.network.PacketConfigSync.ConfigSyncMessage;
 import mekanism.common.network.PacketConfigurationUpdate;
 import mekanism.common.network.PacketConfigurationUpdate.ConfigurationUpdateMessage;
-import mekanism.common.network.PacketConfiguratorState;
-import mekanism.common.network.PacketConfiguratorState.ConfiguratorStateMessage;
+import mekanism.common.network.ConfiguratorStatePacket;
+import mekanism.common.network.ConfiguratorStatePacket.ConfiguratorStateMessage;
 import mekanism.common.network.PacketContainerEditMode;
 import mekanism.common.network.PacketContainerEditMode.ContainerEditModeMessage;
 import mekanism.common.network.PacketDataRequest;
@@ -35,12 +30,12 @@ import mekanism.common.network.PacketJetpackData;
 import mekanism.common.network.PacketJetpackData.JetpackDataMessage;
 import mekanism.common.network.PacketKey;
 import mekanism.common.network.PacketKey.KeyMessage;
-import mekanism.common.network.PacketLogisticalSorterGui;
-import mekanism.common.network.PacketLogisticalSorterGui.LogisticalSorterGuiMessage;
+import mekanism.common.network.LogisticalSorterGuiPacket;
+import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.PacketNewFilter;
 import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.network.PacketOredictionificatorGui;
-import mekanism.common.network.PacketOredictionificatorGui.OredictionificatorGuiMessage;
+import mekanism.common.network.OredictionificatorGuiPacket;
+import mekanism.common.network.OredictionificatorGuiPacket.OredictionificatorGuiMessage;
 import mekanism.common.network.PacketPersonalChest;
 import mekanism.common.network.PacketPersonalChest.PersonalChestMessage;
 import mekanism.common.network.PacketPortableTankState;
@@ -61,14 +56,19 @@ import mekanism.common.network.PacketSecurityMode;
 import mekanism.common.network.PacketSecurityMode.SecurityModeMessage;
 import mekanism.common.network.PacketSecurityUpdate;
 import mekanism.common.network.PacketSecurityUpdate.SecurityUpdateMessage;
-import mekanism.common.network.PacketSimpleGui;
-import mekanism.common.network.PacketSimpleGui.SimpleGuiMessage;
+import mekanism.common.network.SimpleGuiPacket;
+import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.network.PacketTileEntity;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.network.PacketTransmitterUpdate;
 import mekanism.common.network.PacketTransmitterUpdate.TransmitterUpdateMessage;
 import mekanism.common.network.PacketWalkieTalkieState;
 import mekanism.common.network.PacketWalkieTalkieState.WalkieTalkieStateMessage;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -79,11 +79,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.relauncher.Side;
+import io.netty.buffer.ByteBuf;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Mekanism packet handler. As always, use packets sparingly!
@@ -93,7 +91,7 @@ import cpw.mods.fml.relauncher.Side;
 public class PacketHandler
 {
 	public SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel("MEK");
-	
+
 	public void initialize()
 	{
 		netHandler.registerMessage(PacketRobit.class, RobitMessage.class, 0, Side.SERVER);
@@ -101,26 +99,26 @@ public class PacketHandler
 		netHandler.registerMessage(PacketPersonalChest.class, PersonalChestMessage.class, 2, Side.CLIENT);
 		netHandler.registerMessage(PacketPersonalChest.class, PersonalChestMessage.class, 2, Side.SERVER);
 		netHandler.registerMessage(PacketElectricBowState.class, ElectricBowStateMessage.class, 3, Side.SERVER);
-		netHandler.registerMessage(PacketConfiguratorState.class, ConfiguratorStateMessage.class, 4, Side.SERVER);
+		netHandler.registerMessage(ConfiguratorStatePacket.class, ConfiguratorStateMessage.class, 4, Side.SERVER);
 		netHandler.registerMessage(PacketTileEntity.class, TileEntityMessage.class, 5, Side.CLIENT);
 		netHandler.registerMessage(PacketTileEntity.class, TileEntityMessage.class, 5, Side.SERVER);
 		netHandler.registerMessage(PacketPortalFX.class, PortalFXMessage.class, 6, Side.CLIENT);
 		netHandler.registerMessage(PacketDataRequest.class, DataRequestMessage.class, 7, Side.SERVER);
-		netHandler.registerMessage(PacketOredictionificatorGui.class, OredictionificatorGuiMessage.class, 8, Side.CLIENT);
-		netHandler.registerMessage(PacketOredictionificatorGui.class, OredictionificatorGuiMessage.class, 8, Side.SERVER);
+		netHandler.registerMessage(OredictionificatorGuiPacket.class, OredictionificatorGuiMessage.class, 8, Side.CLIENT);
+		netHandler.registerMessage(OredictionificatorGuiPacket.class, OredictionificatorGuiMessage.class, 8, Side.SERVER);
 		netHandler.registerMessage(PacketSecurityMode.class, SecurityModeMessage.class, 9, Side.SERVER);
 		netHandler.registerMessage(PacketPortableTeleporter.class, PortableTeleporterMessage.class, 10, Side.CLIENT);
 		netHandler.registerMessage(PacketPortableTeleporter.class, PortableTeleporterMessage.class, 10, Side.SERVER);
 		netHandler.registerMessage(PacketRemoveUpgrade.class, RemoveUpgradeMessage.class, 11, Side.SERVER);
 		netHandler.registerMessage(PacketRedstoneControl.class, RedstoneControlMessage.class, 12, Side.SERVER);
 		netHandler.registerMessage(PacketWalkieTalkieState.class, WalkieTalkieStateMessage.class, 13, Side.SERVER);
-		netHandler.registerMessage(PacketLogisticalSorterGui.class, LogisticalSorterGuiMessage.class, 14, Side.CLIENT);
-		netHandler.registerMessage(PacketLogisticalSorterGui.class, LogisticalSorterGuiMessage.class, 14, Side.SERVER);
+		netHandler.registerMessage(LogisticalSorterGuiPacket.class, LogisticalSorterGuiMessage.class, 14, Side.CLIENT);
+		netHandler.registerMessage(LogisticalSorterGuiPacket.class, LogisticalSorterGuiMessage.class, 14, Side.SERVER);
 		netHandler.registerMessage(PacketNewFilter.class, NewFilterMessage.class, 15, Side.SERVER);
 		netHandler.registerMessage(PacketEditFilter.class, EditFilterMessage.class, 16, Side.SERVER);
 		netHandler.registerMessage(PacketConfigurationUpdate.class, ConfigurationUpdateMessage.class, 17, Side.SERVER);
-		netHandler.registerMessage(PacketSimpleGui.class, SimpleGuiMessage.class, 18, Side.CLIENT);
-		netHandler.registerMessage(PacketSimpleGui.class, SimpleGuiMessage.class, 18, Side.SERVER);
+		netHandler.registerMessage(SimpleGuiPacket.class, SimpleGuiMessage.class, 18, Side.CLIENT);
+		netHandler.registerMessage(SimpleGuiPacket.class, SimpleGuiMessage.class, 18, Side.SERVER);
 		netHandler.registerMessage(DigitalMinerGuiPacket.class, DigitalMinerGuiMessage.class, 19, Side.CLIENT);
 		netHandler.registerMessage(DigitalMinerGuiPacket.class, DigitalMinerGuiMessage.class, 19, Side.SERVER);
 		netHandler.registerMessage(PacketJetpackData.class, JetpackDataMessage.class, 20, Side.CLIENT);
@@ -138,7 +136,7 @@ public class PacketHandler
 		netHandler.registerMessage(PacketEntityMove.class, EntityMoveMessage.class, 29, Side.CLIENT);
 		netHandler.registerMessage(PacketSecurityUpdate.class, SecurityUpdateMessage.class, 30, Side.CLIENT);
 	}
-	
+
 	/**
 	 * Encodes an Object[] of data into a DataOutputStream.
 	 * @param dataValues - an Object[] of data to encode
@@ -209,27 +207,25 @@ public class PacketHandler
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void writeString(ByteBuf output, String s)
 	{
 		output.writeInt(s.getBytes().length);
 		output.writeBytes(s.getBytes());
 	}
-	
+
 	public static String readString(ByteBuf input)
 	{
 		return new String(input.readBytes(input.readInt()).array());
 	}
-	
+
 	public static void writeStack(ByteBuf output, ItemStack stack)
 	{
 		output.writeInt(stack != null ? Item.getIdFromItem(stack.getItem()) : -1);
-		
 		if(stack != null)
 		{
 			output.writeInt(stack.stackSize);
 			output.writeInt(stack.getItemDamage());
-			
 			if(stack.getTagCompound() != null && stack.getItem().getShareTag())
 			{
 				output.writeBoolean(true);
@@ -240,48 +236,42 @@ public class PacketHandler
 			}
 		}
 	}
-	
+
 	public static ItemStack readStack(ByteBuf input)
 	{
 		int id = input.readInt();
-		
 		if(id >= 0)
 		{
 			ItemStack stack = new ItemStack(Item.getItemById(id), input.readInt(), input.readInt());
-			
 			if(input.readBoolean())
 			{
 				stack.setTagCompound(readNBT(input));
 			}
-			
 			return stack;
 		}
-		
 		return null;
 	}
-	
+
 	public static void writeNBT(ByteBuf output, NBTTagCompound nbtTags)
 	{
 		try {
 			byte[] buffer = CompressedStreamTools.compress(nbtTags);
-			
 			output.writeInt(buffer.length);
 			output.writeBytes(buffer);
 		} catch(Exception e) {}
 	}
-	
+
 	public static NBTTagCompound readNBT(ByteBuf input)
 	{
 		try {
 			byte[] buffer = new byte[input.readInt()];
 			input.readBytes(buffer);
-			
 			return CompressedStreamTools.func_152457_a(buffer, new NBTSizeTracker(2097152L));
 		} catch(Exception e) {
 			return null;
 		}
 	}
-	
+
 	public static void log(String log)
 	{
 		if(general.logPackets)
@@ -289,7 +279,7 @@ public class PacketHandler
 			System.out.println("[Mekanism] " + log);
 		}
 	}
-	
+
 	public static EntityPlayer getPlayer(MessageContext context)
 	{
 		return Mekanism.proxy.getPlayer(context);
@@ -304,7 +294,7 @@ public class PacketHandler
 	{
 		netHandler.sendTo(message, player);
 	}
-	
+
 	/**
 	 * Send this message to everyone connected to the server.
 	 * @param message - message to send
@@ -312,7 +302,6 @@ public class PacketHandler
 	public void sendToAll(IMessage message)
 	{
 		MinecraftServer server = MinecraftServer.getServer();
-		
 		for(EntityPlayer player : (List<EntityPlayer>)server.getConfigurationManager().playerEntityList)
 		{
 			sendTo(message, (EntityPlayerMP)player);
@@ -348,7 +337,7 @@ public class PacketHandler
 	{
 		netHandler.sendToServer(message);
 	}
-	
+
 	/**
 	 * Send this message to all players within a defined AABB cuboid.
 	 * @param message - the message to send
@@ -370,7 +359,7 @@ public class PacketHandler
 			}
 		}
 	}
-	
+
 	public void sendToReceivers(IMessage message, Range4D range)
 	{
 		MinecraftServer server = MinecraftServer.getServer();

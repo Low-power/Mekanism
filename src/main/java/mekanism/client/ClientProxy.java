@@ -1,14 +1,12 @@
 package mekanism.client;
 
-import java.io.File;
-
 import mekanism.api.Coord4D;
 import mekanism.api.MekanismConfig.client;
 import mekanism.api.MekanismConfig.general;
 import mekanism.api.Pos3D;
 import mekanism.client.SparkleAnimation.INodeChecker;
 import mekanism.client.entity.EntityLaser;
-import mekanism.client.gui.GuiAmbientAccumulator;
+import mekanism.client.gui.AmbientAccumulatorGui;
 import mekanism.client.gui.GuiBoilerStats;
 import mekanism.client.gui.ChemicalCrystallizerGui;
 import mekanism.client.gui.ChemicalDissolutionChamberGui;
@@ -17,7 +15,7 @@ import mekanism.client.gui.GuiChemicalInjectionChamber;
 import mekanism.client.gui.ChemicalOxidizerGui;
 import mekanism.client.gui.ChemicalWasherGui;
 import mekanism.client.gui.GuiCombiner;
-import mekanism.client.gui.GuiCredits;
+import mekanism.client.gui.CreditsGui;
 import mekanism.client.gui.GuiCrusher;
 import mekanism.client.gui.GuiDictionary;
 import mekanism.client.gui.DigitalMinerGui;
@@ -38,13 +36,13 @@ import mekanism.client.gui.GuiLaserAmplifier;
 import mekanism.client.gui.GuiLaserTractorBeam;
 import mekanism.client.gui.MatrixStatsGui;
 import mekanism.client.gui.MetallurgicInfuserGui;
-import mekanism.client.gui.GuiOredictionificator;
+import mekanism.client.gui.OredictionificatorGui;
 import mekanism.client.gui.GuiOsmiumCompressor;
 import mekanism.client.gui.PRCGui;
 import mekanism.client.gui.GuiPersonalChest;
 import mekanism.client.gui.GuiPrecisionSawmill;
 import mekanism.client.gui.GuiPurificationChamber;
-import mekanism.client.gui.GuiQuantumEntangloporter;
+import mekanism.client.gui.QuantumEntangloporterGui;
 import mekanism.client.gui.ResistiveHeaterGui;
 import mekanism.client.gui.GuiRobitCrafting;
 import mekanism.client.gui.GuiRobitInventory;
@@ -55,16 +53,16 @@ import mekanism.client.gui.RotaryCondensentratorGui;
 import mekanism.client.gui.GuiSecurityDesk;
 import mekanism.client.gui.GuiSeismicReader;
 import mekanism.client.gui.SeismicVibratorGui;
-import mekanism.client.gui.GuiSideConfiguration;
+import mekanism.client.gui.SideConfigurationGui;
 import mekanism.client.gui.GuiSolarNeutronActivator;
-import mekanism.client.gui.GuiTeleporter;
+import mekanism.client.gui.TeleporterGui;
 import mekanism.client.gui.GuiThermalEvaporationController;
 import mekanism.client.gui.GuiThermoelectricBoiler;
-import mekanism.client.gui.GuiTransporterConfig;
-import mekanism.client.gui.GuiUpgradeManagement;
+import mekanism.client.gui.TransporterConfigGui;
+import mekanism.client.gui.UpgradeManagementGui;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.render.RenderGlowPanel;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.client.render.RenderTickHandler;
 import mekanism.client.render.block.BasicRenderingHandler;
 import mekanism.client.render.block.CTMRenderingHandler;
@@ -76,13 +74,13 @@ import mekanism.client.render.entity.RenderObsidianTNTPrimed;
 import mekanism.client.render.entity.RenderRobit;
 import mekanism.client.render.item.ItemRenderingHandler;
 import mekanism.client.render.tileentity.RenderBin;
-import mekanism.client.render.tileentity.RenderChargepad;
-import mekanism.client.render.tileentity.RenderChemicalCrystallizer;
-import mekanism.client.render.tileentity.RenderChemicalDissolutionChamber;
-import mekanism.client.render.tileentity.RenderChemicalInfuser;
-import mekanism.client.render.tileentity.RenderChemicalOxidizer;
-import mekanism.client.render.tileentity.RenderChemicalWasher;
-import mekanism.client.render.tileentity.RenderConfigurableMachine;
+import mekanism.client.render.tileentity.ChargepadRenderer;
+import mekanism.client.render.tileentity.ChemicalCrystallizerRenderer;
+import mekanism.client.render.tileentity.ChemicalDissolutionChamberRenderer;
+import mekanism.client.render.tileentity.ChemicalInfuserRenderer;
+import mekanism.client.render.tileentity.ChemicalOxidizerRenderer;
+import mekanism.client.render.tileentity.ChemicalWasherRenderer;
+import mekanism.client.render.tileentity.ConfigurableMachineRenderer;
 import mekanism.client.render.tileentity.RenderDigitalMiner;
 import mekanism.client.render.tileentity.RenderDynamicTank;
 import mekanism.client.render.tileentity.RenderElectricPump;
@@ -91,11 +89,11 @@ import mekanism.client.render.tileentity.RenderEnergyCube;
 import mekanism.client.render.tileentity.RenderFluidTank;
 import mekanism.client.render.tileentity.RenderFluidicPlenisher;
 import mekanism.client.render.tileentity.RenderGasTank;
-import mekanism.client.render.tileentity.RenderLaser;
+import mekanism.client.render.tileentity.LaserRenderer;
 import mekanism.client.render.tileentity.RenderLaserAmplifier;
 import mekanism.client.render.tileentity.RenderLaserTractorBeam;
 import mekanism.client.render.tileentity.RenderLogisticalSorter;
-import mekanism.client.render.tileentity.RenderMetallurgicInfuser;
+import mekanism.client.render.tileentity.MetallurgicInfuserRenderer;
 import mekanism.client.render.tileentity.RenderObsidianTNT;
 import mekanism.client.render.tileentity.RenderPersonalChest;
 import mekanism.client.render.tileentity.RenderPressurizedReactionChamber;
@@ -114,43 +112,43 @@ import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
 import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.IUpgradeTile;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.entity.EntityBabySkeleton;
-import mekanism.common.entity.EntityBalloon;
+import mekanism.common.entity.Balloon;
 import mekanism.common.entity.EntityFlame;
 import mekanism.common.entity.EntityObsidianTNT;
-import mekanism.common.entity.EntityRobit;
+import mekanism.common.entity.Robit;
 import mekanism.common.inventory.InventoryPersonalChest;
 import mekanism.common.item.ItemPortableTeleporter;
 import mekanism.common.item.ItemSeismicReader;
 import mekanism.common.multiblock.MultiblockManager;
 import mekanism.common.network.PacketPortableTeleporter.PortableTeleporterMessage;
-import mekanism.common.tile.TileEntityAdvancedElectricMachine;
-import mekanism.common.tile.TileEntityAdvancedFactory;
+import mekanism.common.tile.AdvancedElectricMachineTileEntity;
+import mekanism.common.tile.AdvancedFactoryTileEntity;
 import mekanism.common.tile.TileEntityAmbientAccumulator;
-import mekanism.common.tile.TileEntityBin;
+import mekanism.common.tile.BinTileEntity;
 import mekanism.common.tile.TileEntityBoilerCasing;
 import mekanism.common.tile.TileEntityBoilerValve;
-import mekanism.common.tile.TileEntityChargepad;
-import mekanism.common.tile.TileEntityChemicalCrystallizer;
-import mekanism.common.tile.TileEntityChemicalDissolutionChamber;
-import mekanism.common.tile.TileEntityChemicalInfuser;
+import mekanism.common.tile.ChargepadTileEntity;
+import mekanism.common.tile.ChemicalCrystallizerTileEntity;
+import mekanism.common.tile.ChemicalDissolutionChamberTileEntity;
+import mekanism.common.tile.ChemicalInfuserTileEntity;
 import mekanism.common.tile.TileEntityChemicalInjectionChamber;
-import mekanism.common.tile.TileEntityChemicalOxidizer;
-import mekanism.common.tile.TileEntityChemicalWasher;
+import mekanism.common.tile.ChemicalOxidizerTileEntity;
+import mekanism.common.tile.ChemicalWasherTileEntity;
 import mekanism.common.tile.TileEntityCombiner;
 import mekanism.common.tile.TileEntityCrusher;
 import mekanism.common.tile.TileEntityDigitalMiner;
 import mekanism.common.tile.TileEntityDynamicTank;
 import mekanism.common.tile.TileEntityDynamicValve;
-import mekanism.common.tile.TileEntityElectricMachine;
+import mekanism.common.tile.ElectricMachineTileEntity;
 import mekanism.common.tile.TileEntityElectricPump;
 import mekanism.common.tile.TileEntityElectrolyticSeparator;
-import mekanism.common.tile.TileEntityEliteFactory;
+import mekanism.common.tile.EliteFactoryTileEntity;
 import mekanism.common.tile.TileEntityEnergizedSmelter;
 import mekanism.common.tile.TileEntityEnergyCube;
 import mekanism.common.tile.TileEntityEnrichmentChamber;
-import mekanism.common.tile.TileEntityFactory;
+import mekanism.common.tile.FactoryTileEntity;
 import mekanism.common.tile.TileEntityFluidTank;
 import mekanism.common.tile.TileEntityFluidicPlenisher;
 import mekanism.common.tile.TileEntityFormulaicAssemblicator;
@@ -160,21 +158,21 @@ import mekanism.common.tile.TileEntityInductionCasing;
 import mekanism.common.tile.TileEntityInductionCell;
 import mekanism.common.tile.TileEntityInductionPort;
 import mekanism.common.tile.TileEntityInductionProvider;
-import mekanism.common.tile.TileEntityLaser;
+import mekanism.common.tile.LaserTileEntity;
 import mekanism.common.tile.TileEntityLaserAmplifier;
 import mekanism.common.tile.TileEntityLaserTractorBeam;
 import mekanism.common.tile.TileEntityLogisticalSorter;
-import mekanism.common.tile.TileEntityMetallurgicInfuser;
+import mekanism.common.tile.MetallurgicInfuserTileEntity;
 import mekanism.common.tile.TileEntityMultiblock;
 import mekanism.common.tile.TileEntityObsidianTNT;
 import mekanism.common.tile.TileEntityOredictionificator;
 import mekanism.common.tile.TileEntityOsmiumCompressor;
-import mekanism.common.tile.TileEntityPRC;
-import mekanism.common.tile.TileEntityPersonalChest;
+import mekanism.common.tile.PRCTileEntity;
+import mekanism.common.tile.PersonalChestTileEntity;
 import mekanism.common.tile.TileEntityPrecisionSawmill;
 import mekanism.common.tile.TileEntityPurificationChamber;
 import mekanism.common.tile.TileEntityQuantumEntangloporter;
-import mekanism.common.tile.TileEntityResistiveHeater;
+import mekanism.common.tile.ResistiveHeaterTileEntity;
 import mekanism.common.tile.TileEntityRotaryCondensentrator;
 import mekanism.common.tile.TileEntitySecurityDesk;
 import mekanism.common.tile.TileEntitySeismicVibrator;
@@ -202,6 +200,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import java.io.File;
 
 /**
  * Client proxy for the Mekanism mod.
@@ -244,7 +243,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void openPersonalChest(EntityPlayer player, int id, int windowId, boolean isBlock, int x, int y, int z)
 	{
-		TileEntityPersonalChest tileEntity = (TileEntityPersonalChest)player.worldObj.getTileEntity(x, y, z);
+		PersonalChestTileEntity tileEntity = (PersonalChestTileEntity)player.worldObj.getTileEntity(x, y, z);
 
 		if(id == 0)
 		{
@@ -269,43 +268,43 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerSpecialTileEntities()
 	{
-		ClientRegistry.registerTileEntity(TileEntityEnrichmentChamber.class, "EnrichmentChamber", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityOsmiumCompressor.class, "OsmiumCompressor", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityCombiner.class, "Combiner", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityCrusher.class, "Crusher", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityFactory.class, "SmeltingFactory", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityAdvancedFactory.class, "AdvancedSmeltingFactory", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityEliteFactory.class, "UltimateSmeltingFactory", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityPurificationChamber.class, "PurificationChamber", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityEnergizedSmelter.class, "EnergizedSmelter", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityMetallurgicInfuser.class, "MetallurgicInfuser", new RenderMetallurgicInfuser());
+		ClientRegistry.registerTileEntity(TileEntityEnrichmentChamber.class, "EnrichmentChamber", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(TileEntityOsmiumCompressor.class, "OsmiumCompressor", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(TileEntityCombiner.class, "Combiner", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(TileEntityCrusher.class, "Crusher", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(FactoryTileEntity.class, "SmeltingFactory", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(AdvancedFactoryTileEntity.class, "AdvancedSmeltingFactory", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(EliteFactoryTileEntity.class, "UltimateSmeltingFactory", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(TileEntityPurificationChamber.class, "PurificationChamber", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(TileEntityEnergizedSmelter.class, "EnergizedSmelter", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(MetallurgicInfuserTileEntity.class, "MetallurgicInfuser", new MetallurgicInfuserRenderer());
 		ClientRegistry.registerTileEntity(TileEntityObsidianTNT.class, "ObsidianTNT", new RenderObsidianTNT());
 		ClientRegistry.registerTileEntity(TileEntityGasTank.class, "GasTank", new RenderGasTank());
 		ClientRegistry.registerTileEntity(TileEntityEnergyCube.class, "EnergyCube", new RenderEnergyCube());
 		ClientRegistry.registerTileEntity(TileEntityElectricPump.class, "ElectricPump", new RenderElectricPump());
-		ClientRegistry.registerTileEntity(TileEntityPersonalChest.class, "ElectricChest", new RenderPersonalChest()); //TODO rename
+		ClientRegistry.registerTileEntity(PersonalChestTileEntity.class, "ElectricChest", new RenderPersonalChest()); //TODO rename
 		ClientRegistry.registerTileEntity(TileEntityDynamicTank.class, "DynamicTank", new RenderDynamicTank());
 		ClientRegistry.registerTileEntity(TileEntityDynamicValve.class, "DynamicValve", new RenderDynamicTank());
-		ClientRegistry.registerTileEntity(TileEntityChargepad.class, "Chargepad", new RenderChargepad());
+		ClientRegistry.registerTileEntity(ChargepadTileEntity.class, "Chargepad", new ChargepadRenderer());
 		ClientRegistry.registerTileEntity(TileEntityLogisticalSorter.class, "LogisticalSorter", new RenderLogisticalSorter());
-		ClientRegistry.registerTileEntity(TileEntityBin.class, "Bin", new RenderBin());
+		ClientRegistry.registerTileEntity(BinTileEntity.class, "Bin", new RenderBin());
 		ClientRegistry.registerTileEntity(TileEntityDigitalMiner.class, "DigitalMiner", new RenderDigitalMiner());
 		ClientRegistry.registerTileEntity(TileEntityRotaryCondensentrator.class, "RotaryCondensentrator", new RenderRotaryCondensentrator());
 		ClientRegistry.registerTileEntity(TileEntityTeleporter.class, "MekanismTeleporter", new RenderTeleporter());
-		ClientRegistry.registerTileEntity(TileEntityChemicalOxidizer.class, "ChemicalOxidizer", new RenderChemicalOxidizer());
-		ClientRegistry.registerTileEntity(TileEntityChemicalInfuser.class, "ChemicalInfuser", new RenderChemicalInfuser());
-		ClientRegistry.registerTileEntity(TileEntityChemicalInjectionChamber.class, "ChemicalInjectionChamber", new RenderConfigurableMachine());
+		ClientRegistry.registerTileEntity(ChemicalOxidizerTileEntity.class, "ChemicalOxidizer", new ChemicalOxidizerRenderer());
+		ClientRegistry.registerTileEntity(ChemicalInfuserTileEntity.class, "ChemicalInfuser", new ChemicalInfuserRenderer());
+		ClientRegistry.registerTileEntity(TileEntityChemicalInjectionChamber.class, "ChemicalInjectionChamber", new ConfigurableMachineRenderer());
 		ClientRegistry.registerTileEntity(TileEntityElectrolyticSeparator.class, "ElectrolyticSeparator", new RenderElectrolyticSeparator());
 		ClientRegistry.registerTileEntity(TileEntityThermalEvaporationController.class, "SalinationController", new RenderThermalEvaporationController()); //TODO rename
-		ClientRegistry.registerTileEntity(TileEntityPrecisionSawmill.class, "PrecisionSawmill", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityChemicalDissolutionChamber.class, "ChemicalDissolutionChamber", new RenderChemicalDissolutionChamber());
-		ClientRegistry.registerTileEntity(TileEntityChemicalWasher.class, "ChemicalWasher", new RenderChemicalWasher());
-		ClientRegistry.registerTileEntity(TileEntityChemicalCrystallizer.class, "ChemicalCrystallizer", new RenderChemicalCrystallizer());
+		ClientRegistry.registerTileEntity(TileEntityPrecisionSawmill.class, "PrecisionSawmill", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(ChemicalDissolutionChamberTileEntity.class, "ChemicalDissolutionChamber", new ChemicalDissolutionChamberRenderer());
+		ClientRegistry.registerTileEntity(ChemicalWasherTileEntity.class, "ChemicalWasher", new ChemicalWasherRenderer());
+		ClientRegistry.registerTileEntity(ChemicalCrystallizerTileEntity.class, "ChemicalCrystallizer", new ChemicalCrystallizerRenderer());
 		ClientRegistry.registerTileEntity(TileEntitySeismicVibrator.class, "SeismicVibrator", new RenderSeismicVibrator());
-		ClientRegistry.registerTileEntity(TileEntityPRC.class, "PressurizedReactionChamber", new RenderPressurizedReactionChamber());
+		ClientRegistry.registerTileEntity(PRCTileEntity.class, "PressurizedReactionChamber", new RenderPressurizedReactionChamber());
 		ClientRegistry.registerTileEntity(TileEntityFluidTank.class, "PortableTank", new RenderFluidTank()); //TODO rename
 		ClientRegistry.registerTileEntity(TileEntityFluidicPlenisher.class, "FluidicPlenisher", new RenderFluidicPlenisher());
-		ClientRegistry.registerTileEntity(TileEntityLaser.class, "Laser", new RenderLaser());
+		ClientRegistry.registerTileEntity(LaserTileEntity.class, "Laser", new LaserRenderer());
 		ClientRegistry.registerTileEntity(TileEntityLaserAmplifier.class, "LaserAmplifier", new RenderLaserAmplifier());
 		ClientRegistry.registerTileEntity(TileEntityLaserTractorBeam.class, "LaserTractorBeam", new RenderLaserTractorBeam());
 		ClientRegistry.registerTileEntity(TileEntitySolarNeutronActivator.class, "SolarNeutronActivator", new RenderSolarNeutronActivator());
@@ -316,8 +315,8 @@ public class ClientProxy extends CommonProxy
 		GameRegistry.registerTileEntity(TileEntityInductionProvider.class, "InductionProvider");
 		GameRegistry.registerTileEntity(TileEntityOredictionificator.class, "Oredictionificator");
 		GameRegistry.registerTileEntity(TileEntityStructuralGlass.class, "StructuralGlass");
-		ClientRegistry.registerTileEntity(TileEntityFormulaicAssemblicator.class, "FormulaicAssemblicator", new RenderConfigurableMachine());
-		ClientRegistry.registerTileEntity(TileEntityResistiveHeater.class, "ResistiveHeater", new RenderResistiveHeater());
+		ClientRegistry.registerTileEntity(TileEntityFormulaicAssemblicator.class, "FormulaicAssemblicator", new ConfigurableMachineRenderer());
+		ClientRegistry.registerTileEntity(ResistiveHeaterTileEntity.class, "ResistiveHeater", new RenderResistiveHeater());
 		ClientRegistry.registerTileEntity(TileEntityBoilerCasing.class, "BoilerCasing", new RenderThermoelectricBoiler());
 		ClientRegistry.registerTileEntity(TileEntityBoilerValve.class, "BoilerValve", new RenderThermoelectricBoiler());
 		ClientRegistry.registerTileEntity(TileEntitySecurityDesk.class, "SecurityDesk", new RenderSecurityDesk());
@@ -328,13 +327,13 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerRenderInformation()
 	{
-		RenderPartTransmitter.init();
+		TransmitterPartRenderer.init();
 		RenderGlowPanel.init();
 
 		//Register entity rendering handlers
 		RenderingRegistry.registerEntityRenderingHandler(EntityObsidianTNT.class, new RenderObsidianTNTPrimed());
-		RenderingRegistry.registerEntityRenderingHandler(EntityRobit.class, new RenderRobit());
-		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, new RenderBalloon());
+		RenderingRegistry.registerEntityRenderingHandler(Robit.class, new RenderRobit());
+		RenderingRegistry.registerEntityRenderingHandler(Balloon.class, new RenderBalloon());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBabySkeleton.class, new RenderSkeleton());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlame.class, new RenderFlame());
 
@@ -381,88 +380,88 @@ public class ClientProxy extends CommonProxy
 			case 0:
 				return new GuiDictionary(player.inventory);
 			case 1:
-				return new GuiCredits();
+				return new CreditsGui();
 			case 2:
 				return new DigitalMinerGui(player.inventory, (TileEntityDigitalMiner)tileEntity);
 			case 3:
-				return new GuiEnrichmentChamber(player.inventory, (TileEntityElectricMachine)tileEntity);
+				return new GuiEnrichmentChamber(player.inventory, (ElectricMachineTileEntity)tileEntity);
 			case 4:
-				return new GuiOsmiumCompressor(player.inventory, (TileEntityAdvancedElectricMachine)tileEntity);
+				return new GuiOsmiumCompressor(player.inventory, (AdvancedElectricMachineTileEntity)tileEntity);
 			case 5:
-				return new GuiCombiner(player.inventory, (TileEntityAdvancedElectricMachine)tileEntity);
+				return new GuiCombiner(player.inventory, (AdvancedElectricMachineTileEntity)tileEntity);
 			case 6:
-				return new GuiCrusher(player.inventory, (TileEntityElectricMachine)tileEntity);
+				return new GuiCrusher(player.inventory, (ElectricMachineTileEntity)tileEntity);
 			case 7:
 				return new RotaryCondensentratorGui(player.inventory, (TileEntityRotaryCondensentrator)tileEntity);
 			case 8:
 				return new EnergyCubeGui(player.inventory, (TileEntityEnergyCube)tileEntity);
 			case 9:
-				return new GuiSideConfiguration(player, (ISideConfiguration)tileEntity);
+				return new SideConfigurationGui(player, (ISideConfiguration)tileEntity);
 			case 10:
 				return new GuiGasTank(player.inventory, (TileEntityGasTank)tileEntity);
 			case 11:
-				return new FactoryGui(player.inventory, (TileEntityFactory)tileEntity);
+				return new FactoryGui(player.inventory, (FactoryTileEntity)tileEntity);
 			case 12:
-				return new MetallurgicInfuserGui(player.inventory, (TileEntityMetallurgicInfuser)tileEntity);
+				return new MetallurgicInfuserGui(player.inventory, (MetallurgicInfuserTileEntity)tileEntity);
 			case 13:
-				return new GuiTeleporter(player.inventory, (TileEntityTeleporter)tileEntity);
+				return new TeleporterGui(player.inventory, (TileEntityTeleporter)tileEntity);
 			case 14:
 				ItemStack itemStack = player.getCurrentEquippedItem();
 
 				if(itemStack != null && itemStack.getItem() instanceof ItemPortableTeleporter)
 				{
-					return new GuiTeleporter(player, itemStack);
+					return new TeleporterGui(player, itemStack);
 				}
 			case 15:
-				return new GuiPurificationChamber(player.inventory, (TileEntityAdvancedElectricMachine)tileEntity);
+				return new GuiPurificationChamber(player.inventory, (AdvancedElectricMachineTileEntity)tileEntity);
 			case 16:
-				return new GuiEnergizedSmelter(player.inventory, (TileEntityElectricMachine)tileEntity);
+				return new GuiEnergizedSmelter(player.inventory, (ElectricMachineTileEntity)tileEntity);
 			case 17:
 				return new ElectricPumpGui(player.inventory, (TileEntityElectricPump)tileEntity);
 			case 18:
 				return new GuiDynamicTank(player.inventory, (TileEntityDynamicTank)tileEntity);
 			//EMPTY 19, 20
 			case 21:
-				EntityRobit robit = (EntityRobit)world.getEntityByID(x);
+				Robit robit = (Robit)world.getEntityByID(x);
 
 				if(robit != null)
 				{
 					return new GuiRobitMain(player.inventory, robit);
 				}
 			case 22:
-				robit = (EntityRobit)world.getEntityByID(x);
+				robit = (Robit)world.getEntityByID(x);
 
 				if(robit != null)
 				{
 					return new GuiRobitCrafting(player.inventory, robit);
 				}
 			case 23:
-				robit = (EntityRobit)world.getEntityByID(x);
+				robit = (Robit)world.getEntityByID(x);
 
 				if(robit != null)
 				{
 					return new GuiRobitInventory(player.inventory, robit);
 				}
 			case 24:
-				robit = (EntityRobit)world.getEntityByID(x);
+				robit = (Robit)world.getEntityByID(x);
 
 				if(robit != null)
 				{
 					return new GuiRobitSmelting(player.inventory, robit);
 				}
 			case 25:
-				robit = (EntityRobit)world.getEntityByID(x);
+				robit = (Robit)world.getEntityByID(x);
 
 				if(robit != null)
 				{
 					return new GuiRobitRepair(player.inventory, robit);
 				}
 			case 29:
-				return new ChemicalOxidizerGui(player.inventory, (TileEntityChemicalOxidizer)tileEntity);
+				return new ChemicalOxidizerGui(player.inventory, (ChemicalOxidizerTileEntity)tileEntity);
 			case 30:
-				return new ChemicalInfuserGui(player.inventory, (TileEntityChemicalInfuser)tileEntity);
+				return new ChemicalInfuserGui(player.inventory, (ChemicalInfuserTileEntity)tileEntity);
 			case 31:
-				return new GuiChemicalInjectionChamber(player.inventory, (TileEntityAdvancedElectricMachine)tileEntity);
+				return new GuiChemicalInjectionChamber(player.inventory, (AdvancedElectricMachineTileEntity)tileEntity);
 			case 32:
 				return new ElectrolyticSeparatorGui(player.inventory, (TileEntityElectrolyticSeparator)tileEntity);
 			case 33:
@@ -470,11 +469,11 @@ public class ClientProxy extends CommonProxy
 			case 34:
 				return new GuiPrecisionSawmill(player.inventory, (TileEntityPrecisionSawmill)tileEntity);
 			case 35:
-				return new ChemicalDissolutionChamberGui(player.inventory, (TileEntityChemicalDissolutionChamber)tileEntity);
+				return new ChemicalDissolutionChamberGui(player.inventory, (ChemicalDissolutionChamberTileEntity)tileEntity);
 			case 36:
-				return new ChemicalWasherGui(player.inventory, (TileEntityChemicalWasher)tileEntity);
+				return new ChemicalWasherGui(player.inventory, (ChemicalWasherTileEntity)tileEntity);
 			case 37:
-				return new ChemicalCrystallizerGui(player.inventory, (TileEntityChemicalCrystallizer)tileEntity);
+				return new ChemicalCrystallizerGui(player.inventory, (ChemicalCrystallizerTileEntity)tileEntity);
 			case 38:
 				ItemStack itemStack1 = player.getCurrentEquippedItem().copy();
 
@@ -485,33 +484,33 @@ public class ClientProxy extends CommonProxy
 			case 39:
 				return new SeismicVibratorGui(player.inventory, (TileEntitySeismicVibrator)tileEntity);
 			case 40:
-				return new PRCGui(player.inventory, (TileEntityPRC)tileEntity);
+				return new PRCGui(player.inventory, (PRCTileEntity)tileEntity);
 			case 41:
 				return new GuiFluidTank(player.inventory, (TileEntityFluidTank)tileEntity);
 			case 42:
 				return new FluidicPlenisherGui(player.inventory, (TileEntityFluidicPlenisher)tileEntity);
 			case 43:
-				return new GuiUpgradeManagement(player.inventory, (IUpgradeTile)tileEntity);
+				return new UpgradeManagementGui(player.inventory, (IUpgradeTile)tileEntity);
 			case 44:
 				return new GuiLaserAmplifier(player.inventory, (TileEntityLaserAmplifier)tileEntity);
 			case 45:
 				return new GuiLaserTractorBeam(player.inventory, (TileEntityLaserTractorBeam)tileEntity);
 			case 46:
-				return new GuiQuantumEntangloporter(player.inventory, (TileEntityQuantumEntangloporter)tileEntity);
+				return new QuantumEntangloporterGui(player.inventory, (TileEntityQuantumEntangloporter)tileEntity);
 			case 47:
 				return new GuiSolarNeutronActivator(player.inventory, (TileEntitySolarNeutronActivator)tileEntity);
 			case 48:
-				return new GuiAmbientAccumulator(player, (TileEntityAmbientAccumulator)tileEntity);
+				return new AmbientAccumulatorGui(player, (TileEntityAmbientAccumulator)tileEntity);
 			case 49:
 				return new InductionMatrixGui(player.inventory, (TileEntityInductionCasing)tileEntity);
 			case 50:
 				return new MatrixStatsGui(player.inventory, (TileEntityInductionCasing)tileEntity);
 			case 51:
-				return new GuiTransporterConfig(player, (ISideConfiguration)tileEntity);
+				return new TransporterConfigGui(player, (ISideConfiguration)tileEntity);
 			case 52:
-				return new GuiOredictionificator(player.inventory, (TileEntityOredictionificator)tileEntity);
+				return new OredictionificatorGui(player.inventory, (TileEntityOredictionificator)tileEntity);
 			case 53:
-				return new ResistiveHeaterGui(player.inventory, (TileEntityResistiveHeater)tileEntity);
+				return new ResistiveHeaterGui(player.inventory, (ResistiveHeaterTileEntity)tileEntity);
 			case 54:
 				return new GuiThermoelectricBoiler(player.inventory, (TileEntityBoilerCasing)tileEntity);
 			case 55:
@@ -523,28 +522,24 @@ public class ClientProxy extends CommonProxy
 			case 58:
 				return new GuiFuelwoodHeater(player.inventory, (TileEntityFuelwoodHeater)tileEntity);
 		}
-		
 		return null;
 	}
-	
+
 	@Override
 	public void handleTeleporterUpdate(PortableTeleporterMessage message)
 	{
 		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
-		
-		if(screen instanceof GuiTeleporter && ((GuiTeleporter)screen).itemStack != null)
+		if(screen instanceof TeleporterGui && ((TeleporterGui)screen).itemStack != null)
 		{
-			GuiTeleporter teleporter = (GuiTeleporter)screen;
-			
+			TeleporterGui teleporter = (TeleporterGui)screen;
 			teleporter.clientStatus = message.status;
 			teleporter.clientFreq = message.frequency;
 			teleporter.clientPublicCache = message.publicCache;
 			teleporter.clientPrivateCache = message.privateCache;
-			
 			teleporter.updateButtons();
 		}
 	}
-	
+
 	@Override
 	public void addHitEffects(Coord4D coord, MovingObjectPosition mop)
 	{
@@ -553,7 +548,7 @@ public class ClientProxy extends CommonProxy
 			Minecraft.getMinecraft().effectRenderer.addBlockHitEffects(coord.xCoord, coord.yCoord, coord.zCoord, mop);
 		}
 	}
-	
+
 	@Override
 	public void doGenericSparkle(TileEntity tileEntity, INodeChecker checker)
 	{
@@ -576,12 +571,11 @@ public class ClientProxy extends CommonProxy
 	public void loadUtilities()
 	{
 		super.loadUtilities();
-		
+
 		FMLCommonHandler.instance().bus().register(new ClientConnectionHandler());
 		FMLCommonHandler.instance().bus().register(new ClientPlayerTracker());
 		FMLCommonHandler.instance().bus().register(new ClientTickHandler());
 		FMLCommonHandler.instance().bus().register(new RenderTickHandler());
-		
 		new MekanismKeyHandler();
 
 		HolidayManager.init();
@@ -649,7 +643,7 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(new EntityLaser(world, from, to, direction, energy));
 	}
-	
+
 	@Override
 	public FontRenderer getFontRenderer()
 	{

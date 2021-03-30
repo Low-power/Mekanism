@@ -3,22 +3,22 @@ package mekanism.generators.common;
 import mekanism.api.MekanismConfig.generators;
 import mekanism.common.Mekanism;
 import mekanism.common.base.IGuiProvider;
-import mekanism.common.inventory.container.ContainerFilter;
-import mekanism.common.inventory.container.ContainerNull;
-import mekanism.common.tile.TileEntityContainerBlock;
-import mekanism.generators.common.inventory.container.ContainerBioGenerator;
-import mekanism.generators.common.inventory.container.ContainerGasGenerator;
-import mekanism.generators.common.inventory.container.ContainerHeatGenerator;
+import mekanism.common.inventory.container.FilterContainer;
+import mekanism.common.inventory.container.NullContainer;
+import mekanism.common.tile.ContainerTileEntity;
+import mekanism.generators.common.inventory.container.BioGeneratorContainer;
+import mekanism.generators.common.inventory.container.GasGeneratorContainer;
+import mekanism.generators.common.inventory.container.HeatGeneratorContainer;
 import mekanism.generators.common.inventory.container.ContainerNeutronCapture;
 import mekanism.generators.common.inventory.container.ContainerReactorController;
-import mekanism.generators.common.inventory.container.ContainerSolarGenerator;
-import mekanism.generators.common.inventory.container.ContainerWindGenerator;
+import mekanism.generators.common.inventory.container.SolarGeneratorContainer;
+import mekanism.generators.common.inventory.container.WindGeneratorContainer;
 import mekanism.generators.common.tile.TileEntityAdvancedSolarGenerator;
-import mekanism.generators.common.tile.TileEntityBioGenerator;
-import mekanism.generators.common.tile.TileEntityGasGenerator;
-import mekanism.generators.common.tile.TileEntityHeatGenerator;
-import mekanism.generators.common.tile.TileEntitySolarGenerator;
-import mekanism.generators.common.tile.TileEntityWindGenerator;
+import mekanism.generators.common.tile.BioGeneratorTileEntity;
+import mekanism.generators.common.tile.GasGeneratorTileEntity;
+import mekanism.generators.common.tile.HeatGeneratorTileEntity;
+import mekanism.generators.common.tile.SolarGeneratorTileEntity;
+import mekanism.generators.common.tile.WindGeneratorTileEntity;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
 import mekanism.generators.common.tile.reactor.TileEntityReactorFrame;
 import mekanism.generators.common.tile.reactor.TileEntityReactorGlass;
@@ -71,11 +71,11 @@ public class GeneratorsCommonProxy implements IGuiProvider
 	public void registerSpecialTileEntities()
 	{
 		GameRegistry.registerTileEntity(TileEntityAdvancedSolarGenerator.class, "AdvancedSolarGenerator");
-		GameRegistry.registerTileEntity(TileEntitySolarGenerator.class, "SolarGenerator");
-		GameRegistry.registerTileEntity(TileEntityBioGenerator.class, "BioGenerator");
-		GameRegistry.registerTileEntity(TileEntityHeatGenerator.class, "HeatGenerator");
-		GameRegistry.registerTileEntity(TileEntityGasGenerator.class, "GasGenerator");
-		GameRegistry.registerTileEntity(TileEntityWindGenerator.class, "WindTurbine");
+		GameRegistry.registerTileEntity(SolarGeneratorTileEntity.class, "SolarGenerator");
+		GameRegistry.registerTileEntity(BioGeneratorTileEntity.class, "BioGenerator");
+		GameRegistry.registerTileEntity(HeatGeneratorTileEntity.class, "HeatGenerator");
+		GameRegistry.registerTileEntity(GasGeneratorTileEntity.class, "GasGenerator");
+		GameRegistry.registerTileEntity(WindGeneratorTileEntity.class, "WindTurbine");
 		GameRegistry.registerTileEntity(TileEntityReactorController.class, "ReactorController");
 		GameRegistry.registerTileEntity(TileEntityTurbineRotor.class, "TurbineRod");
 		GameRegistry.registerTileEntity(TileEntityTurbineCasing.class, "TurbineCasing");
@@ -99,9 +99,9 @@ public class GeneratorsCommonProxy implements IGuiProvider
 		generators.heatGenerationLava = Mekanism.configuration.get("generation", "HeatGenerationLava", 5D).getDouble();
 		generators.heatGenerationNether = Mekanism.configuration.get("generation", "HeatGenerationNether", 100D).getDouble();
 		generators.solarGeneration = Mekanism.configuration.get("generation", "SolarGeneration", 50D).getDouble();
-		
+
 		loadWindConfiguration();
-		
+
 		generators.turbineBladesPerCoil = Mekanism.configuration.get("generation", "TurbineBladesPerCoil", 4).getInt();
 		generators.turbineVentGasFlow = Mekanism.configuration.get("generation", "TurbineVentGasFlow", 16000D).getDouble();
 		generators.turbineDisperserGasFlow = Mekanism.configuration.get("generation", "TurbineDisperserGasFlow", 640D).getDouble();
@@ -112,9 +112,8 @@ public class GeneratorsCommonProxy implements IGuiProvider
 			Mekanism.configuration.save();
 		}
 	}
-	
-	private void loadWindConfiguration() 
-	{
+
+	private void loadWindConfiguration() {
 		generators.windGenerationMin = Mekanism.configuration.get("generation", "WindGenerationMin", 60D).getDouble();
 		generators.windGenerationMax = Mekanism.configuration.get("generation", "WindGenerationMax", 480D).getDouble();
 
@@ -140,31 +139,30 @@ public class GeneratorsCommonProxy implements IGuiProvider
 		switch(ID)
 		{
 			case 0:
-				return new ContainerHeatGenerator(player.inventory, (TileEntityHeatGenerator)tileEntity);
+				return new HeatGeneratorContainer(player.inventory, (HeatGeneratorTileEntity)tileEntity);
 			case 1:
-				return new ContainerSolarGenerator(player.inventory, (TileEntitySolarGenerator)tileEntity);
+				return new SolarGeneratorContainer(player.inventory, (SolarGeneratorTileEntity)tileEntity);
 			case 3:
-				return new ContainerGasGenerator(player.inventory, (TileEntityGasGenerator)tileEntity);
+				return new GasGeneratorContainer(player.inventory, (GasGeneratorTileEntity)tileEntity);
 			case 4:
-				return new ContainerBioGenerator(player.inventory, (TileEntityBioGenerator)tileEntity);
+				return new BioGeneratorContainer(player.inventory, (BioGeneratorTileEntity)tileEntity);
 			case 5:
-				return new ContainerWindGenerator(player.inventory, (TileEntityWindGenerator)tileEntity);
+				return new WindGeneratorContainer(player.inventory, (WindGeneratorTileEntity)tileEntity);
 			case 6:
-				return new ContainerFilter(player.inventory, (TileEntityTurbineCasing)tileEntity);
+				return new FilterContainer(player.inventory, (TileEntityTurbineCasing)tileEntity);
 			case 7:
-				return new ContainerNull(player, (TileEntityTurbineCasing)tileEntity);
+				return new NullContainer(player, (TileEntityTurbineCasing)tileEntity);
 			case 10:
 				return new ContainerReactorController(player.inventory, (TileEntityReactorController)tileEntity);
 			case 11:
 			case 12:
 			case 13:
-				return new ContainerNull(player, (TileEntityContainerBlock)tileEntity);
+				return new NullContainer(player, (ContainerTileEntity)tileEntity);
 			case 14:
 				return new ContainerNeutronCapture(player.inventory, (TileEntityReactorNeutronCapture)tileEntity);
 			case 15:
-				return new ContainerNull(player, (TileEntityContainerBlock)tileEntity);
+				return new NullContainer(player, (ContainerTileEntity)tileEntity);
 		}
-		
 		return null;
 	}
 }

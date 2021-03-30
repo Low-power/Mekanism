@@ -14,7 +14,7 @@ import mekanism.client.gui.element.GuiRateBar;
 import mekanism.client.gui.element.GuiRateBar.IRateInfoHandler;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.common.content.boiler.SynchronizedBoilerData;
-import mekanism.common.inventory.container.ContainerFilter;
+import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.tile.TileEntityBoilerCasing;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -34,7 +34,7 @@ public class GuiThermoelectricBoiler extends GuiMekanism
 
 	public GuiThermoelectricBoiler(InventoryPlayer inventory, TileEntityBoilerCasing tentity)
 	{
-		super(tentity, new ContainerFilter(inventory, tentity));
+		super(tentity, new FilterContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiBoilerTab(this, tileEntity, BoilerTab.STAT, 6, MekanismUtils.getResource(ResourceType.GUI, "GuiThermoelectricBoiler.png")));
 		guiElements.add(new GuiRateBar(this, new IRateInfoHandler()

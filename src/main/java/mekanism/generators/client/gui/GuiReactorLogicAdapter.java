@@ -8,7 +8,7 @@ import mekanism.client.gui.GuiMekanism;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerNull;
+import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
@@ -29,7 +29,7 @@ public class GuiReactorLogicAdapter extends GuiMekanism
 	
 	public GuiReactorLogicAdapter(InventoryPlayer inventory, final TileEntityReactorLogicAdapter tentity)
 	{
-		super(new ContainerNull(inventory.player, tentity));
+		super(new NullContainer(inventory.player, tentity));
 		
 		tileEntity = tentity;
 	}

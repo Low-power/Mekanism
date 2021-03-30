@@ -21,7 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityFuelwoodHeater extends TileEntityContainerBlock implements IHeatTransfer, ISecurityTile, IActiveState
+public class TileEntityFuelwoodHeater extends ContainerTileEntity implements IHeatTransfer, ISecurityTile, IActiveState
 {
 	public double temperature;
 	public double heatToAbsorb = 0;

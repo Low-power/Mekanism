@@ -17,7 +17,7 @@ import mekanism.api.transmitters.IBlockableConnection;
 import mekanism.api.transmitters.ITransmitter;
 import mekanism.api.transmitters.ITransmitterTile;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.MekanismItems;
 import mekanism.common.Tier;
 import mekanism.common.base.ITileNetwork;
@@ -467,12 +467,12 @@ public abstract class PartSidedPipe extends TMultiPart implements TSlottedPart, 
 	{
 		if(pass == 0)
 		{
-			RenderPartTransmitter.getInstance().renderStatic(this, pass);
+			TransmitterPartRenderer.getInstance().renderStatic(this, pass);
 			return true;
 		}
 		else if(pass == 1 && transparencyRender())
 		{
-			RenderPartTransmitter.getInstance().renderStatic(this, pass);
+			TransmitterPartRenderer.getInstance().renderStatic(this, pass);
 			return true;
 		}
 		
@@ -775,15 +775,15 @@ public abstract class PartSidedPipe extends TMultiPart implements TSlottedPart, 
 
 		if(internal)
 		{
-			return RenderPartTransmitter.contents_models.get(name);
+			return TransmitterPartRenderer.contents_models.get(name);
 		}
 		else {
 			if(getTransmitterType().getSize() == Size.LARGE)
 			{
-				return RenderPartTransmitter.large_models.get(name);
+				return TransmitterPartRenderer.large_models.get(name);
 			}
 			else {
-				return RenderPartTransmitter.small_models.get(name);
+				return TransmitterPartRenderer.small_models.get(name);
 			}
 		}
 	}

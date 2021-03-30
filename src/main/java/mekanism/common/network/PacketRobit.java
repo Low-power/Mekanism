@@ -3,7 +3,7 @@ package mekanism.common.network;
 import io.netty.buffer.ByteBuf;
 import mekanism.common.Mekanism;
 import mekanism.common.PacketHandler;
-import mekanism.common.entity.EntityRobit;
+import mekanism.common.entity.Robit;
 import mekanism.common.network.PacketRobit.RobitMessage;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -42,7 +42,7 @@ public class PacketRobit implements IMessageHandler<RobitMessage, IMessage>
 		}
 		else if(message.activeType == RobitPacketType.FOLLOW)
 		{
-			EntityRobit robit = (EntityRobit)player.worldObj.getEntityByID(message.entityId);
+			Robit robit = (Robit)player.worldObj.getEntityByID(message.entityId);
 
 			if(robit != null)
 			{
@@ -51,7 +51,7 @@ public class PacketRobit implements IMessageHandler<RobitMessage, IMessage>
 		}
 		else if(message.activeType == RobitPacketType.NAME)
 		{
-			EntityRobit robit = (EntityRobit)player.worldObj.getEntityByID(message.entityId);
+			Robit robit = (Robit)player.worldObj.getEntityByID(message.entityId);
 
 			if(robit != null)
 			{
@@ -60,7 +60,7 @@ public class PacketRobit implements IMessageHandler<RobitMessage, IMessage>
 		}
 		else if(message.activeType == RobitPacketType.GO_HOME)
 		{
-			EntityRobit robit = (EntityRobit)player.worldObj.getEntityByID(message.entityId);
+			Robit robit = (Robit)player.worldObj.getEntityByID(message.entityId);
 
 			if(robit != null)
 			{
@@ -69,7 +69,7 @@ public class PacketRobit implements IMessageHandler<RobitMessage, IMessage>
 		}
 		else if(message.activeType == RobitPacketType.DROP_PICKUP)
 		{
-			EntityRobit robit = (EntityRobit)player.worldObj.getEntityByID(message.entityId);
+			Robit robit = (Robit)player.worldObj.getEntityByID(message.entityId);
 
 			if(robit != null)
 			{

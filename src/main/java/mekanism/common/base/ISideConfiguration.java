@@ -1,7 +1,7 @@
 package mekanism.common.base;
 
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
+import mekanism.common.tile.component.ConfigTileComponent;
+import mekanism.common.tile.component.EjectorTileComponent;
 
 /**
  * Implement this if your TileEntity is capable of being modified by a Configurator in it's 'modify' mode.
@@ -14,7 +14,7 @@ public interface ISideConfiguration
 	 * Gets the tile's configuration component.
 	 * @return the tile's configuration component
 	 */
-	public TileComponentConfig getConfig();
+	public ConfigTileComponent getConfig();
 
 	/**
 	 * Gets this machine's current orientation.
@@ -26,5 +26,5 @@ public interface ISideConfiguration
 	 * Gets this machine's ejector.
 	 * @return
 	 */
-	public TileComponentEjector getEjector();
+	public EjectorTileComponent getEjector();
 }

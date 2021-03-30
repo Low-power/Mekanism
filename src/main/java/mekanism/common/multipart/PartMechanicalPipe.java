@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import mekanism.api.MekanismConfig.client;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.FluidNetwork;
 import mekanism.common.Tier;
 import mekanism.common.Tier.BaseTier;
@@ -230,7 +230,7 @@ public class PartMechanicalPipe extends PartTransmitter<IFluidHandler, FluidNetw
 	{
 		if(pass == 0 && !client.opaqueTransmitters)
 		{
-			RenderPartTransmitter.getInstance().renderContents(this, pos);
+			TransmitterPartRenderer.getInstance().renderContents(this, pos);
 		}
 	}
 

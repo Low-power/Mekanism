@@ -3,12 +3,12 @@ package mekanism.common.tile;
 import java.util.Map;
 
 import mekanism.api.MekanismConfig.usage;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.SmeltingRecipe;
 
-public class TileEntityEnergizedSmelter extends TileEntityElectricMachine<SmeltingRecipe>
+public class TileEntityEnergizedSmelter extends ElectricMachineTileEntity<SmeltingRecipe>
 {
 	public TileEntityEnergizedSmelter()
 	{

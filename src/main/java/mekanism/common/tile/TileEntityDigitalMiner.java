@@ -25,7 +25,7 @@ import mekanism.common.base.IRedstoneControl;
 import mekanism.common.base.ISustainedData;
 import mekanism.common.base.ITransporterTile;
 import mekanism.common.base.IUpgradeTile;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.content.miner.MItemStackFilter;
 import mekanism.common.content.miner.MOreDictFilter;
 import mekanism.common.content.miner.MinerFilter;
@@ -33,8 +33,8 @@ import mekanism.common.content.miner.ThreadMinerSearch;
 import mekanism.common.content.miner.ThreadMinerSearch.State;
 import mekanism.common.content.transporter.InvStack;
 import mekanism.common.content.transporter.TransporterManager;
-import mekanism.common.inventory.container.ContainerFilter;
-import mekanism.common.inventory.container.ContainerNull;
+import mekanism.common.inventory.container.FilterContainer;
+import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
@@ -135,7 +135,7 @@ public class TileEntityDigitalMiner extends TileEntityElectricBlock implements I
 		{
 			for(EntityPlayer player : (HashSet<EntityPlayer>)playersUsing.clone())
 			{
-				if(player.openContainer instanceof ContainerNull || player.openContainer instanceof ContainerFilter)
+				if(player.openContainer instanceof NullContainer || player.openContainer instanceof FilterContainer)
 				{
 					player.closeScreen();
 				}

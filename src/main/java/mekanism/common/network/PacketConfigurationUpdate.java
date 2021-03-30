@@ -13,7 +13,7 @@ import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.ITileNetwork;
 import mekanism.common.network.PacketConfigurationUpdate.ConfigurationUpdateMessage;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityBasicBlock;
+import mekanism.common.tile.BasicBlockTileEntity;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.TransporterUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -94,7 +94,7 @@ public class PacketConfigurationUpdate implements IMessageHandler<ConfigurationU
 				config.getEjector().setStrictInput(!config.getEjector().hasStrictInput());
 			}
 
-			for(EntityPlayer p : ((TileEntityBasicBlock)config).playersUsing)
+			for(EntityPlayer p : ((BasicBlockTileEntity)config).playersUsing)
 			{
 				Mekanism.packetHandler.sendTo(new TileEntityMessage(message.coord4D, ((ITileNetwork)tile).getNetworkedData(new ArrayList())), (EntityPlayerMP)p);
 			}

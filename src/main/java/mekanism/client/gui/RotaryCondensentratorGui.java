@@ -1,8 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
@@ -12,7 +9,7 @@ import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
@@ -30,13 +27,13 @@ import mekanism.common.tile.TileEntityRotaryCondensentrator;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fluids.FluidTank;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class RotaryCondensentratorGui extends GuiMekanism
@@ -58,7 +55,6 @@ public class RotaryCondensentratorGui extends GuiMekanism
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 154, 55));
 
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 154, 4).with(SlotOverlay.POWER));
-		
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()
@@ -73,14 +69,14 @@ public class RotaryCondensentratorGui extends GuiMekanism
 			{
 				return tileEntity.fluidTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 133, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 133, 13));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.gasTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 25, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 25, 13));
 
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{
@@ -138,7 +134,7 @@ public class RotaryCondensentratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
@@ -174,10 +170,10 @@ public class RotaryCondensentratorGui extends GuiMekanism
 			if(xAxis >= 4 && xAxis <= 22 && yAxis >= 4 && yAxis <= 22)
 			{
 				ArrayList data = new ArrayList();
-				data.add(0);
+				data.add(Integer.valueOf(0));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
-                SoundHandler.playSound("gui.button.press");
+				SoundHandler.playSound("gui.button.press");
 			}
 		}
 	}

@@ -1,9 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.api.util.ListUtils;
@@ -13,20 +9,21 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerNull;
-import mekanism.common.network.PacketSimpleGui.SimpleGuiMessage;
+import mekanism.common.inventory.container.NullContainer;
+import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.client.gui.element.GuiFuelTab;
 import mekanism.generators.client.gui.element.GuiHeatTab;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ReactorStatsGui extends GuiMekanism
@@ -36,7 +33,7 @@ public class ReactorStatsGui extends GuiMekanism
 
 	public ReactorStatsGui(InventoryPlayer inventory, final TileEntityReactorController tentity)
 	{
-		super(new ContainerNull(inventory.player, tentity));
+		super(new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
@@ -56,7 +53,6 @@ public class ReactorStatsGui extends GuiMekanism
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
 		fontRendererObj.drawString(tileEntity.getInventoryName(), 46, 6, 0x404040);
-		
 		if(tileEntity.isFormed())
 		{
 			fontRendererObj.drawString(EnumColor.DARK_GREEN + LangUtils.localize("gui.passive"), 6, 26, 0x404040);
@@ -74,7 +70,7 @@ public class ReactorStatsGui extends GuiMekanism
 			fontRendererObj.drawString(LangUtils.localize("gui.passiveGeneration") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getReactor().getPassiveGeneration(true, false))+"/t", 16, 142, 0x404040);
 			fontRendererObj.drawString(LangUtils.localize("gui.steamProduction") + ": " + nf.format(tileEntity.getReactor().getSteamPerTick(false)) + "mB/t", 16, 152, 0x404040);
 		}
-		
+
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
@@ -82,7 +78,7 @@ public class ReactorStatsGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

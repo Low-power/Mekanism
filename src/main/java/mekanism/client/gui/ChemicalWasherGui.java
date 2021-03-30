@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiBucketIO;
@@ -11,8 +9,8 @@ import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
-import mekanism.client.gui.element.GuiGauge.Type;
+import mekanism.client.gui.element.GaugeGui;
+import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
@@ -22,27 +20,26 @@ import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.common.inventory.container.ContainerChemicalWasher;
-import mekanism.common.tile.TileEntityChemicalWasher;
+import mekanism.common.inventory.container.ChemicalWasherContainer;
+import mekanism.common.tile.ChemicalWasherTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fluids.FluidTank;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ChemicalWasherGui extends GuiMekanism
 {
-	public TileEntityChemicalWasher tileEntity;
+	public ChemicalWasherTileEntity tileEntity;
 
-	public ChemicalWasherGui(InventoryPlayer inventory, TileEntityChemicalWasher tentity)
+	public ChemicalWasherGui(InventoryPlayer inventory, ChemicalWasherTileEntity tentity)
 	{
-		super(tentity, new ContainerChemicalWasher(inventory, tentity));
+		super(tentity, new ChemicalWasherContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png")));
@@ -71,14 +68,14 @@ public class ChemicalWasherGui extends GuiMekanism
 			{
 				return tileEntity.inputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 26, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 26, 13));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.outputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 133, 13));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 133, 13));
 
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 154, 4).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"), 154, 55).with(SlotOverlay.MINUS));
@@ -98,9 +95,7 @@ public class ChemicalWasherGui extends GuiMekanism
 	{
 		int xAxis = (mouseX - (width - xSize) / 2);
 		int yAxis = (mouseY - (height - ySize) / 2);
-		
 		fontRendererObj.drawString(tileEntity.getInventoryName(), 45, 4, 0x404040);
-		
 		if(xAxis >= 116 && xAxis <= 168 && yAxis >= 76 && yAxis <= 80)
 		{
 			drawCreativeTabHoveringText(MekanismUtils.getEnergyDisplay(tileEntity.getEnergy()), xAxis, yAxis);
@@ -113,11 +108,10 @@ public class ChemicalWasherGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "ChemicalWasherGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
-		
 		int displayInt;
 
 		displayInt = tileEntity.getScaledEnergyLevel(52);

@@ -1,18 +1,10 @@
 package mekanism.client.nei;
 
-import static codechicken.lib.gui.GuiDraw.changeTexture;
-import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.GasStack;
 import mekanism.client.gui.ChemicalOxidizerGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiGasGauge;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
@@ -25,31 +17,35 @@ import mekanism.common.recipe.machines.OxidationRecipe;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraft.item.ItemStack;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import org.lwjgl.opengl.GL11;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.List;
+import static codechicken.lib.gui.GuiDraw.changeTexture;
+import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 
 public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 {
 	private int ticksPassed;
-	
+
 	public GuiGasGauge gasOutput;
 
 	public static int xOffset = 5;
 	public static int yOffset = 12;
-	
+
 	@Override
 	public void addGuiElements()
 	{
-		guiElements.add(gasOutput = GuiGasGauge.getDummy(GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 133, 13));
+		guiElements.add(gasOutput = GuiGasGauge.getDummy(GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 133, 13));
 
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 154, 4).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 25, 35));
@@ -60,7 +56,7 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 			@Override
 			public double getProgress()
 			{
-				return ticksPassed >= 20 ? (ticksPassed - 20) % 20 / 20.0F : 0.0F;
+				return ticksPassed >= 20 ? (ticksPassed - 20) % 20 / 20F : 0F;
 			}
 		}, ProgressBar.LARGE_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 62, 39));
 	}
@@ -102,10 +98,9 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(0, 0, xOffset, yOffset, 147, 62);
-		
 		for(GuiElement e : guiElements)
 		{
 			e.renderBackground(0, 0, -xOffset, -yOffset);

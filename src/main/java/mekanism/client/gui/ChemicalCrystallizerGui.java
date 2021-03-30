@@ -1,8 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasTank;
 import mekanism.api.gas.OreGas;
@@ -11,7 +8,7 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
@@ -24,26 +21,26 @@ import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.common.inventory.container.ContainerChemicalCrystallizer;
+import mekanism.common.inventory.container.ChemicalCrystallizerContainer;
 import mekanism.common.recipe.machines.CrystallizerRecipe;
-import mekanism.common.tile.TileEntityChemicalCrystallizer;
+import mekanism.common.tile.ChemicalCrystallizerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class ChemicalCrystallizerGui extends GuiMekanism
 {
-	public TileEntityChemicalCrystallizer tileEntity;
+	public ChemicalCrystallizerTileEntity tileEntity;
 
 	public Gas prevGas;
 
@@ -55,9 +52,9 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 
 	public List<ItemStack> iterStacks = new ArrayList<ItemStack>();
 
-	public ChemicalCrystallizerGui(InventoryPlayer inventory, TileEntityChemicalCrystallizer tentity)
+	public ChemicalCrystallizerGui(InventoryPlayer inventory, ChemicalCrystallizerTileEntity tentity)
 	{
-		super(tentity, new ContainerChemicalCrystallizer(inventory, tentity));
+		super(tentity, new ChemicalCrystallizerContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
@@ -80,7 +77,7 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 			{
 				return tileEntity.inputTank;
 			}
-		}, GuiGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 5, 4));
+		}, GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 5, 4));
 		guiElements.add(new GuiSlot(SlotType.EXTRA, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 5, 64).with(SlotOverlay.PLUS));
 		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 154, 4).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 130, 56));
@@ -113,7 +110,6 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 			}
 			else {
 				CrystallizerRecipe recipe = tileEntity.getRecipe();
-				
 				if(recipe == null)
 				{
 					fontRendererObj.drawString("(" + LangUtils.localize("gui.noRecipe") + ")", 29, 24, 0x00CD00);
@@ -142,7 +138,7 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

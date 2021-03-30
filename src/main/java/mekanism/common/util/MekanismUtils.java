@@ -1,20 +1,5 @@
 package mekanism.common.util;
 
-import ic2.api.energy.EnergyNet;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import mekanism.api.Chunk3D;
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
@@ -48,16 +33,31 @@ import mekanism.common.base.IModule;
 import mekanism.common.base.IRedstoneControl;
 import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.IUpgradeTile;
-import mekanism.common.inventory.container.ContainerPersonalChest;
-import mekanism.common.item.ItemBlockBasic;
+import mekanism.common.inventory.container.PersonalChestContainer;
+import mekanism.common.item.BasicBlockItem;
 import mekanism.common.item.ItemBlockEnergyCube;
 import mekanism.common.item.ItemBlockGasTank;
-import mekanism.common.item.ItemBlockMachine;
+import mekanism.common.item.MachineItem;
 import mekanism.common.network.PacketPersonalChest.PersonalChestMessage;
 import mekanism.common.network.PacketPersonalChest.PersonalChestPacketType;
 import mekanism.common.tile.TileEntityAdvancedBoundingBlock;
 import mekanism.common.tile.TileEntityBoundingBlock;
-import mekanism.common.tile.TileEntityPersonalChest;
+import mekanism.common.tile.PersonalChestTileEntity;
+import buildcraft.api.tools.IToolWrench;
+import ic2.api.energy.EnergyNet;
+import cofh.api.item.IToolHammer;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -78,20 +78,18 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import buildcraft.api.tools.IToolWrench;
-import cofh.api.item.IToolHammer;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Utilities used by Mekanism. All miscellaneous methods are located here.
@@ -206,7 +204,7 @@ public final class MekanismUtils
 	public static void doFakeEntityExplosion(EntityPlayer player)
 	{
 		World world = player.worldObj;
-		world.spawnParticle("hugeexplosion", player.posX, player.posY, player.posZ, 0.0D, 0.0D, 0.0D);
+		world.spawnParticle("hugeexplosion", player.posX, player.posY, player.posZ, 0D, 0D, 0D);
 		world.playSoundAtEntity(player, "random.explode", 1F, 1F);
 	}
 
@@ -219,8 +217,8 @@ public final class MekanismUtils
 	 */
 	public static void doFakeBlockExplosion(World world, int x, int y, int z)
 	{
-		world.spawnParticle("hugeexplosion", x, y, z, 0.0D, 0.0D, 0.0D);
-		world.playSound(x, y, z, "random.explode", 1.0F, 1.0F, true);
+		world.spawnParticle("hugeexplosion", x, y, z, 0D, 0D, 0D);
+		world.playSound(x, y, z, "random.explode", 1F, 1F, true);
 	}
 
 	/**
@@ -255,7 +253,7 @@ public final class MekanismUtils
 	{
 		return ((ItemBlockEnergyCube)new ItemStack(MekanismBlocks.EnergyCube).getItem()).getUnchargedItem(tier);
 	}
-	
+
 	/**
 	 * Returns a Control Circuit with a defined tier, using an OreDict value if enabled in the config.
 	 * @param tier - tier to add to the Control Circuit
@@ -265,7 +263,7 @@ public final class MekanismUtils
 	{
 		return general.controlCircuitOreDict ? "circuit" + tier.getName() : new ItemStack(MekanismItems.ControlCircuit, 1, tier.ordinal());
 	}
-	
+
 	/**
 	 * Retrieves an empty Induction Cell with a defined tier.
 	 * @param tier - tier to add to the Induction Cell
@@ -273,9 +271,9 @@ public final class MekanismUtils
 	 */
 	public static ItemStack getInductionCell(InductionCellTier tier)
 	{
-		return ((ItemBlockBasic)new ItemStack(MekanismBlocks.BasicBlock2, 1, 3).getItem()).getUnchargedCell(tier);
+		return ((BasicBlockItem)new ItemStack(MekanismBlocks.BasicBlock2, 1, 3).getItem()).getUnchargedCell(tier);
 	}
-	
+
 	/**
 	 * Retrieves an Induction Provider with a defined tier.
 	 * @param tier - tier to add to the Induction Provider
@@ -283,9 +281,9 @@ public final class MekanismUtils
 	 */
 	public static ItemStack getInductionProvider(InductionProviderTier tier)
 	{
-		return ((ItemBlockBasic)new ItemStack(MekanismBlocks.BasicBlock2, 1, 4).getItem()).getUnchargedProvider(tier);
+		return ((BasicBlockItem)new ItemStack(MekanismBlocks.BasicBlock2, 1, 4).getItem()).getUnchargedProvider(tier);
 	}
-	
+
 	/**
 	 * Retrieves an Bin with a defined tier.
 	 * @param tier - tier to add to the Bin
@@ -294,8 +292,8 @@ public final class MekanismUtils
 	public static ItemStack getBin(BinTier tier)
 	{
 		ItemStack ret = new ItemStack(MekanismBlocks.BasicBlock, 1, 6);
-		((ItemBlockBasic)ret.getItem()).setBaseTier(ret, tier.getBaseTier());
-		
+		((BasicBlockItem)ret.getItem()).setBaseTier(ret, tier.getBaseTier());
+
 		return ret;
 	}
 
@@ -307,13 +305,12 @@ public final class MekanismUtils
 	{
 		return ((ItemBlockGasTank)new ItemStack(MekanismBlocks.GasTank).getItem()).getEmptyItem(tier);
 	}
-	
+
 	public static ItemStack getEmptyFluidTank(FluidTankTier tier)
 	{
 		ItemStack stack = new ItemStack(MekanismBlocks.MachineBlock2, 1, 11);
-		ItemBlockMachine itemMachine = (ItemBlockMachine)stack.getItem();
-		itemMachine.setBaseTier(stack, tier.getBaseTier());
-		
+		MachineItem machine_item = (MachineItem)stack.getItem();
+		machine_item.setBaseTier(stack, tier.getBaseTier());
 		return stack;
 	}
 
@@ -450,7 +447,7 @@ public final class MekanismUtils
 			{
 				return 0;
 			}
-			
+
 			return side;
 		}
 		else if(blockFacing == 1)
@@ -471,7 +468,7 @@ public final class MekanismUtils
 			{
 				return 1;
 			}
-			
+
 			return side;
 		}
 		else if(blockFacing == 3 || side == 1 || side == 0)
@@ -589,7 +586,7 @@ public final class MekanismUtils
 	{
 		return def * Math.pow(general.maxUpgradeMultiplier, 2*fractionUpgrades(mgmt, Upgrade.SPEED)-fractionUpgrades(mgmt, Upgrade.ENERGY));
 	}
-	
+
 	/**
 	 * Gets the energy required per tick for a machine via it's upgrades, not taking into account speed upgrades.
 	 * @param mgmt - tile containing upgrades
@@ -627,7 +624,7 @@ public final class MekanismUtils
 	{
 		return def * Math.pow(general.maxUpgradeMultiplier, fractionUpgrades(mgmt, Upgrade.ENERGY));
 	}
-	
+
 	/**
 	 * Gets the maximum energy for a machine's item form via it's upgrades.
 	 * @param itemStack - stack holding energy upgrades
@@ -640,7 +637,7 @@ public final class MekanismUtils
 		float numUpgrades =  upgrades.get(Upgrade.ENERGY) == null ? 0 : (float)upgrades.get(Upgrade.ENERGY);
 		return def * Math.pow(general.maxUpgradeMultiplier, numUpgrades/(float)Upgrade.ENERGY.getMax());
 	}
-	
+
 	/**
 	 * Better version of the World.isBlockIndirectlyGettingPowered() method that doesn't load chunks.
 	 * @param world - the world to perform the check in
@@ -652,12 +649,11 @@ public final class MekanismUtils
 		for(ForgeDirection side : ForgeDirection.VALID_DIRECTIONS)
 		{
 			Coord4D sideCoord = coord.getFromSide(side);
-			
 			if(sideCoord.exists(world) && sideCoord.getFromSide(side).exists(world))
 			{
 				Block block = sideCoord.getBlock(world);
 				boolean weakPower = block.shouldCheckWeakPower(world, coord.xCoord, coord.yCoord, coord.zCoord, side.ordinal());
-				
+
 				if(weakPower && isDirectlyGettingPowered(world, sideCoord))
 				{
 					return true;
@@ -668,10 +664,10 @@ public final class MekanismUtils
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Checks if a block is directly getting powered by any of its neighbors without loading any chunks.
 	 * @param world - the world to perform the check in
@@ -683,7 +679,7 @@ public final class MekanismUtils
 		for(ForgeDirection side : ForgeDirection.VALID_DIRECTIONS)
 		{
 			Coord4D sideCoord = coord.getFromSide(side);
-			
+
 			if(sideCoord.exists(world))
 			{
 				if(world.isBlockProvidingPowerTo(coord.xCoord, coord.yCoord, coord.zCoord, side.ordinal()) > 0)
@@ -692,7 +688,7 @@ public final class MekanismUtils
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -711,11 +707,9 @@ public final class MekanismUtils
 			{
 				Block block1 = offset.getBlock(world);
 				block1.onNeighborChange(world, offset.xCoord, offset.yCoord, offset.zCoord, coord.xCoord, coord.yCoord, coord.zCoord);
-				
 				if(block1.isNormalCube(world, offset.xCoord, offset.yCoord, offset.zCoord))
 				{
 					offset = offset.getFromSide(dir);
-					
 					if(offset.exists(world))
 					{
 						block1 = offset.getBlock(world);
@@ -782,7 +776,7 @@ public final class MekanismUtils
 			updateAllLightTypes(world, pos);
 		}
 	}
-	
+
 	/**
 	 * Updates all light types at the given coordinates.
 	 * @param world - the world to perform the lighting update in
@@ -879,7 +873,7 @@ public final class MekanismUtils
 
 		return false;
 	}
-	
+
 	/**
 	 * Gets the flowing block type from a Forge-based fluid. Incorporates the MC system of fliuds as well.
 	 * @param fluid - the fluid type
@@ -912,7 +906,7 @@ public final class MekanismUtils
 	 * @param inventory - IInventory of the item, if it's not a block
 	 * @param isBlock - whether or not this electric chest is in it's block form
 	 */
-	public static void openPersonalChestGui(EntityPlayerMP player, TileEntityPersonalChest tileEntity, IInventory inventory, boolean isBlock)
+	public static void openPersonalChestGui(EntityPlayerMP player, PersonalChestTileEntity tileEntity, IInventory inventory, boolean isBlock)
 	{
 		player.getNextWindowId();
 		player.closeContainer();
@@ -926,7 +920,7 @@ public final class MekanismUtils
 			Mekanism.packetHandler.sendTo(new PersonalChestMessage(PersonalChestPacketType.CLIENT_OPEN, false, 0, id, null), player);
 		}
 
-		player.openContainer = new ContainerPersonalChest(player.inventory, tileEntity, inventory, isBlock);
+		player.openContainer = new PersonalChestContainer(player.inventory, tileEntity, inventory, isBlock);
 		player.openContainer.windowId = id;
 		player.openContainer.addCraftingToCrafters(player);
 	}
@@ -1133,7 +1127,6 @@ public final class MekanismUtils
 		{
 			return LangUtils.localize("gui.infinite");
 		}
-		
 		switch(general.energyUnit)
 		{
 			case J:
@@ -1148,7 +1141,7 @@ public final class MekanismUtils
 
 		return "error";
 	}
-	
+
 	/**
 	 * Convert from the unit defined in the configuration to joules.
 	 * @param energy - energy to convert
@@ -1168,7 +1161,7 @@ public final class MekanismUtils
 				return energy;
 		}
 	}
-	
+
 	/**
 	 * Convert from joules to the unit defined in the configuration.
 	 * @param energy - energy to convert
@@ -1197,7 +1190,6 @@ public final class MekanismUtils
 	public static String getTemperatureDisplay(double T, TemperatureUnit unit)
 	{
 		double TK = unit.convertToK(T, true);
-		
 		switch(general.tempUnit)
 		{
 			case K:
@@ -1244,25 +1236,20 @@ public final class MekanismUtils
 	{
 		return "[" + obj.xCoord + ", " + obj.yCoord + ", " + obj.zCoord + "]";
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public static List<String> splitTooltip(String s, ItemStack stack)
 	{
 		s = s.trim();
-		
 		try {
 			FontRenderer renderer = (FontRenderer)Mekanism.proxy.getFontRenderer();
-			
 			if(stack != null && stack.getItem().getFontRenderer(stack) != null)
 			{
 				renderer = stack.getItem().getFontRenderer(stack);
 			}
-			
 			List<String> words = new ArrayList<String>();
 			List<String> lines = new ArrayList<String>();
-			
 			String currentWord = "";
-			
 			for(Character c : s.toCharArray())
 			{
 				if(c.equals(' '))
@@ -1274,14 +1261,11 @@ public final class MekanismUtils
 					currentWord += c;
 				}
 			}
-			
 			if(!currentWord.isEmpty())
 			{
 				words.add(currentWord);
 			}
-			
 			String currentLine = "";
-			
 			for(String word : words)
 			{
 				if(currentLine.isEmpty() || renderer.getStringWidth(currentLine + " " + word) <= 200)
@@ -1290,29 +1274,23 @@ public final class MekanismUtils
 					{
 						currentLine += " ";
 					}
-					
 					currentLine += word;
-					
 					continue;
 				}
 				else {
 					lines.add(currentLine);
 					currentLine = word;
-					
 					continue;
 				}
 			}
-			
 			if(!currentLine.isEmpty())
 			{
 				lines.add(currentLine);
 			}
-			
 			return lines;
-		} catch(Throwable t) {
-			t.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		
 		return new ArrayList<String>();
 	}
 
@@ -1329,7 +1307,7 @@ public final class MekanismUtils
 
 		return tank;
 	}
-	
+
 	public static InventoryCrafting getDummyCraftingInv()
 	{
 		Container tempContainer = new Container() {
@@ -1339,7 +1317,7 @@ public final class MekanismUtils
 				return false;
 			}
 		};
-		
+
 		return new InventoryCrafting(tempContainer, 3, 3);
 	}
 
@@ -1380,7 +1358,6 @@ public final class MekanismUtils
 			int dmgDiff1 = theItem.getMaxDamage() - dmgItems[1].getItemDamageForDisplay();
 			int value = dmgDiff0 + dmgDiff1 + theItem.getMaxDamage() * 5 / 100;
 			int solve = Math.max(0, theItem.getMaxDamage() - value);
-			
 			return new ItemStack(dmgItems[0].getItem(), 1, solve);
 		}
 
@@ -1394,7 +1371,7 @@ public final class MekanismUtils
 
 		return null;
 	}
-	
+
 	/**
 	 * Whether or not the provided chunk is being vibrated by a Seismic Vibrator.
 	 * @param chunk - chunk to check
@@ -1409,10 +1386,9 @@ public final class MekanismUtils
 				return true;
 			}
 		}
-		
 		return false;
 	}
-	
+
 	/**
 	 * Whether or not a given EntityPlayer is considered an Op.
 	 * @param player - player to check
@@ -1424,12 +1400,10 @@ public final class MekanismUtils
 		{
 			return false;
 		}
-		
 		EntityPlayerMP player = (EntityPlayerMP)p;
-		
 		return general.opsBypassRestrictions && player.mcServer.getConfigurationManager().func_152596_g(player.getGameProfile());
 	}
-	
+
 	/**
 	 * Gets the mod ID of the mod owning the given ItemStack.
 	 * @param stack - ItemStack to check
@@ -1444,7 +1418,7 @@ public final class MekanismUtils
 			return "null";
 		}
 	}
-	
+
 	/**
 	 * Gets the item ID from a given ItemStack
 	 * @param itemStack - ItemStack to check
@@ -1456,7 +1430,6 @@ public final class MekanismUtils
 		{
 			return -1;
 		}
-		
 		return Item.getIdFromItem(itemStack.getItem());
 	}
 
@@ -1524,28 +1497,23 @@ public final class MekanismUtils
 	 */
 	public static boolean hasUsableWrench(EntityPlayer player, int x, int y, int z)
 	{
-		ItemStack tool = player.getCurrentEquippedItem();
-		
-		if(tool == null)
-		{
-			return false;
-		}
-		
-		if(tool.getItem() instanceof IMekWrench && ((IMekWrench)tool.getItem()).canUseWrench(player, x, y, z))
+		ItemStack item_stack = player.getCurrentEquippedItem();
+		if(item_stack == null) return false;
+
+		Item tool = item_stack.getItem();
+		if(tool instanceof IMekWrench && ((IMekWrench)tool).canUseWrench(player, x, y, z))
 		{
 			return true;
 		}
-		
-		if(isBCWrench(tool.getItem()) && ((IToolWrench)tool.getItem()).canWrench(player, x, y, z))
+		if(isBCWrench(tool) && ((IToolWrench)tool).canWrench(player, x, y, z))
 		{
 			return true;
 		}
-		
-		if(isCoFHHammer(tool.getItem()) && ((IToolHammer)tool.getItem()).isUsable(tool, player, x, y, z))
+		if(isCoFHHammer(tool) && ((IToolHammer)tool).isUsable(item_stack, player, x, y, z))
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 

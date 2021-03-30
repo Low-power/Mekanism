@@ -9,8 +9,8 @@ import mekanism.api.transmitters.TransmissionType;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.common.SideData;
 import mekanism.common.base.ISideConfiguration;
-import mekanism.common.item.ItemConfigurator;
-import mekanism.common.tile.TileEntityContainerBlock;
+import mekanism.common.item.Configurator;
+import mekanism.common.tile.ContainerTileEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -25,7 +25,7 @@ public abstract class GuiMekanism extends GuiContainer implements IGuiWrapper
 {
 	public Set<GuiElement> guiElements = new HashSet<GuiElement>();
 
-	private TileEntityContainerBlock tileEntity;
+	private ContainerTileEntity tileEntity;
 
 	//Try not to use
 	public GuiMekanism(Container container)
@@ -33,7 +33,7 @@ public abstract class GuiMekanism extends GuiContainer implements IGuiWrapper
 		super(container);
 	}
 
-	public GuiMekanism(TileEntityContainerBlock tile, Container container)
+	public GuiMekanism(ContainerTileEntity tile, Container container)
 	{
 		super(container);
 		tileEntity = tile;
@@ -117,7 +117,7 @@ public abstract class GuiMekanism extends GuiContainer implements IGuiWrapper
 
 			ItemStack stack = mc.thePlayer.inventory.getItemStack();
 
-			if(stack != null && stack.getItem() instanceof ItemConfigurator && hovering != null)
+			if(stack != null && stack.getItem() instanceof Configurator && hovering != null)
 			{
 				SideData data = getFromSlot(hovering);
 
@@ -129,7 +129,7 @@ public abstract class GuiMekanism extends GuiContainer implements IGuiWrapper
 		}
 	}
 	
-	public TileEntityContainerBlock getTileEntity()
+	public ContainerTileEntity getTileEntity()
 	{
 		return tileEntity;
 	}

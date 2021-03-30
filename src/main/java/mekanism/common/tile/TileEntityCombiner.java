@@ -6,7 +6,7 @@ import mekanism.api.MekanismConfig.usage;
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.gas.GasStack;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.CombinerRecipe;
 import net.minecraft.block.Block;
@@ -14,7 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class TileEntityCombiner extends TileEntityAdvancedElectricMachine<CombinerRecipe>
+public class TileEntityCombiner extends AdvancedElectricMachineTileEntity<CombinerRecipe>
 {
 	public TileEntityCombiner()
 	{

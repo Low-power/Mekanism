@@ -20,7 +20,7 @@ import net.minecraftforge.fluids.FluidTank;
 
 import org.lwjgl.input.Keyboard;
 
-public class GuiFluidGauge extends GuiGauge<Fluid>
+public class GuiFluidGauge extends GaugeGui<Fluid>
 {
 	IFluidInfoHandler infoHandler;
 

@@ -2,8 +2,8 @@ package mekanism.client.gui;
 
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.entity.EntityRobit;
-import mekanism.common.inventory.container.ContainerRobitSmelting;
+import mekanism.common.entity.Robit;
+import mekanism.common.inventory.container.RobitSmeltingContainer;
 import mekanism.common.network.PacketRobit.RobitMessage;
 import mekanism.common.network.PacketRobit.RobitPacketType;
 import mekanism.common.util.LangUtils;
@@ -15,11 +15,11 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiRobitSmelting extends GuiMekanism
 {
-	public EntityRobit robit;
+	public Robit robit;
 
-	public GuiRobitSmelting(InventoryPlayer inventory, EntityRobit entity)
+	public GuiRobitSmelting(InventoryPlayer inventory, Robit entity)
 	{
-		super(new ContainerRobitSmelting(inventory, entity));
+		super(new RobitSmeltingContainer(inventory, entity));
 		robit = entity;
 		xSize += 25;
 	}

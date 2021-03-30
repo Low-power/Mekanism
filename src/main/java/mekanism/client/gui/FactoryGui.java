@@ -1,17 +1,14 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiRecipeType;
+import mekanism.client.gui.element.RecipeTypeGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
-import mekanism.client.gui.element.GuiSortingTab;
+import mekanism.client.gui.element.SortingTabGui;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
 import mekanism.client.gui.element.GuiUpgradeTab;
 import mekanism.client.render.MekanismRenderer;
@@ -19,30 +16,30 @@ import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.Tier.FactoryTier;
 import mekanism.common.base.IFactory.RecipeType;
-import mekanism.common.inventory.container.ContainerFactory;
+import mekanism.common.inventory.container.FactoryContainer;
 import mekanism.common.item.ItemGaugeDropper;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityFactory;
+import mekanism.common.tile.FactoryTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class FactoryGui extends GuiMekanism
 {
-	public TileEntityFactory tileEntity;
+	public FactoryTileEntity tileEntity;
 
-	public FactoryGui(InventoryPlayer inventory, TileEntityFactory tentity)
+	public FactoryGui(InventoryPlayer inventory, FactoryTileEntity tentity)
 	{
-		super(tentity, new ContainerFactory(inventory, tentity));
+		super(tentity, new FactoryContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		ySize += 11;
@@ -50,10 +47,10 @@ public class FactoryGui extends GuiMekanism
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, tileEntity.tier.guiLocation));
-		guiElements.add(new GuiRecipeType(this, tileEntity, tileEntity.tier.guiLocation));
+		guiElements.add(new RecipeTypeGui(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, tileEntity.tier.guiLocation));
-		guiElements.add(new GuiSortingTab(this, tileEntity, tileEntity.tier.guiLocation));
+		guiElements.add(new SortingTabGui(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()
@@ -97,7 +94,7 @@ public class FactoryGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(tileEntity.tier.guiLocation);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);
@@ -110,11 +107,10 @@ public class FactoryGui extends GuiMekanism
 		displayInt = tileEntity.getScaledEnergyLevel(52);
 		drawTexturedModalRect(guiWidth + 165, guiHeight + 17 + 52 - displayInt, 176, 52 - displayInt, 4, displayInt);
 
-		int xOffset = tileEntity.tier == FactoryTier.BASIC ? 59 : (tileEntity.tier == FactoryTier.ADVANCED ? 
+		int xOffset = tileEntity.tier == FactoryTier.BASIC ? 59 : (tileEntity.tier == FactoryTier.ADVANCED ?
 			39 : 33);
-		int xDistance = tileEntity.tier == FactoryTier.BASIC ? 38 : (tileEntity.tier == FactoryTier.ADVANCED ? 
+		int xDistance = tileEntity.tier == FactoryTier.BASIC ? 38 : (tileEntity.tier == FactoryTier.ADVANCED ?
 			26 : 19);
-		
 		for(int i = 0; i < tileEntity.tier.processes; i++)
 		{
 			int xPos = xOffset + (i*xDistance);
@@ -137,7 +133,7 @@ public class FactoryGui extends GuiMekanism
 				displayGauge(8, 78, tileEntity.getScaledInfuseLevel(160), 5, tileEntity.infuseStored.type.icon);
 			}
 		}
-		
+
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 	}
 
@@ -154,7 +150,7 @@ public class FactoryGui extends GuiMekanism
 		mc.renderEngine.bindTexture(MekanismRenderer.getBlocksTexture());
 		drawTexturedModelRectFromIcon(guiWidth + xPos, guiHeight + yPos, icon, sizeX, sizeY);
 	}
-	
+
 	@Override
 	protected void mouseClicked(int x, int y, int button)
 	{
@@ -168,12 +164,10 @@ public class FactoryGui extends GuiMekanism
 			if(xAxis > 8 && xAxis < 168 && yAxis > 78 && yAxis < 83)
 			{
 				ItemStack stack = mc.thePlayer.inventory.getItemStack();
-				
 				if(stack != null && stack.getItem() instanceof ItemGaugeDropper)
 				{
 					ArrayList data = new ArrayList();
-					data.add(1);
-	
+					data.add(Integer.valueOf(1));
 					Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 					SoundHandler.playSound("gui.button.press");
 				}

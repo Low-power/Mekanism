@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.gas.GasTank;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -10,7 +8,7 @@ import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
-import mekanism.client.gui.element.GuiGauge;
+import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
@@ -23,27 +21,26 @@ import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.common.inventory.container.ContainerPRC;
-import mekanism.common.tile.TileEntityPRC;
+import mekanism.common.inventory.container.PRCContainer;
+import mekanism.common.tile.PRCTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.fluids.FluidTank;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fluids.FluidTank;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class PRCGui extends GuiMekanism
 {
-	public TileEntityPRC tileEntity;
+	public PRCTileEntity tileEntity;
 
-	public PRCGui(InventoryPlayer inventory, TileEntityPRC tentity)
+	public PRCGui(InventoryPlayer inventory, PRCTileEntity tentity)
 	{
-		super(tentity, new ContainerPRC(inventory, tentity));
+		super(tentity, new PRCContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
@@ -66,21 +63,21 @@ public class PRCGui extends GuiMekanism
 			{
 				return tileEntity.inputFluidTank;
 			}
-		}, GuiGauge.Type.STANDARD_YELLOW, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 5, 10));
+		}, GaugeGui.Type.STANDARD_YELLOW, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 5, 10));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.inputGasTank;
 			}
-		}, GuiGauge.Type.STANDARD_RED, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 28, 10));
+		}, GaugeGui.Type.STANDARD_RED, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 28, 10));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.outputGasTank;
 			}
-		}, GuiGauge.Type.SMALL_BLUE, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 140, 40));
+		}, GaugeGui.Type.SMALL_BLUE, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 140, 40));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 164, 15));
 
 		guiElements.add(new GuiSlot(SlotType.INPUT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 53, 34));
@@ -113,7 +110,7 @@ public class PRCGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

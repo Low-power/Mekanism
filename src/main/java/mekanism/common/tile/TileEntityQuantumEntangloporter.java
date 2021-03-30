@@ -24,8 +24,8 @@ import mekanism.common.frequency.FrequencyManager;
 import mekanism.common.frequency.IFrequencyHandler;
 import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentConfig;
-import mekanism.common.tile.component.TileComponentEjector;
+import mekanism.common.tile.component.ConfigTileComponent;
+import mekanism.common.tile.component.EjectorTileComponent;
 import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.CableUtils;
 import mekanism.common.util.HeatUtils;
@@ -55,15 +55,15 @@ public class TileEntityQuantumEntangloporter extends TileEntityElectricBlock imp
 
 	public static final EnumSet<ForgeDirection> nothing = EnumSet.noneOf(ForgeDirection.class);
 	
-	public TileComponentEjector ejectorComponent;
-	public TileComponentConfig configComponent;
+	public EjectorTileComponent ejectorComponent;
+	public ConfigTileComponent configComponent;
 	public TileComponentSecurity securityComponent;
 
 	public TileEntityQuantumEntangloporter()
 	{
 		super("QuantumEntangloporter", 0);
 		
-		configComponent = new TileComponentConfig(this, TransmissionType.ITEM, TransmissionType.FLUID, TransmissionType.GAS, TransmissionType.ENERGY, TransmissionType.HEAT);
+		configComponent = new ConfigTileComponent(this, TransmissionType.ITEM, TransmissionType.FLUID, TransmissionType.GAS, TransmissionType.ENERGY, TransmissionType.HEAT);
 		
 		for(TransmissionType type : TransmissionType.values())
 		{
@@ -82,7 +82,7 @@ public class TileEntityQuantumEntangloporter extends TileEntityElectricBlock imp
 		configComponent.getOutputs(TransmissionType.FLUID).get(2).availableSlots = new int[] {0};
 		configComponent.getOutputs(TransmissionType.GAS).get(2).availableSlots = new int[] {1};
 		
-		ejectorComponent = new TileComponentEjector(this);
+		ejectorComponent = new EjectorTileComponent(this);
 		ejectorComponent.setOutputData(TransmissionType.ITEM, configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		ejectorComponent.setOutputData(TransmissionType.FLUID, configComponent.getOutputs(TransmissionType.FLUID).get(2));
 		ejectorComponent.setOutputData(TransmissionType.GAS, configComponent.getOutputs(TransmissionType.GAS).get(2));
@@ -637,7 +637,7 @@ public class TileEntityQuantumEntangloporter extends TileEntityElectricBlock imp
 	}
 
 	@Override
-	public TileComponentConfig getConfig() 
+	public ConfigTileComponent getConfig() 
 	{
 		return configComponent;
 	}
@@ -649,7 +649,7 @@ public class TileEntityQuantumEntangloporter extends TileEntityElectricBlock imp
 	}
 
 	@Override
-	public TileComponentEjector getEjector() 
+	public EjectorTileComponent getEjector() 
 	{
 		return ejectorComponent;
 	}

@@ -1,7 +1,7 @@
 package mekanism.client.render.tileentity;
 
 import mekanism.client.model.ModelResistiveHeater;
-import mekanism.common.tile.TileEntityResistiveHeater;
+import mekanism.common.tile.ResistiveHeaterTileEntity;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -20,10 +20,10 @@ public class RenderResistiveHeater extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		renderAModelAt((TileEntityResistiveHeater)tileEntity, x, y, z, partialTick);
+		renderAModelAt((ResistiveHeaterTileEntity)tileEntity, x, y, z, partialTick);
 	}
 
-	private void renderAModelAt(TileEntityResistiveHeater tileEntity, double x, double y, double z, float partialTick)
+	private void renderAModelAt(ResistiveHeaterTileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);

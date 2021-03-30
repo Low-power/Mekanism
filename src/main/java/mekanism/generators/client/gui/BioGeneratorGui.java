@@ -1,7 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.util.List;
-
 import mekanism.api.MekanismConfig.generators;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.GuiMekanism;
@@ -16,23 +14,22 @@ import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.common.inventory.container.ContainerBioGenerator;
-import mekanism.generators.common.tile.TileEntityBioGenerator;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
+import mekanism.generators.common.inventory.container.BioGeneratorContainer;
+import mekanism.generators.common.tile.BioGeneratorTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class BioGeneratorGui extends GuiMekanism
 {
-	public TileEntityBioGenerator tileEntity;
+	public BioGeneratorTileEntity tileEntity;
 
-	public BioGeneratorGui(InventoryPlayer inventory, TileEntityBioGenerator tentity)
+	public BioGeneratorGui(InventoryPlayer inventory, BioGeneratorTileEntity tentity)
 	{
-		super(new ContainerBioGenerator(inventory, tentity));
+		super(new BioGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png")));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png")));
@@ -67,7 +64,7 @@ public class BioGeneratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

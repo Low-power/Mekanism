@@ -9,7 +9,7 @@ import mekanism.client.render.MekanismRenderer.Model3D;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.client.model.ModelBioGenerator;
-import mekanism.generators.common.tile.TileEntityBioGenerator;
+import mekanism.generators.common.tile.BioGeneratorTileEntity;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -32,10 +32,10 @@ public class RenderBioGenerator extends TileEntitySpecialRenderer
 	@Override
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
-		renderAModelAt((TileEntityBioGenerator)tileEntity, x, y, z, partialTick);
+		renderAModelAt((BioGeneratorTileEntity)tileEntity, x, y, z, partialTick);
 	}
 
-	private void renderAModelAt(TileEntityBioGenerator tileEntity, double x, double y, double z, float partialTick)
+	private void renderAModelAt(BioGeneratorTileEntity tileEntity, double x, double y, double z, float partialTick)
 	{
 		if(tileEntity.bioFuelSlot.fluidStored > 0)
 		{

@@ -3,7 +3,7 @@ package mekanism.common.inventory;
 import mekanism.api.util.StackUtils;
 import mekanism.common.Tier.BinTier;
 import mekanism.common.base.ITierItem;
-import mekanism.common.block.BlockBasic.BasicType;
+import mekanism.common.block.BasicBlock.BasicType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

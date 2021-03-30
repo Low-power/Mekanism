@@ -1,8 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.text.DecimalFormat;
-import java.util.List;
-
 import mekanism.api.EnumColor;
 import mekanism.api.MekanismConfig.generators;
 import mekanism.api.util.ListUtils;
@@ -18,25 +15,25 @@ import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.common.inventory.container.ContainerWindGenerator;
-import mekanism.generators.common.tile.TileEntityWindGenerator;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
+import mekanism.generators.common.inventory.container.WindGeneratorContainer;
+import mekanism.generators.common.tile.WindGeneratorTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.text.DecimalFormat;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class WindGeneratorGui extends GuiMekanism
 {
-	public TileEntityWindGenerator tileEntity;
+	public WindGeneratorTileEntity tileEntity;
 
 	private DecimalFormat powerFormat = new DecimalFormat("0.##");
 
-	public WindGeneratorGui(InventoryPlayer inventory, TileEntityWindGenerator tentity)
+	public WindGeneratorGui(InventoryPlayer inventory, WindGeneratorTileEntity tentity)
 	{
-		super(new ContainerWindGenerator(inventory, tentity));
+		super(new WindGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png")));
 		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png")));
@@ -78,7 +75,7 @@ public class WindGeneratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

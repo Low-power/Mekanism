@@ -1,9 +1,5 @@
 package mekanism.generators.common;
 
-import io.netty.buffer.ByteBuf;
-
-import java.io.IOException;
-
 import mekanism.api.MekanismConfig.general;
 import mekanism.api.MekanismConfig.generators;
 import mekanism.api.gas.Gas;
@@ -18,18 +14,11 @@ import mekanism.common.Tier.GasTankTier;
 import mekanism.common.Version;
 import mekanism.common.base.IModule;
 import mekanism.common.multiblock.MultiblockManager;
-import mekanism.common.network.PacketSimpleGui;
+import mekanism.common.network.SimpleGuiPacket;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.ShapedMekanismRecipe;
 import mekanism.common.util.MekanismUtils;
 import mekanism.generators.common.content.turbine.SynchronizedTurbineData;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.fuels.IFuel;
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -43,19 +32,28 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import io.netty.buffer.ByteBuf;
+import java.io.IOException;
 
 @Mod(modid = "MekanismGenerators", name = "MekanismGenerators", version = "9.1.1", dependencies = "required-after:Mekanism", guiFactory = "mekanism.generators.client.gui.GeneratorsGuiFactory")
 public class MekanismGenerators implements IModule
 {
 	@SidedProxy(clientSide = "mekanism.generators.client.GeneratorsClientProxy", serverSide = "mekanism.generators.common.GeneratorsCommonProxy")
 	public static GeneratorsCommonProxy proxy;
-	
+
 	@Instance("MekanismGenerators")
 	public static MekanismGenerators instance;
-	
+
 	/** MekanismGenerators version number */
 	public static Version versionNumber = new Version(9, 1, 1);
-	
+
 	public static MultiblockManager<SynchronizedTurbineData> turbineManager = new MultiblockManager<SynchronizedTurbineData>("industrialTurbine");
 
 	@EventHandler
@@ -70,10 +68,10 @@ public class MekanismGenerators implements IModule
 	{
 		//Add this module to the core list
 		Mekanism.modulesLoaded.add(this);
-		
+
 		//Register this module's GUI handler in the simple packet protocol
-		PacketSimpleGui.handlers.add(1, proxy);
-		
+		SimpleGuiPacket.handlers.add(1, proxy);
+
 		//Set up the GUI handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GeneratorsGuiHandler());
 		FMLCommonHandler.instance().bus().register(this);
@@ -83,9 +81,9 @@ public class MekanismGenerators implements IModule
 		proxy.registerRegularTileEntities();
 		proxy.registerSpecialTileEntities();
 		proxy.registerRenderInformation();
-		
+
 		addRecipes();
-		
+
 		//Finalization
 		Mekanism.logger.info("Loaded MekanismGenerators module.");
 	}
@@ -105,13 +103,12 @@ public class MekanismGenerators implements IModule
 
 			BuildcraftFuelRegistry.fuel.addFuel(FluidRegistry.getFluid("ethene"), (int)(240 * general.TO_TE), 40 * FluidContainerRegistry.BUCKET_VOLUME);
 		}
-		
 		for(ItemStack ore : OreDictionary.getOres("dustGold"))
 		{
 			RecipeHandler.addMetallurgicInfuserRecipe(InfuseRegistry.get("CARBON"), 10, MekanismUtils.size(ore, 4), GeneratorsItems.Hohlraum.getEmptyItem());
 		}
 	}
-	
+
 	public void addRecipes()
 	{
 		CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(GeneratorsBlocks.Generator, 1, 0), new Object[] {
@@ -159,7 +156,7 @@ public class MekanismGenerators implements IModule
 		CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(GeneratorsBlocks.Generator, 1, 13), new Object[] {
 			"STS", "TBT", "STS", Character.valueOf('S'), "ingotSteel", Character.valueOf('T'), "ingotTin", Character.valueOf('B'), Items.bucket
 		}));
-		
+
 		//Reactor Recipes
 		CraftingManager.getInstance().getRecipeList().add(new ShapedMekanismRecipe(new ItemStack(GeneratorsBlocks.Reactor, 4, 1), new Object[] {
 			" C ", "CAC", " C ", Character.valueOf('C'), new ItemStack(MekanismBlocks.BasicBlock, 1, 8), Character.valueOf('A'), "alloyUltimate"
@@ -184,8 +181,7 @@ public class MekanismGenerators implements IModule
 	}
 
 	@Override
-	public Version getVersion() 
-	{
+	public Version getVersion() {
 		return versionNumber;
 	}
 
@@ -194,7 +190,7 @@ public class MekanismGenerators implements IModule
 	{
 		return "Generators";
 	}
-	
+
 	@Override
 	public void writeConfig(ByteBuf dataStream) throws IOException
 	{
@@ -204,13 +200,10 @@ public class MekanismGenerators implements IModule
 		dataStream.writeDouble(generators.heatGenerationLava);
 		dataStream.writeDouble(generators.heatGenerationNether);
 		dataStream.writeDouble(generators.solarGeneration);
-		
 		dataStream.writeDouble(generators.windGenerationMin);
 		dataStream.writeDouble(generators.windGenerationMax);
-		
 		dataStream.writeInt(generators.windGenerationMinY);
 		dataStream.writeInt(generators.windGenerationMaxY);
-		
 		dataStream.writeInt(generators.turbineBladesPerCoil);
 		dataStream.writeDouble(generators.turbineVentGasFlow);
 		dataStream.writeDouble(generators.turbineDisperserGasFlow);
@@ -226,19 +219,16 @@ public class MekanismGenerators implements IModule
 		generators.heatGenerationLava = dataStream.readDouble();
 		generators.heatGenerationNether = dataStream.readDouble();
 		generators.solarGeneration = dataStream.readDouble();
-		
 		generators.windGenerationMin = dataStream.readDouble();
 		generators.windGenerationMax = dataStream.readDouble();
-		
 		generators.windGenerationMinY = dataStream.readInt();
 		generators.windGenerationMaxY = dataStream.readInt();
-		
 		generators.turbineBladesPerCoil = dataStream.readInt();
 		generators.turbineVentGasFlow = dataStream.readDouble();
 		generators.turbineDisperserGasFlow = dataStream.readDouble();
 		generators.condenserRate = dataStream.readInt();
 	}
-	
+
 	@Override
 	public void resetClient()
 	{

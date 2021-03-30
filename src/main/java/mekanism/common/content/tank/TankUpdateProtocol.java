@@ -1,11 +1,9 @@
 package mekanism.common.content.tank;
 
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.util.StackUtils;
 import mekanism.common.Mekanism;
-import mekanism.common.block.BlockBasic.BasicType;
+import mekanism.common.block.BasicBlock.BasicType;
 import mekanism.common.content.tank.SynchronizedTankData.ValveData;
 import mekanism.common.multiblock.MultiblockCache;
 import mekanism.common.multiblock.MultiblockManager;
@@ -13,6 +11,7 @@ import mekanism.common.multiblock.UpdateProtocol;
 import mekanism.common.tile.TileEntityDynamicTank;
 import mekanism.common.tile.TileEntityDynamicValve;
 import net.minecraft.item.ItemStack;
+import java.util.List;
 
 public class TankUpdateProtocol extends UpdateProtocol<SynchronizedTankData>
 {
@@ -28,25 +27,25 @@ public class TankUpdateProtocol extends UpdateProtocol<SynchronizedTankData>
 	{
 		return BasicType.get(pointer.getWorldObj().getBlock(x, y, z), pointer.getWorldObj().getBlockMetadata(x, y, z)) == BasicType.DYNAMIC_TANK;
 	}
-	
+
 	@Override
 	protected TankCache getNewCache()
 	{
 		return new TankCache();
 	}
-	
+
 	@Override
 	protected SynchronizedTankData getNewStructure()
 	{
 		return new SynchronizedTankData();
 	}
-	
+
 	@Override
 	protected MultiblockManager<SynchronizedTankData> getManager()
 	{
 		return Mekanism.tankManager;
 	}
-	
+
 	@Override
 	protected void mergeCaches(List<ItemStack> rejectedItems, MultiblockCache<SynchronizedTankData> cache, MultiblockCache<SynchronizedTankData> merge)
 	{
@@ -58,28 +57,26 @@ public class TankUpdateProtocol extends UpdateProtocol<SynchronizedTankData>
 		{
 			((TankCache)cache).fluid.amount += ((TankCache)merge).fluid.amount;
 		}
-		
+
 		List<ItemStack> rejects = StackUtils.getMergeRejects(((TankCache)cache).inventory, ((TankCache)merge).inventory);
-		
 		if(!rejects.isEmpty())
 		{
 			rejectedItems.addAll(rejects);
 		}
-		
 		StackUtils.merge(((TankCache)cache).inventory, ((TankCache)merge).inventory);
 	}
-	
+
 	@Override
 	protected void onFormed()
 	{
 		super.onFormed();
-		
+
 		if(structureFound.fluidStored != null)
 		{
 			structureFound.fluidStored.amount = Math.min(structureFound.fluidStored.amount, structureFound.volume*FLUID_PER_TANK);
 		}
 	}
-	
+
 	@Override
 	protected void onStructureCreated(SynchronizedTankData structure, int origX, int origY, int origZ, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
 	{

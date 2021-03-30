@@ -3,7 +3,7 @@ package mekanism.common.tile;
 import java.util.Map;
 
 import mekanism.api.MekanismConfig.usage;
-import mekanism.common.block.BlockMachine.MachineType;
+import mekanism.common.block.Machine.MachineType;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.SawmillRecipe;
@@ -12,7 +12,7 @@ import mekanism.common.util.MekanismUtils.ResourceType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityPrecisionSawmill extends TileEntityChanceMachine<SawmillRecipe>
+public class TileEntityPrecisionSawmill extends ChanceMachineTileEntity<SawmillRecipe>
 {
 	public TileEntityPrecisionSawmill()
 	{

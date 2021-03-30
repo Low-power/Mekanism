@@ -8,7 +8,7 @@ import mekanism.api.MekanismConfig.general;
 import mekanism.api.energy.EnergizedItemManager;
 import mekanism.api.energy.IEnergizedItem;
 import mekanism.api.energy.IStrictEnergyStorage;
-import mekanism.common.tile.TileEntityContainerBlock;
+import mekanism.common.tile.ContainerTileEntity;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -23,8 +23,7 @@ public final class ChargeUtils
 	 */
 	public static void discharge(int slotID, IStrictEnergyStorage storer)
 	{
-		IInventory inv = (TileEntityContainerBlock)storer;
-		
+		IInventory inv = (ContainerTileEntity)storer;
 		if(inv.getStackInSlot(slotID) != null && storer.getEnergy() < storer.getMaxEnergy())
 		{
 			if(inv.getStackInSlot(slotID).getItem() instanceof IEnergizedItem)
@@ -71,8 +70,7 @@ public final class ChargeUtils
 	 */
 	public static void charge(int slotID, IStrictEnergyStorage storer)
 	{
-		IInventory inv = (TileEntityContainerBlock)storer;
-		
+		IInventory inv = (ContainerTileEntity)storer;
 		if(inv.getStackInSlot(slotID) != null && storer.getEnergy() > 0)
 		{
 			if(inv.getStackInSlot(slotID).getItem() instanceof IEnergizedItem)
@@ -134,7 +132,6 @@ public final class ChargeUtils
 		if(itemstack.getItem() instanceof IEnergizedItem)
 		{
 			IEnergizedItem energized = (IEnergizedItem)itemstack.getItem();
-			
 			if(chargeSlot)
 			{
 				return energized.getEnergy(itemstack) == energized.getMaxEnergy(itemstack);
@@ -146,7 +143,6 @@ public final class ChargeUtils
 		else if(itemstack.getItem() instanceof IEnergyContainerItem)
 		{
 			IEnergyContainerItem energyContainer = (IEnergyContainerItem)itemstack.getItem();
-			
 			if(chargeSlot)
 			{
 				return energyContainer.receiveEnergy(itemstack, 1, true) > 0;
@@ -158,7 +154,6 @@ public final class ChargeUtils
 		else if(itemstack.getItem() instanceof ISpecialElectricItem)
 		{
 			IElectricItemManager manager = ((ISpecialElectricItem)itemstack.getItem()).getManager(itemstack);
-			
 			if(manager != null)
 			{
 				if(chargeSlot)
@@ -170,7 +165,6 @@ public final class ChargeUtils
 				}
 			}
 		}
-		
 		return true;
 	}
 }

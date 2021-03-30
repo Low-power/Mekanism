@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileEntityThermalEvaporationBlock extends TileEntityContainerBlock implements IComputerIntegration
+public class TileEntityThermalEvaporationBlock extends ContainerTileEntity implements IComputerIntegration
 {
 	public Coord4D master;
 	

@@ -21,7 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.common.Optional.Method;
 
-public abstract class TileEntityElectricBlock extends TileEntityContainerBlock implements IEnergyWrapper
+public abstract class TileEntityElectricBlock extends ContainerTileEntity implements IEnergyWrapper
 {
 	/** How much energy is stored in this block. */
 	public double electricityStored;

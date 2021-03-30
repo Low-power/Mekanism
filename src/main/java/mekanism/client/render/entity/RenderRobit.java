@@ -1,7 +1,7 @@
 package mekanism.client.render.entity;
 
 import mekanism.client.model.ModelRobit;
-import mekanism.common.entity.EntityRobit;
+import mekanism.common.entity.Robit;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -21,7 +21,7 @@ public class RenderRobit extends RenderLiving
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity)
 	{
-		EntityRobit robit = (EntityRobit)entity;
+		Robit robit = (Robit)entity;
 
 		if((Math.abs(entity.posX-entity.prevPosX) + Math.abs(entity.posX-entity.prevPosX)) > 0.001)
 		{

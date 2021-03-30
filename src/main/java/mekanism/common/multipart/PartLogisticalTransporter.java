@@ -10,7 +10,7 @@ import mekanism.api.EnumColor;
 import mekanism.api.MekanismConfig.client;
 import mekanism.api.Range4D;
 import mekanism.api.transmitters.TransmissionType;
-import mekanism.client.render.RenderPartTransmitter;
+import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.common.InventoryNetwork;
 import mekanism.common.Mekanism;
 import mekanism.common.Tier;
@@ -97,7 +97,7 @@ public class PartLogisticalTransporter extends PartTransmitter<IInventory, Inven
 	{
 		if(pass == 0 && !client.opaqueTransmitters)
 		{
-			RenderPartTransmitter.getInstance().renderContents(this, f, pos);
+			TransmitterPartRenderer.getInstance().renderContents(this, f, pos);
 		}
 	}
 	
@@ -316,9 +316,9 @@ public class PartLogisticalTransporter extends PartTransmitter<IInventory, Inven
 	{
 		ArrayList data = new ArrayList();
 
-		data.add(1);
-		data.add(kill);
-		data.add(getTransmitter().transit.indexOf(stack));
+		data.add(Integer.valueOf(1));
+		data.add(Boolean.valueOf(kill));
+		data.add(Integer.valueOf(getTransmitter().transit.indexOf(stack)));
 
 		if(!kill)
 		{

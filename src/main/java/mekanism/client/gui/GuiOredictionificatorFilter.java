@@ -5,10 +5,10 @@ import java.util.List;
 import mekanism.api.Coord4D;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerFilter;
+import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.network.PacketEditFilter.EditFilterMessage;
 import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.network.PacketSimpleGui.SimpleGuiMessage;
+import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.tile.TileEntityOredictionificator;
 import mekanism.common.tile.TileEntityOredictionificator.OredictionificatorFilter;
 import mekanism.common.util.LangUtils;
@@ -43,7 +43,7 @@ public class GuiOredictionificatorFilter extends GuiMekanism
 	
 	public GuiOredictionificatorFilter(EntityPlayer player, TileEntityOredictionificator tentity, int index)
 	{
-		super(tentity, new ContainerFilter(player.inventory, tentity));
+		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
 		
 		origFilter = tileEntity.filters.get(index);
@@ -54,7 +54,7 @@ public class GuiOredictionificatorFilter extends GuiMekanism
 	
 	public GuiOredictionificatorFilter(EntityPlayer player, TileEntityOredictionificator tentity)
 	{
-		super(tentity, new ContainerFilter(player.inventory, tentity));
+		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
 		
 		isNew = true;
