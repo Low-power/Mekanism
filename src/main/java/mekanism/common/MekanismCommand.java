@@ -78,11 +78,13 @@ public class MekanismCommand extends CommandBase
 			{
 				if(params.length < 2)
 				{
-					sender.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " Invalid parameters."));
+					sender.addChatMessage(new ChatComponentText(String.format("%s[Mekanism]%s Missing subcommand for 'teleporter'. Type %s/mekanism help teleporter%s for help.", EnumColor.DARK_BLUE, EnumColor.GREY, EnumColor.INDIGO, EnumColor.GREY)));
 				}
 				else if(params[1].equalsIgnoreCase("freq") || params[1].equalsIgnoreCase("frequencies"))
 				{
-					if(params[2].equalsIgnoreCase("list"))
+					if(params.length < 3) {
+						sender.addChatMessage(new ChatComponentText(String.format("%s[Mekanism]%s Missing subcommand for 'teleporter %s'. Type %s/mekanism help teleporter%s for help.", EnumColor.DARK_BLUE, EnumColor.GREY, params[1], EnumColor.INDIGO, EnumColor.GREY)));
+					} else if(params[2].equalsIgnoreCase("list"))
 					{
 						sender.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " -------------"));
 						if(params.length == 3)
@@ -155,7 +157,11 @@ public class MekanismCommand extends CommandBase
 								sender.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " User profile doesn't exist."));
 							}
 						}
+					} else {
+						sender.addChatMessage(new ChatComponentText(String.format("%s[Mekanism]%s Invalid subcommand for 'teleporter %s'.", EnumColor.DARK_BLUE, EnumColor.GREY, params[1])));
 					}
+				} else {
+					sender.addChatMessage(new ChatComponentText(String.format("%s[Mekanism]%s Invalid subcommand for 'teleporter'.", EnumColor.DARK_BLUE, EnumColor.GREY)));
 				}
 			}
 			else if(params[0].equalsIgnoreCase("debug"))
