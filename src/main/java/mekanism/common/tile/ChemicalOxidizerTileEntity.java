@@ -21,8 +21,6 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.OxidationRecipe;
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -34,7 +32,7 @@ import net.minecraft.tileentity.TileEntity;
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 
-public class ChemicalOxidizerTileEntity extends NoisyElectricBlockTileEntity implements ITubeConnection, IRedstoneControl, IUpgradeTile, ISustainedData, ITankManager, ISecurityTile
+public class ChemicalOxidizerTileEntity extends NoisyElectricBlockTileEntity implements ITubeConnection, IRedstoneControl, IUpgradeTile, ISustainedData, ITankManager
 {
 	public GasTank gasTank = new GasTank(MAX_GAS);
 
@@ -65,7 +63,6 @@ public class ChemicalOxidizerTileEntity extends NoisyElectricBlockTileEntity imp
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
 
 	public TileComponentUpgrade upgradeComponent = new TileComponentUpgrade(this, 3);
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	public ChemicalOxidizerTileEntity()
 	{
@@ -257,18 +254,19 @@ public class ChemicalOxidizerTileEntity extends NoisyElectricBlockTileEntity imp
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(controlType.ordinal());
-		data.add(operatingTicks);
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(controlType.ordinal()));
+		data.add(Integer.valueOf(operatingTicks));
 
-		if(gasTank.getGas() != null)
+		GasStack gas_stack = gasTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(gasTank.getGas().getGas().getID());
-			data.add(gasTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(gasTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;
@@ -397,10 +395,5 @@ public class ChemicalOxidizerTileEntity extends NoisyElectricBlockTileEntity imp
 	@Override
 	public Object[] getTanks() {
 		return new Object[] {gasTank};
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity() {
-		return securityComponent;
 	}
 }

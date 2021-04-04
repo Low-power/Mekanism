@@ -23,8 +23,6 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ChemicalPairInput;
 import mekanism.common.recipe.machines.ChemicalInfuserRecipe;
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -37,7 +35,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChemicalInfuserTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, ISustainedData, IUpgradeTile, IUpgradeInfoHandler, ITankManager, ISecurityTile
+public class ChemicalInfuserTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, ISustainedData, IUpgradeTile, IUpgradeInfoHandler, ITankManager
 {
 	public GasTank leftTank = new GasTank(MAX_GAS);
 	public GasTank rightTank = new GasTank(MAX_GAS);
@@ -64,7 +62,6 @@ public class ChemicalInfuserTileEntity extends NoisyElectricBlockTileEntity impl
 	public double clientEnergyUsed;
 
 	public TileComponentUpgrade upgradeComponent = new TileComponentUpgrade(this, 4);
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	/** This machine's current RedstoneControl type. */
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
@@ -244,38 +241,41 @@ public class ChemicalInfuserTileEntity extends NoisyElectricBlockTileEntity impl
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(controlType.ordinal());
-		data.add(clientEnergyUsed);
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(controlType.ordinal()));
+		data.add(Double.valueOf(clientEnergyUsed));
 
-		if(leftTank.getGas() != null)
+		GasStack gas_stack = leftTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(leftTank.getGas().getGas().getID());
-			data.add(leftTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(leftTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
-		if(rightTank.getGas() != null)
+		gas_stack = rightTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(rightTank.getGas().getGas().getID());
-			data.add(rightTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(rightTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
-		if(centerTank.getGas() != null)
+		gas_stack = centerTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(centerTank.getGas().getGas().getID());
-			data.add(centerTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(centerTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;
@@ -540,10 +540,5 @@ public class ChemicalInfuserTileEntity extends NoisyElectricBlockTileEntity impl
 	@Override
 	public Object[] getTanks() {
 		return new Object[] {leftTank, rightTank, centerTank};
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity() {
-		return securityComponent;
 	}
 }

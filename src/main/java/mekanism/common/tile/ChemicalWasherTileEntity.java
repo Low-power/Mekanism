@@ -23,8 +23,6 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.WasherRecipe;
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.FluidContainerUtils;
@@ -48,7 +46,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChemicalWasherTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, IFluidHandler, IUpgradeTile, ISustainedData, IUpgradeInfoHandler, ITankManager, ISecurityTile
+public class ChemicalWasherTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, IFluidHandler, IUpgradeTile, ISustainedData, IUpgradeInfoHandler, ITankManager
 {
 	public FluidTank fluidTank = new FluidTank(MAX_FLUID);
 	public GasTank inputTank = new GasTank(MAX_GAS);
@@ -78,7 +76,6 @@ public class ChemicalWasherTileEntity extends NoisyElectricBlockTileEntity imple
 	public double clientEnergyUsed;
 
 	public TileComponentUpgrade upgradeComponent = new TileComponentUpgrade(this, 4);
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	/** This machine's current RedstoneControl type. */
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
@@ -255,38 +252,41 @@ public class ChemicalWasherTileEntity extends NoisyElectricBlockTileEntity imple
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(controlType.ordinal());
-		data.add(clientEnergyUsed);
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(controlType.ordinal()));
+		data.add(Double.valueOf(clientEnergyUsed));
 
-		if(fluidTank.getFluid() != null)
+		FluidStack fluid_stack = fluidTank.getFluid();
+		if(fluid_stack != null)
 		{
-			data.add(true);
-			data.add(fluidTank.getFluid().getFluid().getID());
-			data.add(fluidTank.getFluidAmount());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(fluid_stack.getFluid().getID()));
+			data.add(Integer.valueOf(fluidTank.getFluidAmount()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
-		if(inputTank.getGas() != null)
+		GasStack gas_stack = inputTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(inputTank.getGas().getGas().getID());
-			data.add(inputTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(inputTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
-		if(outputTank.getGas() != null)
+		gas_stack = outputTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(outputTank.getGas().getGas().getID());
-			data.add(outputTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(outputTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;
@@ -590,11 +590,5 @@ public class ChemicalWasherTileEntity extends NoisyElectricBlockTileEntity imple
 	@Override
 	public Object[] getTanks() {
 		return new Object[] {fluidTank, inputTank, outputTank};
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 }

@@ -1,16 +1,16 @@
 package mekanism.generators.common.content.turbine;
 
 import mekanism.common.util.MekanismUtils;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
 
 public class TurbineFluidTank implements IFluidTank
 {
-	public TileEntityTurbineCasing turbine;
+	public TurbineCasingTileEntity turbine;
 
-	public TurbineFluidTank(TileEntityTurbineCasing tileEntity)
+	public TurbineFluidTank(TurbineCasingTileEntity tileEntity)
 	{
 		turbine = tileEntity;
 	}
@@ -36,7 +36,6 @@ public class TurbineFluidTank implements IFluidTank
 			{
 				return 0;
 			}
-			
 			if(turbine.structure.fluidStored != null && !turbine.structure.fluidStored.isFluidEqual(resource))
 			{
 				return 0;
@@ -49,7 +48,6 @@ public class TurbineFluidTank implements IFluidTank
 					if(doFill)
 					{
 						turbine.structure.fluidStored = resource.copy();
-						
 						if(resource.amount > 0)
 						{
 							MekanismUtils.saveChunk(turbine);
@@ -63,7 +61,6 @@ public class TurbineFluidTank implements IFluidTank
 					{
 						turbine.structure.fluidStored = resource.copy();
 						turbine.structure.fluidStored.amount = getCapacity();
-						
 						if(getCapacity() > 0)
 						{
 							MekanismUtils.saveChunk(turbine);
@@ -78,7 +75,6 @@ public class TurbineFluidTank implements IFluidTank
 				if(doFill)
 				{
 					turbine.structure.fluidStored.amount += resource.amount;
-					
 					if(resource.amount > 0)
 					{
 						MekanismUtils.saveChunk(turbine);
@@ -89,11 +85,9 @@ public class TurbineFluidTank implements IFluidTank
 			}
 			else {
 				int prevNeeded = getNeeded();
-				
 				if(doFill)
 				{
 					turbine.structure.fluidStored.amount = getCapacity();
-					
 					if(prevNeeded > 0)
 					{
 						MekanismUtils.saveChunk(turbine);
@@ -152,7 +146,7 @@ public class TurbineFluidTank implements IFluidTank
 
 		return null;
 	}
-	
+
 	public int getNeeded()
 	{
 		return getCapacity()-getFluidAmount();

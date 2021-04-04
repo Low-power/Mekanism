@@ -29,10 +29,8 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.inputs.InfusionInput;
 import mekanism.common.recipe.machines.MetallurgicInfuserRecipe;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.component.ConfigTileComponent;
 import mekanism.common.tile.component.EjectorTileComponent;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -42,7 +40,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 
-public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, ISideConfiguration, IUpgradeTile, IRedstoneControl, IConfigCardAccess, ISecurityTile, ITierUpgradeable
+public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, ISideConfiguration, IUpgradeTile, IRedstoneControl, IConfigCardAccess, ITierUpgradeable
 {
 	/** The maxiumum amount of infuse this machine can store. */
 	public int MAX_INFUSE = 1000;
@@ -81,7 +79,6 @@ public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity i
 	public TileComponentUpgrade upgradeComponent;
 	public EjectorTileComponent ejectorComponent;
 	public ConfigTileComponent configComponent;
-	public TileComponentSecurity securityComponent;
 
 	public MetallurgicInfuserTileEntity()
 	{
@@ -100,7 +97,6 @@ public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity i
 		upgradeComponent.setSupported(Upgrade.MUFFLING);
 		ejectorComponent = new EjectorTileComponent(this);
 		ejectorComponent.setOutputData(TransmissionType.ITEM, configComponent.getOutputs(TransmissionType.ITEM).get(2));
-		securityComponent = new TileComponentSecurity(this);
 	}
 
 	@Override
@@ -234,7 +230,6 @@ public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity i
 		factory.ejectorComponent.setOutputData(TransmissionType.ITEM, factory.configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		factory.recipeType = type;
 		factory.upgradeComponent.setSupported(Upgrade.GAS, type.fuelEnergyUpgrades());
-		factory.securityComponent.readFrom(securityComponent);
 
 		for(TransmissionType transmission : configComponent.transmissions)
 		{
@@ -414,10 +409,10 @@ public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity i
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(operatingTicks);
-		data.add(infuseStored.amount);
-		data.add(controlType.ordinal());
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(operatingTicks));
+		data.add(Integer.valueOf(infuseStored.amount));
+		data.add(Integer.valueOf(controlType.ordinal()));
 
 		if(infuseStored.type != null)
 		{
@@ -549,12 +544,6 @@ public class MetallurgicInfuserTileEntity extends NoisyElectricBlockTileEntity i
 	public EjectorTileComponent getEjector()
 	{
 		return ejectorComponent;
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -43,11 +42,10 @@ public class PRCGui extends GuiMekanism
 		super(tentity, new PRCContainer(inventory, tentity));
 		tileEntity = tentity;
 
-		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
-		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
-		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
-		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
+		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()
@@ -56,33 +54,33 @@ public class PRCGui extends GuiMekanism
 				String multiplier = MekanismUtils.getEnergyDisplay(MekanismUtils.getEnergyPerTick(tileEntity, tileEntity.BASE_ENERGY_PER_TICK + extra));
 				return ListUtils.asList(LangUtils.localize("gui.using") + ": " + multiplier + "/t", LangUtils.localize("gui.needed") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getMaxEnergy()-tileEntity.getEnergy()));
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 		guiElements.add(new GuiFluidGauge(new IFluidInfoHandler() {
 			@Override
 			public FluidTank getTank()
 			{
 				return tileEntity.inputFluidTank;
 			}
-		}, GaugeGui.Type.STANDARD_YELLOW, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 5, 10));
+		}, GaugeGui.Type.STANDARD_YELLOW, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 5, 10));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.inputGasTank;
 			}
-		}, GaugeGui.Type.STANDARD_RED, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 28, 10));
+		}, GaugeGui.Type.STANDARD_RED, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 28, 10));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler() {
 			@Override
 			public GasTank getTank()
 			{
 				return tileEntity.outputGasTank;
 			}
-		}, GaugeGui.Type.SMALL_BLUE, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 140, 40));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 164, 15));
+		}, GaugeGui.Type.SMALL_BLUE, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 140, 40));
+		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 164, 15));
 
-		guiElements.add(new GuiSlot(SlotType.INPUT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 53, 34));
-		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 140, 18).with(SlotOverlay.POWER));
-		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 115, 34));
+		guiElements.add(new GuiSlot(SlotType.INPUT, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 53, 34));
+		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 140, 18).with(SlotOverlay.POWER));
+		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 115, 34));
 
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{
@@ -91,7 +89,7 @@ public class PRCGui extends GuiMekanism
 			{
 				return tileEntity.getScaledProgress();
 			}
-		}, getProgressType(), this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 75, 37));
+		}, getProgressType(), this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 75, 37));
 	}
 
 	@Override
@@ -109,7 +107,7 @@ public class PRCGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

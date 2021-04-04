@@ -8,9 +8,9 @@ import mekanism.common.content.miner.MMaterialFilter;
 import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
-import mekanism.common.network.PacketEditFilter.EditFilterMessage;
-import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.tile.TileEntityDigitalMiner;
+import mekanism.common.network.EditFilterPacket.EditFilterMessage;
+import mekanism.common.network.NewFilterPacket.NewFilterMessage;
+import mekanism.common.tile.DigitalMinerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -28,7 +28,7 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class MMaterialFilterGui extends GuiMekanism
 {
-	public TileEntityDigitalMiner tileEntity;
+	public DigitalMinerTileEntity tileEntity;
 
 	public boolean isNew = false;
 
@@ -40,7 +40,7 @@ public class MMaterialFilterGui extends GuiMekanism
 
 	public int ticker;
 
-	public MMaterialFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity, int index)
+	public MMaterialFilterGui(EntityPlayer player, DigitalMinerTileEntity tentity, int index)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
@@ -49,7 +49,7 @@ public class MMaterialFilterGui extends GuiMekanism
 		filter = ((MMaterialFilter)tileEntity.filters.get(index)).clone();
 	}
 
-	public MMaterialFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity)
+	public MMaterialFilterGui(EntityPlayer player, DigitalMinerTileEntity tentity)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;

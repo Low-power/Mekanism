@@ -1,8 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.api.util.ListUtils;
@@ -10,52 +7,50 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiUpgradeTab;
-import mekanism.client.gui.element.GuiVisualsTab;
+import mekanism.client.gui.element.VisualsTab;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.content.miner.ThreadMinerSearch.State;
-import mekanism.common.inventory.container.ContainerDigitalMiner;
+import mekanism.common.content.miner.MinerSearchThread.State;
+import mekanism.common.inventory.container.DigitalMinerContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityDigitalMiner;
+import mekanism.common.tile.DigitalMinerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import java.util.ArrayList;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
-	public class DigitalMinerGui extends GuiMekanism
+public class DigitalMinerGui extends GuiMekanism
 {
-	public TileEntityDigitalMiner tileEntity;
+	public DigitalMinerTileEntity tileEntity;
 
 	public GuiButton startButton;
 	public GuiButton stopButton;
 	public GuiButton configButton;
 
-	public DigitalMinerGui(InventoryPlayer inventory, TileEntityDigitalMiner tentity)
+	public DigitalMinerGui(InventoryPlayer inventory, DigitalMinerTileEntity tentity)
 	{
-		super(tentity, new ContainerDigitalMiner(inventory, tentity));
+		super(tentity, new DigitalMinerContainer(inventory, tentity));
 		tileEntity = tentity;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png"), 163, 23));
-		guiElements.add(new GuiVisualsTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
+		guiElements.add(new VisualsTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()
@@ -114,14 +109,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 		if(guibutton.id == 0)
 		{
 			ArrayList data = new ArrayList();
-			data.add(3);
+			data.add(Integer.valueOf(3));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 		}
 		else if(guibutton.id == 1)
 		{
 			ArrayList data = new ArrayList();
-			data.add(4);
+			data.add(Integer.valueOf(4));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 		}
@@ -306,7 +301,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 				SoundHandler.playSound("gui.button.press");
 
 				ArrayList data = new ArrayList();
-				data.add(0);
+				data.add(Integer.valueOf(0));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			}
@@ -316,7 +311,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 				SoundHandler.playSound("gui.button.press");
 
 				ArrayList data = new ArrayList();
-				data.add(1);
+				data.add(Integer.valueOf(1));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			}
@@ -326,7 +321,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 				SoundHandler.playSound("gui.button.press");
 
 				ArrayList data = new ArrayList();
-				data.add(5);
+				data.add(Integer.valueOf(5));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			}
@@ -336,7 +331,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 				SoundHandler.playSound("gui.button.press");
 
 				ArrayList data = new ArrayList();
-				data.add(9);
+				data.add(Integer.valueOf(9));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			}

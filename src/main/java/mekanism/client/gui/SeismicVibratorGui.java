@@ -1,40 +1,35 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.MekanismConfig.usage;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
-import mekanism.common.inventory.container.ContainerSeismicVibrator;
-import mekanism.common.tile.TileEntitySeismicVibrator;
+import mekanism.common.inventory.container.SeismicVibratorContainer;
+import mekanism.common.tile.SeismicVibratorTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class SeismicVibratorGui extends GuiMekanism
 {
-	public TileEntitySeismicVibrator tileEntity;
+	public SeismicVibratorTileEntity tileEntity;
 
-	public SeismicVibratorGui(InventoryPlayer inventory, TileEntitySeismicVibrator tentity)
+	public SeismicVibratorGui(InventoryPlayer inventory, SeismicVibratorTileEntity tentity)
 	{
-		super(tentity, new ContainerSeismicVibrator(inventory, tentity));
+		super(tentity, new SeismicVibratorContainer(inventory, tentity));
 		tileEntity = tentity;
 
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png")));
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png")));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png"), 164, 15));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
@@ -57,7 +52,6 @@ public class SeismicVibratorGui extends GuiMekanism
 
 		fontRendererObj.drawString(tileEntity.getInventoryName(), 45, 6, 0x404040);
 		fontRendererObj.drawString(LangUtils.localize("container.inventory"), 8, (ySize - 96) + 2, 0x404040);
-		
 		fontRendererObj.drawString(tileEntity.isActive ? LangUtils.localize("gui.vibrating") : LangUtils.localize("gui.idle"), 19, 26, 0x00CD00);
 		fontRendererObj.drawString(LangUtils.localize("gui.chunk") + ": " + (tileEntity.xCoord >> 4) + ", " + (tileEntity.zCoord >> 4), 19, 35, 0x00CD00);
 
@@ -68,7 +62,7 @@ public class SeismicVibratorGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

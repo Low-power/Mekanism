@@ -15,7 +15,7 @@ import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityDigitalMiner;
+import mekanism.common.tile.DigitalMinerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -38,7 +38,7 @@ import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class DigitalMinerConfigGui extends GuiMekanism
 {
-	public TileEntityDigitalMiner tileEntity;
+	public DigitalMinerTileEntity tileEntity;
 
 	public boolean isDragging = false;
 
@@ -69,7 +69,7 @@ public class DigitalMinerConfigGui extends GuiMekanism
 	private GuiTextField minField;
 	private GuiTextField maxField;
 
-	public DigitalMinerConfigGui(EntityPlayer player, TileEntityDigitalMiner tentity)
+	public DigitalMinerConfigGui(EntityPlayer player, DigitalMinerTileEntity tentity)
 	{
 		super(tentity, new NullContainer(player, tentity));
 		tileEntity = tentity;

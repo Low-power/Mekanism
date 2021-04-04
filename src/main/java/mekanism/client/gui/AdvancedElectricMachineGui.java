@@ -9,7 +9,6 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -39,7 +38,6 @@ public class AdvancedElectricMachineGui extends GuiMekanism
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, tileEntity.guiLocation));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, tileEntity.guiLocation));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, tileEntity.guiLocation));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, tileEntity.guiLocation));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, tileEntity.guiLocation));
 		guiElements.add(new GuiPowerBar(this, tileEntity, tileEntity.guiLocation, 164, 15));
@@ -83,7 +81,8 @@ public class AdvancedElectricMachineGui extends GuiMekanism
 
 		if(xAxis >= 61 && xAxis <= 67 && yAxis >= 37 && yAxis <= 49)
 		{
-			drawCreativeTabHoveringText(tileEntity.gasTank.getGas() != null ? tileEntity.gasTank.getGas().getGas().getLocalizedName() + ": " + tileEntity.gasTank.getStored() : LangUtils.localize("gui.none"), xAxis, yAxis);
+			GasStack gas_stack = tileEntity.gasTank.getGas();
+			drawCreativeTabHoveringText(gas_stack != null ? gas_stack.getGas().getLocalizedName() + ": " + tileEntity.gasTank.getStored() : LangUtils.localize("gui.none"), xAxis, yAxis);
 		}
 
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);

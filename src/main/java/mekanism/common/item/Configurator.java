@@ -15,7 +15,6 @@ import mekanism.common.tile.ContainerTileEntity;
 import mekanism.common.tile.component.ConfigTileComponent;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.util.SecurityUtils;
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.item.IToolHammer;
 import cpw.mods.fml.common.Optional.Interface;
@@ -83,20 +82,14 @@ public class Configurator extends ItemEnergized implements IMekWrench, IToolWren
 						else {
 							if(getEnergy(stack) >= ENERGY_PER_CONFIGURE)
 							{
-								if(SecurityUtils.canAccess(player, tile))
+								setEnergy(stack, getEnergy(stack) - ENERGY_PER_CONFIGURE);
+								MekanismUtils.incrementOutput(config, getState(stack).getTransmission(), MekanismUtils.getBaseOrientation(side, config.getOrientation()));
+								SideData data = config.getConfig().getOutput(getState(stack).getTransmission(), side, config.getOrientation());
+								player.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " " + getToggleModeText(getState(stack).getTransmission()) + ": " + data.color + data.localize() + " (" + data.color.getName() + ")"));
+								if(config instanceof BasicBlockTileEntity)
 								{
-									setEnergy(stack, getEnergy(stack) - ENERGY_PER_CONFIGURE);
-									MekanismUtils.incrementOutput(config, getState(stack).getTransmission(), MekanismUtils.getBaseOrientation(side, config.getOrientation()));
-									SideData data = config.getConfig().getOutput(getState(stack).getTransmission(), side, config.getOrientation());
-									player.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " " + getToggleModeText(getState(stack).getTransmission()) + ": " + data.color + data.localize() + " (" + data.color.getName() + ")"));
-									if(config instanceof BasicBlockTileEntity)
-									{
-										BasicBlockTileEntity tileEntity = (BasicBlockTileEntity)config;
-										Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(tileEntity), tileEntity.getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(tileEntity)));
-									}
-								}
-								else {
-									SecurityUtils.displayNoAccess(player);
+									BasicBlockTileEntity tileEntity = (BasicBlockTileEntity)config;
+									Mekanism.packetHandler.sendToReceivers(new TileEntityMessage(Coord4D.get(tileEntity), tileEntity.getNetworkedData(new ArrayList())), new Range4D(Coord4D.get(tileEntity)));
 								}
 							}
 						}
@@ -107,19 +100,12 @@ public class Configurator extends ItemEnergized implements IMekWrench, IToolWren
 				{
 					IConfigurable config = (IConfigurable)tile;
 
-					if(SecurityUtils.canAccess(player, tile))
+					if(player.isSneaking())
 					{
-						if(player.isSneaking())
-						{
-							return config.onSneakRightClick(player, side);
-						}
-						else {
-							return config.onRightClick(player, side);
-						}
+						return config.onSneakRightClick(player, side);
 					}
 					else {
-						SecurityUtils.displayNoAccess(player);
-						return true;
+						return config.onRightClick(player, side);
 					}
 				}
 			}
@@ -129,58 +115,50 @@ public class Configurator extends ItemEnergized implements IMekWrench, IToolWren
 				{
 					IInventory inv = (IInventory)tile;
 
-					if(SecurityUtils.canAccess(player, tile))
+					for(int i = 0; i < inv.getSizeInventory(); i++)
 					{
-						for(int i = 0; i < inv.getSizeInventory(); i++)
+						ItemStack slotStack = inv.getStackInSlot(i);
+						if(slotStack != null)
 						{
-							ItemStack slotStack = inv.getStackInSlot(i);
-
-							if(slotStack != null)
+							if(getEnergy(stack) < ENERGY_PER_ITEM_DUMP)
 							{
-								if(getEnergy(stack) < ENERGY_PER_ITEM_DUMP)
+								break;
+							}
+
+							float xRandom = random.nextFloat() * 0.8F + 0.1F;
+							float yRandom = random.nextFloat() * 0.8F + 0.1F;
+							float zRandom = random.nextFloat() * 0.8F + 0.1F;
+
+							while(slotStack.stackSize > 0)
+							{
+								int j = random.nextInt(21) + 10;
+
+								if(j > slotStack.stackSize)
 								{
-									break;
+									j = slotStack.stackSize;
 								}
 
-								float xRandom = random.nextFloat() * 0.8F + 0.1F;
-								float yRandom = random.nextFloat() * 0.8F + 0.1F;
-								float zRandom = random.nextFloat() * 0.8F + 0.1F;
+								slotStack.stackSize -= j;
+								EntityItem item = new EntityItem(world, x + xRandom, y + yRandom, z + zRandom, new ItemStack(slotStack.getItem(), j, slotStack.getItemDamage()));
 
-								while(slotStack.stackSize > 0)
+								if(slotStack.hasTagCompound())
 								{
-									int j = random.nextInt(21) + 10;
-
-									if(j > slotStack.stackSize)
-									{
-										j = slotStack.stackSize;
-									}
-
-									slotStack.stackSize -= j;
-									EntityItem item = new EntityItem(world, x + xRandom, y + yRandom, z + zRandom, new ItemStack(slotStack.getItem(), j, slotStack.getItemDamage()));
-
-									if(slotStack.hasTagCompound())
-									{
-										item.getEntityItem().setTagCompound((NBTTagCompound)slotStack.getTagCompound().copy());
-									}
-
-									float k = 0.05F;
-									item.motionX = random.nextGaussian() * k;
-									item.motionY = random.nextGaussian() * k + 0.2F;
-									item.motionZ = random.nextGaussian() * k;
-									world.spawnEntityInWorld(item);
-
-									inv.setInventorySlotContents(i, null);
-									setEnergy(stack, getEnergy(stack) - ENERGY_PER_ITEM_DUMP);
+									item.getEntityItem().setTagCompound((NBTTagCompound)slotStack.getTagCompound().copy());
 								}
+
+								float k = 0.05F;
+								item.motionX = random.nextGaussian() * k;
+								item.motionY = random.nextGaussian() * k + 0.2F;
+								item.motionZ = random.nextGaussian() * k;
+								world.spawnEntityInWorld(item);
+
+								inv.setInventorySlotContents(i, null);
+								setEnergy(stack, getEnergy(stack) - ENERGY_PER_ITEM_DUMP);
 							}
 						}
+					}
 
-						return true;
-					}
-					else {
-						SecurityUtils.displayNoAccess(player);
-						return true;
-					}
+					return true;
 				}
 			}
 			else if(getState(stack) == ConfiguratorMode.ROTATE) //Rotate

@@ -6,17 +6,16 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerOredictionificator;
+import mekanism.common.inventory.container.OredictionificatorContainer;
 import mekanism.common.network.OredictionificatorGuiPacket.OredictionificatorGuiMessage;
 import mekanism.common.network.OredictionificatorGuiPacket.OredictionificatorGuiPacketType;
-import mekanism.common.tile.TileEntityOredictionificator;
-import mekanism.common.tile.TileEntityOredictionificator.OredictionificatorFilter;
+import mekanism.common.tile.OredictionificatorTileEntity;
+import mekanism.common.tile.OredictionificatorTileEntity.OredictionificatorFilter;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -34,7 +33,7 @@ import java.util.Map;
 @SideOnly(Side.CLIENT)
 public class OredictionificatorGui extends GuiMekanism
 {
-	public TileEntityOredictionificator tileEntity;
+	public OredictionificatorTileEntity tileEntity;
 
 	public Map<OredictionificatorFilter, ItemStack> renderStacks = new HashMap<OredictionificatorFilter, ItemStack>();
 
@@ -44,12 +43,11 @@ public class OredictionificatorGui extends GuiMekanism
 
 	public float scroll;
 
-	public OredictionificatorGui(InventoryPlayer inventory, TileEntityOredictionificator tentity)
+	public OredictionificatorGui(InventoryPlayer inventory, OredictionificatorTileEntity tentity)
 	{
-		super(tentity, new ContainerOredictionificator(inventory, tentity));
+		super(tentity, new OredictionificatorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "OredictionificatorGui.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "OredictionificatorGui.png")));
 		guiElements.add(new GuiProgress(new IProgressInfoHandler()
 		{
 			@Override

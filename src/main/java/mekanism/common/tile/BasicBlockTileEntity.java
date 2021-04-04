@@ -13,7 +13,6 @@ import mekanism.common.frequency.FrequencyManager;
 import mekanism.common.frequency.IFrequencyHandler;
 import mekanism.common.network.PacketDataRequest.DataRequestMessage;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.util.MekanismUtils;
 import ic2.api.tile.IWrenchable;
 import cpw.mods.fml.common.Optional.Interface;
@@ -125,8 +124,8 @@ public abstract class BasicBlockTileEntity extends TileEntity implements IWrench
 	@Override
 	public ArrayList getNetworkedData(ArrayList data)
 	{
-		data.add(facing);
-		data.add(redstone);
+		data.add(Integer.valueOf(facing));
+		data.add(Boolean.valueOf(redstone));
 
 		for(ITileComponent component : components)
 		{
@@ -294,10 +293,6 @@ public abstract class BasicBlockTileEntity extends TileEntity implements IWrench
 	@Override
 	public Frequency getFrequency(FrequencyManager manager)
 	{
-		if(manager == Mekanism.securityFrequencies && this instanceof ISecurityTile)
-		{
-			return ((ISecurityTile)this).getSecurity().getFrequency();
-		}
 		return null;
 	}
 }

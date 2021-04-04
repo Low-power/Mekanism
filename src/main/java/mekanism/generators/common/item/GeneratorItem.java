@@ -9,14 +9,10 @@ import mekanism.common.base.ISustainedData;
 import mekanism.common.base.ISustainedInventory;
 import mekanism.common.base.ISustainedTank;
 import mekanism.common.integration.IC2ItemManager;
-import mekanism.common.security.ISecurityItem;
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.security.ISecurityTile.SecurityMode;
 import mekanism.common.tile.BasicBlockTileEntity;
 import mekanism.common.tile.TileEntityElectricBlock;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.util.SecurityUtils;
 import mekanism.generators.common.block.Generator.GeneratorType;
 import ic2.api.item.IElectricItemManager;
 import ic2.api.item.ISpecialElectricItem;
@@ -62,7 +58,7 @@ import java.util.List;
 @InterfaceList({
 	@Interface(iface = "ic2.api.item.ISpecialElectricItem", modid = "IC2")
 })
-public class GeneratorItem extends ItemBlock implements IEnergizedItem, ISpecialElectricItem, ISustainedInventory, ISustainedTank, IEnergyContainerItem, ISecurityItem
+public class GeneratorItem extends ItemBlock implements IEnergizedItem, ISpecialElectricItem, ISustainedInventory, ISustainedTank, IEnergyContainerItem
 {
 	public Block metaBlock;
 
@@ -117,16 +113,6 @@ public class GeneratorItem extends ItemBlock implements IEnergizedItem, ISpecial
 			}
 			else if(!MekKeyHandler.getIsKeyPressed(MekanismKeyHandler.modeSwitchKey))
 			{
-				if(hasSecurity(itemstack))
-				{
-					list.add(SecurityUtils.getOwnerDisplay(player.getCommandSenderName(), getOwner(itemstack)));
-					list.add(EnumColor.GREY + LangUtils.localize("gui.security") + ": " + SecurityUtils.getSecurityDisplay(itemstack, Side.CLIENT));
-					if(SecurityUtils.isOverridden(itemstack, Side.CLIENT))
-					{
-						list.add(EnumColor.RED + "(" + LangUtils.localize("gui.overridden") + ")");
-					}
-				}
-
 				list.add(EnumColor.BRIGHT_GREEN + LangUtils.localize("tooltip.storedEnergy") + ": " + EnumColor.GREY + MekanismUtils.getEnergyDisplay(getEnergy(itemstack)));
 
 				if(hasTank(itemstack))
@@ -201,19 +187,6 @@ public class GeneratorItem extends ItemBlock implements IEnergizedItem, ISpecial
 		if(place && super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata))
 		{
 			BasicBlockTileEntity tileEntity = (BasicBlockTileEntity)world.getTileEntity(x, y, z);
-			if(tileEntity instanceof ISecurityTile)
-			{
-				ISecurityTile security = (ISecurityTile)tileEntity;
-				security.getSecurity().setOwner(getOwner(stack));
-				if(hasSecurity(stack))
-				{
-					security.getSecurity().setMode(getSecurity(stack));
-				}
-				if(getOwner(stack) == null)
-				{
-					security.getSecurity().setOwner(player.getCommandSenderName());
-				}
-			}
 			if(tileEntity instanceof TileEntityElectricBlock)
 			{
 				((TileEntityElectricBlock)tileEntity).electricityStored = getEnergy(stack);
@@ -471,63 +444,5 @@ public class GeneratorItem extends ItemBlock implements IEnergizedItem, ISpecial
 	public IElectricItemManager getManager(ItemStack itemStack)
 	{
 		return IC2ItemManager.getManager(this);
-	}
-
-	@Override
-	public String getOwner(ItemStack stack) {
-		if(stack.stackTagCompound != null && stack.stackTagCompound.hasKey("owner"))
-		{
-			return stack.stackTagCompound.getString("owner");
-		}
-
-		return null;
-	}
-
-	@Override
-	public void setOwner(ItemStack stack, String owner) {
-		if(stack.stackTagCompound == null)
-		{
-			stack.setTagCompound(new NBTTagCompound());
-		}
-
-		if(owner == null || owner.isEmpty())
-		{
-			stack.stackTagCompound.removeTag("owner");
-			return;
-		}
-
-		stack.stackTagCompound.setString("owner", owner);
-	}
-
-	@Override
-	public SecurityMode getSecurity(ItemStack stack) {
-		if(stack.stackTagCompound == null || !general.allowProtection)
-		{
-			return SecurityMode.PUBLIC;
-		}
-
-		return SecurityMode.values()[stack.stackTagCompound.getInteger("security")];
-	}
-
-	@Override
-	public void setSecurity(ItemStack stack, SecurityMode mode) {
-		if(stack.stackTagCompound == null)
-		{
-			stack.setTagCompound(new NBTTagCompound());
-		}
-
-		stack.stackTagCompound.setInteger("security", mode.ordinal());
-	}
-
-	@Override
-	public boolean hasSecurity(ItemStack stack) {
-		GeneratorType type = GeneratorType.getFromMetadata(stack.getItemDamage());
-		return type.hasModel;
-	}
-
-	@Override
-	public boolean hasOwner(ItemStack stack)
-	{
-		return hasSecurity(stack);
 	}
 }

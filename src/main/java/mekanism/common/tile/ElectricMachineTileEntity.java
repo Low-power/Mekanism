@@ -96,7 +96,6 @@ public abstract class ElectricMachineTileEntity<RECIPE extends BasicMachineRecip
 		factory.ejectorComponent.setOutputData(TransmissionType.ITEM, factory.configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		factory.recipeType = type;
 		factory.upgradeComponent.setSupported(Upgrade.GAS, type.fuelEnergyUpgrades());
-		factory.securityComponent.readFrom(securityComponent);
 
 		for(TransmissionType transmission : configComponent.transmissions)
 		{

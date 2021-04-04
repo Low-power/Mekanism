@@ -14,13 +14,12 @@ import mekanism.common.Mekanism;
 import mekanism.common.frequency.Frequency;
 import mekanism.common.frequency.FrequencyManager;
 import mekanism.common.inventory.container.NullContainer;
-import mekanism.common.inventory.container.ContainerTeleporter;
-import mekanism.common.item.ItemPortableTeleporter;
-import mekanism.common.network.PacketPortableTeleporter.PortableTeleporterMessage;
-import mekanism.common.network.PacketPortableTeleporter.PortableTeleporterPacketType;
+import mekanism.common.inventory.container.TeleporterContainer;
+import mekanism.common.item.PortableTeleporter;
+import mekanism.common.network.PortableTeleporterPacket.PortableTeleporterMessage;
+import mekanism.common.network.PortableTeleporterPacket.PortableTeleporterPacketType;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.security.IOwnerItem;
-import mekanism.common.tile.TileEntityTeleporter;
+import mekanism.common.tile.TeleporterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -42,7 +41,7 @@ public class TeleporterGui extends GuiMekanism
 {
 	public ResourceLocation resource;
 
-	public TileEntityTeleporter tileEntity;
+	public TeleporterTileEntity tileEntity;
 	public ItemStack itemStack;
 
 	//public EntityPlayer player;
@@ -69,9 +68,9 @@ public class TeleporterGui extends GuiMekanism
 
 	public boolean isInit = true;
 
-	public TeleporterGui(InventoryPlayer inventory, TileEntityTeleporter tentity)
+	public TeleporterGui(InventoryPlayer inventory, TeleporterTileEntity tentity)
 	{
-		super(tentity, new ContainerTeleporter(inventory, tentity));
+		super(tentity, new TeleporterContainer(inventory, tentity));
 		tileEntity = tentity;
 		resource = MekanismUtils.getResource(ResourceType.GUI, "TeleporterGui.png");
 
@@ -116,7 +115,7 @@ public class TeleporterGui extends GuiMekanism
 			}
 		}, resource, 158, 26));
 		guiElements.add(scrollList = new GuiScrollList(this, resource, 28, 37, 120, 4));
-		ItemPortableTeleporter item = (ItemPortableTeleporter)itemStack.getItem();
+		PortableTeleporter item = (PortableTeleporter)itemStack.getItem();
 		if(item.getFrequency(stack) != null)
 		{
 			privateMode = item.isPrivateMode(itemStack);
@@ -187,17 +186,14 @@ public class TeleporterGui extends GuiMekanism
 		}
 	}
 
-	public String getSecurity(Frequency freq)
-	{
-		return !freq.publicFreq ? EnumColor.DARK_RED + LangUtils.localize("gui.private") : LangUtils.localize("gui.public");
-	}
-
 	public void updateButtons()
 	{
+/*
 		if(getOwner() == null)
 		{
 			return;
 		}
+*/
 		List<String> text = new ArrayList<String>();
 		if(privateMode)
 		{
@@ -232,13 +228,14 @@ public class TeleporterGui extends GuiMekanism
 			else {
 				setButton.enabled = false;
 			}
+/*
 			if(getOwner().equals(freq.owner))
 			{
 				deleteButton.enabled = true;
 			}
 			else {
 				deleteButton.enabled = false;
-			}
+			}*/
 		}
 		else {
 			setButton.enabled = false;
@@ -341,7 +338,7 @@ public class TeleporterGui extends GuiMekanism
 					ArrayList data = new ArrayList();
 					data.add(Integer.valueOf(1));
 					data.add(freq.name);
-					data.add(freq.publicFreq);
+					data.add(Boolean.valueOf(freq.publicFreq));
 					Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 				}
 				else {
@@ -369,11 +366,8 @@ public class TeleporterGui extends GuiMekanism
 		int yAxis = (mouseY-(height-ySize)/2);
 
 		fontRendererObj.drawString(getInventoryName(), (xSize/2)-(fontRendererObj.getStringWidth(getInventoryName())/2), 4, 0x404040);
-		fontRendererObj.drawString(LangUtils.localize("gui.owner") + ": " + (getOwner() != null ? getOwner() : LangUtils.localize("gui.none")), 8, itemStack != null ? ySize-12 : (ySize-96)+4, 0x404040);
 		fontRendererObj.drawString(LangUtils.localize("gui.freq") + ":", 32, 81, 0x404040);
-		fontRendererObj.drawString(LangUtils.localize("gui.security") + ":", 32, 91, 0x404040);
 		fontRendererObj.drawString(" " + (getFrequency() != null ? getFrequency().name : EnumColor.DARK_RED + LangUtils.localize("gui.none")), 32 + fontRendererObj.getStringWidth(LangUtils.localize("gui.freq") + ":"), 81, 0x797979);
-		fontRendererObj.drawString(" " + (getFrequency() != null ? getSecurity(getFrequency()) : EnumColor.DARK_RED + LangUtils.localize("gui.none")), 32 + fontRendererObj.getStringWidth(LangUtils.localize("gui.security") + ":"), 91, 0x797979);
 		String str = LangUtils.localize("gui.set") + ":";
 		renderScaledText(str, 27, 104, 0x404040, 20);
 		if(xAxis >= 6 && xAxis <= 24 && yAxis >= 6 && yAxis <= 24)
@@ -445,17 +439,6 @@ public class TeleporterGui extends GuiMekanism
 		return EnumColor.DARK_RED + LangUtils.localize("gui.teleporter.noLink");
 	}
 
-	private String getOwner()
-	{
-		if(tileEntity != null)
-		{
-			return tileEntity.getSecurity().getOwner();
-		}
-		else {
-			return ((IOwnerItem)itemStack.getItem()).getOwner(itemStack);
-		}
-	}
-
 	private byte getStatus()
 	{
 		return tileEntity != null ? tileEntity.status : clientStatus;
@@ -485,7 +468,7 @@ public class TeleporterGui extends GuiMekanism
 	{
 		if(itemStack != null)
 		{
-			return ((ItemPortableTeleporter)itemStack.getItem()).getEnergy(itemStack);
+			return ((PortableTeleporter)itemStack.getItem()).getEnergy(itemStack);
 		}
 		return tileEntity.getEnergy();
 	}
@@ -494,7 +477,7 @@ public class TeleporterGui extends GuiMekanism
 	{
 		if(itemStack != null)
 		{
-			return ((ItemPortableTeleporter)itemStack.getItem()).getMaxEnergy(itemStack);
+			return ((PortableTeleporter)itemStack.getItem()).getMaxEnergy(itemStack);
 		}
 		return tileEntity.getMaxEnergy();
 	}

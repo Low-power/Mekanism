@@ -16,7 +16,7 @@ import mekanism.client.gui.PRCGui;
 import mekanism.client.gui.GuiPrecisionSawmill;
 import mekanism.client.gui.GuiPurificationChamber;
 import mekanism.client.gui.RotaryCondensentratorGui;
-import mekanism.client.gui.GuiSolarNeutronActivator;
+import mekanism.client.gui.SolarNeutronActivatorGui;
 import mekanism.client.gui.GuiThermalEvaporationController;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
@@ -77,16 +77,16 @@ public class NEIMekanismConfig implements IConfigureNEI
 
 		API.registerRecipeHandler(new ChemicalCrystallizerRecipeHandler());
 		API.registerUsageHandler(new ChemicalCrystallizerRecipeHandler());
-		
+
 		API.registerRecipeHandler(new PRCRecipeHandler());
 		API.registerUsageHandler(new PRCRecipeHandler());
-		
+
 		API.registerRecipeHandler(new SolarNeutronRecipeHandler());
 		API.registerUsageHandler(new SolarNeutronRecipeHandler());
-		
+
 		API.registerRecipeHandler(new ShapedMekanismRecipeHandler());
 		API.registerUsageHandler(new ShapedMekanismRecipeHandler());
-		
+
 		API.registerRecipeHandler(new ShapelessMekanismRecipeHandler());
 		API.registerUsageHandler(new ShapelessMekanismRecipeHandler());
 
@@ -108,10 +108,10 @@ public class NEIMekanismConfig implements IConfigureNEI
 		API.setGuiOffset(ChemicalCrystallizerGui.class, ChemicalCrystallizerRecipeHandler.xOffset, ChemicalCrystallizerRecipeHandler.yOffset);
 		API.setGuiOffset(PRCGui.class, PRCRecipeHandler.xOffset, PRCRecipeHandler.yOffset);
 		API.setGuiOffset(GuiThermalEvaporationController.class, ThermalEvaporationRecipeHandler.xOffset, ThermalEvaporationRecipeHandler.yOffset);
-		API.setGuiOffset(GuiSolarNeutronActivator.class, SolarNeutronRecipeHandler.xOffset, SolarNeutronRecipeHandler.yOffset);
-		
+		API.setGuiOffset(SolarNeutronActivatorGui.class, SolarNeutronRecipeHandler.xOffset, SolarNeutronRecipeHandler.yOffset);
+
 		GuiContainerManager.addSlotClickHandler(new MekanismSlotClickHandler());
-		
+
 		API.registerNEIGuiHandler(new ElementBoundHandler());
 
 		API.hideItem(new ItemStack(MekanismBlocks.BoundingBlock));

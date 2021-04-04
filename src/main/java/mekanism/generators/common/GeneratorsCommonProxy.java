@@ -29,10 +29,10 @@ import mekanism.generators.common.tile.reactor.TileEntityReactorPort;
 import mekanism.generators.common.tile.turbine.TileEntityElectromagneticCoil;
 import mekanism.generators.common.tile.turbine.TileEntityRotationalComplex;
 import mekanism.generators.common.tile.turbine.TileEntitySaturatingCondenser;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineRotor;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineValve;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineVent;
+import mekanism.generators.common.tile.turbine.TurbineValveTileEntity;
+import mekanism.generators.common.tile.turbine.TurbineVentTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
@@ -78,9 +78,9 @@ public class GeneratorsCommonProxy implements IGuiProvider
 		GameRegistry.registerTileEntity(WindGeneratorTileEntity.class, "WindTurbine");
 		GameRegistry.registerTileEntity(TileEntityReactorController.class, "ReactorController");
 		GameRegistry.registerTileEntity(TileEntityTurbineRotor.class, "TurbineRod");
-		GameRegistry.registerTileEntity(TileEntityTurbineCasing.class, "TurbineCasing");
-		GameRegistry.registerTileEntity(TileEntityTurbineValve.class, "TurbineValve");
-		GameRegistry.registerTileEntity(TileEntityTurbineVent.class, "TurbineVent");
+		GameRegistry.registerTileEntity(TurbineCasingTileEntity.class, "TurbineCasing");
+		GameRegistry.registerTileEntity(TurbineValveTileEntity.class, "TurbineValve");
+		GameRegistry.registerTileEntity(TurbineVentTileEntity.class, "TurbineVent");
 	}
 
 	/**
@@ -149,9 +149,9 @@ public class GeneratorsCommonProxy implements IGuiProvider
 			case 5:
 				return new WindGeneratorContainer(player.inventory, (WindGeneratorTileEntity)tileEntity);
 			case 6:
-				return new FilterContainer(player.inventory, (TileEntityTurbineCasing)tileEntity);
+				return new FilterContainer(player.inventory, (TurbineCasingTileEntity)tileEntity);
 			case 7:
-				return new NullContainer(player, (TileEntityTurbineCasing)tileEntity);
+				return new NullContainer(player, (TurbineCasingTileEntity)tileEntity);
 			case 10:
 				return new ContainerReactorController(player.inventory, (TileEntityReactorController)tileEntity);
 			case 11:

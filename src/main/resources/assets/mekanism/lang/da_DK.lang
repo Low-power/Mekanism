@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=Superheating-element
 tile.BasicBlock2.PressureDisperser.name=Trykspreder
 tile.BasicBlock2.BoilerCasing.name=Kedel-casing
 tile.BasicBlock2.BoilerValve.name=Kedelventil
-tile.BasicBlock2.SecurityDesk.name=Sikkerhedskateder
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Berigelseskammer
@@ -481,13 +480,11 @@ gui.thermoelectricBoiler=Termoelektrisk Kedel
 gui.visuals=Visuelle
 gui.noEject=Kan ikke udstøde
 gui.undefined=Udefineret
-gui.owner=Ejer
 gui.public=Offentlig
 gui.private=Privat
 gui.add=Tilføj
 gui.set=Sæt
 gui.freq=Frek.
-gui.security=Sikkerhed
 gui.index=Indeks
 gui.producing=Producerer
 gui.maxOutput=Maks Output
@@ -541,16 +538,7 @@ gui.autoModeToggle=Skift Auto-modus
 gui.craftSingle=Craft Enkel Genstand
 gui.craftAvailable=Craft Tilgængelige Genstande
 gui.fillEmpty=Fyld/Tøm Grid
-gui.noOwner=Ingen Ejer
-gui.securityOverride=Sikkerheds-override
 gui.remove=Fjern
-gui.trustedPlayers=Betroede Spillere
-gui.publicMode=Offentlig Modus
-gui.privateMode=Privat Modus
-gui.trustedMode=Betroede Modus
-gui.securityOffline=Sikkerhed Offline
-gui.noAccessDesc=Du har ikke adgang til denne blok.
-gui.overridden=Overriden
 
 gui.reactor.injectionRate=Injektionssats
 
@@ -671,11 +659,6 @@ gui.digitalMiner.missingBlock=Manglende blok
 recipe.mekanismShaped=Formet
 recipe.mekanismShapeless=Formløs
 
-//Security types
-security.public=Offentlig
-security.private=Privat
-security.trusted=Betroede
-
 //Item and block tooltip text
 tooltip.configurator.configurate=Konfigurér
 tooltip.configurator.empty=Tom
@@ -788,7 +771,6 @@ tooltip.SuperheatingElement=En modulær, nogenlunde farlig radiator, der er i st
 tooltip.PressureDisperser=En blok brugt til at sprede damp hele vejen igennem en multiblok-konstruktion. Disse skulle forme et vandret plan uden huller for ordentligt at kunne kontrollere dampen.
 tooltip.BoilerCasing=Et trykmodstående, tæt kabinet brugt i konstruktionen af en Termoelektrisk Kedel-multiblok.
 tooltip.BoilerValve=En ventil, der kan placeres på en Termoelektrisk Kedel-multiblok, der muliggør indførslen af energi og vand samt udvindelsen af produceret damp.
-tooltip.SecurityDesk=En central kontrolhub til at styre sikkerheden af alt dit egede maskineri.
 
 tooltip.EnrichmentChamber=En simpel maskine brugt til at berige malm om til to af deres støvmodparter, såvel som at udføre mange andre operationer.
 tooltip.OsmiumCompressor=En nogenlunde avanceret maskine brugt til at komprimere osmium om til adskillige støve for så at kunne lave deres barremodparter.

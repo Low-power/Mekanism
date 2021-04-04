@@ -41,10 +41,8 @@ import mekanism.common.recipe.inputs.InfusionInput;
 import mekanism.common.recipe.machines.AdvancedMachineRecipe;
 import mekanism.common.recipe.machines.BasicMachineRecipe;
 import mekanism.common.recipe.machines.MetallurgicInfuserRecipe;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.component.ConfigTileComponent;
 import mekanism.common.tile.component.EjectorTileComponent;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -63,7 +61,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, ISideConfiguration, IUpgradeTile, IRedstoneControl, IGasHandler, ITubeConnection, ISpecialConfigData, ISecurityTile, ITierUpgradeable
+public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, ISideConfiguration, IUpgradeTile, IRedstoneControl, IGasHandler, ITubeConnection, ISpecialConfigData, ITierUpgradeable
 {
 	/** This Factory's tier. */
 	public FactoryTier tier;
@@ -133,7 +131,6 @@ public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements I
 	public TileComponentUpgrade upgradeComponent;
 	public EjectorTileComponent ejectorComponent;
 	public ConfigTileComponent configComponent;
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	public FactoryTileEntity()
 	{
@@ -220,7 +217,6 @@ public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements I
 		factory.ejectorComponent.setOutputData(TransmissionType.ITEM, factory.configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		factory.recipeType = recipeType;
 		factory.upgradeComponent.setSupported(Upgrade.GAS, recipeType.fuelEnergyUpgrades());
-		factory.securityComponent.readFrom(securityComponent);
 
 		for(int i = 0; i < tier.processes+5; i++)
 		{
@@ -849,14 +845,14 @@ public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements I
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(recipeType.ordinal());
-		data.add(recipeTicks);
-		data.add(controlType.ordinal());
-		data.add(sorting);
-		data.add(upgraded);
-		data.add(lastUsage);
-		data.add(infuseStored.amount);
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(recipeType.ordinal()));
+		data.add(Integer.valueOf(recipeTicks));
+		data.add(Integer.valueOf(controlType.ordinal()));
+		data.add(Boolean.valueOf(sorting));
+		data.add(Boolean.valueOf(upgraded));
+		data.add(Double.valueOf(lastUsage));
+		data.add(Integer.valueOf(infuseStored.amount));
 		if(infuseStored.type != null)
 		{
 			data.add(infuseStored.type.name);
@@ -866,14 +862,15 @@ public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements I
 		}
 		data.add(progress);
 
-		if(gasTank.getGas() != null)
+		GasStack gas_stack = gasTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(gasTank.getGas().getGas().getID());
-			data.add(gasTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(gasTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 		upgraded = false;
 
@@ -1158,10 +1155,5 @@ public class FactoryTileEntity extends NoisyElectricBlockTileEntity implements I
 	@Override
 	public String getDataType() {
 		return tier.getBaseTier().getLocalizedName() + " " + recipeType.getLocalizedName() + " " + super.getInventoryName();
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity() {
-		return securityComponent;
 	}
 }

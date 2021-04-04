@@ -13,7 +13,6 @@ import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiHeatInfo;
 import mekanism.client.gui.element.GuiPowerBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -39,7 +38,6 @@ public class HeatGeneratorGui extends GuiMekanism
 		super(new HeatGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
 			@Override

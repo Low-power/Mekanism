@@ -6,7 +6,7 @@ import mekanism.common.base.ISideConfiguration;
 import mekanism.common.content.transporter.Finder;
 import mekanism.common.content.transporter.InvStack;
 import mekanism.common.tile.BinTileEntity;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -68,9 +68,9 @@ public final class InventoryUtils
 	{
 		inventory = checkChestInv(inventory);
 
-		if(force && inventory instanceof TileEntityLogisticalSorter)
+		if(force && inventory instanceof LogisticalSorterTileEntity)
 		{
-			return ((TileEntityLogisticalSorter)inventory).sendHome(itemStack.copy());
+			return ((LogisticalSorterTileEntity)inventory).sendHome(itemStack.copy());
 		}
 
 		ItemStack toInsert = itemStack.copy();
@@ -400,9 +400,9 @@ public final class InventoryUtils
 			return false;
 		}
 
-		if(force && tileEntity instanceof TileEntityLogisticalSorter)
+		if(force && tileEntity instanceof LogisticalSorterTileEntity)
 		{
-			return ((TileEntityLogisticalSorter)tileEntity).canSendHome(itemStack);
+			return ((LogisticalSorterTileEntity)tileEntity).canSendHome(itemStack);
 		}
 
 		if(!force && tileEntity instanceof ISideConfiguration)

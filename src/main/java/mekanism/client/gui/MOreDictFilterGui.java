@@ -10,9 +10,9 @@ import mekanism.common.content.transporter.TransporterFilter;
 import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
-import mekanism.common.network.PacketEditFilter.EditFilterMessage;
-import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.tile.TileEntityDigitalMiner;
+import mekanism.common.network.EditFilterPacket.EditFilterMessage;
+import mekanism.common.network.NewFilterPacket.NewFilterMessage;
+import mekanism.common.tile.DigitalMinerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -32,7 +32,7 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class MOreDictFilterGui extends GuiMekanism
 {
-	public TileEntityDigitalMiner tileEntity;
+	public DigitalMinerTileEntity tileEntity;
 
 	public boolean isNew = false;
 
@@ -54,7 +54,7 @@ public class MOreDictFilterGui extends GuiMekanism
 
 	public String status = EnumColor.DARK_GREEN + LangUtils.localize("gui.allOK");
 
-	public MOreDictFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity, int index)
+	public MOreDictFilterGui(EntityPlayer player, DigitalMinerTileEntity tentity, int index)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
@@ -65,7 +65,7 @@ public class MOreDictFilterGui extends GuiMekanism
 		updateStackList(filter.oreDictName);
 	}
 
-	public MOreDictFilterGui(EntityPlayer player, TileEntityDigitalMiner tentity)
+	public MOreDictFilterGui(EntityPlayer player, DigitalMinerTileEntity tentity)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;

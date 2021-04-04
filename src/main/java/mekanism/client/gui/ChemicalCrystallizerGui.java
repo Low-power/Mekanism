@@ -1,6 +1,7 @@
 package mekanism.client.gui;
 
 import mekanism.api.gas.Gas;
+import mekanism.api.gas.GasStack;
 import mekanism.api.gas.GasTank;
 import mekanism.api.gas.OreGas;
 import mekanism.api.util.ListUtils;
@@ -14,7 +15,6 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -57,7 +57,6 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 		super(tentity, new ChemicalCrystallizerContainer(inventory, tentity));
 		tileEntity = tentity;
 
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 160, 23));
@@ -100,13 +99,14 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 
 		fontRendererObj.drawString(tileEntity.getInventoryName(), 37, 4, 0x404040);
 
-		if(tileEntity.inputTank.getGas() != null)
+		GasStack gas_stack = tileEntity.inputTank.getGas();
+		if(gas_stack != null)
 		{
-			fontRendererObj.drawString(tileEntity.inputTank.getGas().getGas().getLocalizedName(), 29, 15, 0x00CD00);
-
-			if(tileEntity.inputTank.getGas().getGas() instanceof OreGas)
+			Gas gas = gas_stack.getGas();
+			fontRendererObj.drawString(gas.getLocalizedName(), 29, 15, 0x00CD00);
+			if(gas instanceof OreGas)
 			{
-				fontRendererObj.drawString("(" + ((OreGas)tileEntity.inputTank.getGas().getGas()).getOreName() + ")", 29, 24, 0x00CD00);
+				fontRendererObj.drawString("(" + ((OreGas)gas).getOreName() + ")", 29, 24, 0x00CD00);
 			}
 			else {
 				CrystallizerRecipe recipe = tileEntity.getRecipe();
@@ -148,7 +148,8 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 
 	private Gas getInputGas()
 	{
-		return tileEntity.inputTank.getGas() != null ? tileEntity.inputTank.getGas().getGas() : null;
+		GasStack gas_stack = tileEntity.inputTank.getGas();
+		return gas_stack != null ? gas_stack.getGas() : null;
 	}
 
 	private void resetStacks()

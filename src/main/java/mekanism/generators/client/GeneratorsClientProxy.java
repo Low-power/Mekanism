@@ -17,8 +17,8 @@ import mekanism.generators.client.render.RenderAdvancedSolarGenerator;
 import mekanism.generators.client.render.RenderBioGenerator;
 import mekanism.generators.client.render.RenderGasGenerator;
 import mekanism.generators.client.render.RenderHeatGenerator;
-import mekanism.generators.client.render.RenderIndustrialTurbine;
-import mekanism.generators.client.render.RenderReactor;
+import mekanism.generators.client.render.IndustrialTurbineRenderer;
+import mekanism.generators.client.render.ReactorRenderer;
 import mekanism.generators.client.render.RenderSolarGenerator;
 import mekanism.generators.client.render.RenderTurbineRotor;
 import mekanism.generators.client.render.RenderWindGenerator;
@@ -34,10 +34,10 @@ import mekanism.generators.common.tile.WindGeneratorTileEntity;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
 import mekanism.generators.common.tile.reactor.TileEntityReactorLogicAdapter;
 import mekanism.generators.common.tile.reactor.TileEntityReactorNeutronCapture;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineRotor;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineValve;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineVent;
+import mekanism.generators.common.tile.turbine.TurbineValveTileEntity;
+import mekanism.generators.common.tile.turbine.TurbineVentTileEntity;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -64,11 +64,11 @@ public class GeneratorsClientProxy extends GeneratorsCommonProxy
 		ClientRegistry.registerTileEntity(HeatGeneratorTileEntity.class, "HeatGenerator", new RenderHeatGenerator());
 		ClientRegistry.registerTileEntity(GasGeneratorTileEntity.class, "GasGenerator", new RenderGasGenerator());
 		ClientRegistry.registerTileEntity(WindGeneratorTileEntity.class, "WindTurbine", new RenderWindGenerator());
-		ClientRegistry.registerTileEntity(TileEntityReactorController.class, "ReactorController", new RenderReactor());
+		ClientRegistry.registerTileEntity(TileEntityReactorController.class, "ReactorController", new ReactorRenderer());
 		ClientRegistry.registerTileEntity(TileEntityTurbineRotor.class, "TurbineRod", new RenderTurbineRotor());
-		ClientRegistry.registerTileEntity(TileEntityTurbineCasing.class, "TurbineCasing", new RenderIndustrialTurbine());
-		ClientRegistry.registerTileEntity(TileEntityTurbineValve.class, "TurbineValve", new RenderIndustrialTurbine());
-		ClientRegistry.registerTileEntity(TileEntityTurbineVent.class, "TurbineVent", new RenderIndustrialTurbine());
+		ClientRegistry.registerTileEntity(TurbineCasingTileEntity.class, "TurbineCasing", new IndustrialTurbineRenderer());
+		ClientRegistry.registerTileEntity(TurbineValveTileEntity.class, "TurbineValve", new IndustrialTurbineRenderer());
+		ClientRegistry.registerTileEntity(TurbineVentTileEntity.class, "TurbineVent", new IndustrialTurbineRenderer());
 	}
 
 	@Override
@@ -105,9 +105,9 @@ public class GeneratorsClientProxy extends GeneratorsCommonProxy
 			case 5:
 				return new WindGeneratorGui(player.inventory, (WindGeneratorTileEntity)tileEntity);
 			case 6:
-				return new IndustrialTurbineGui(player.inventory, (TileEntityTurbineCasing)tileEntity);
+				return new IndustrialTurbineGui(player.inventory, (TurbineCasingTileEntity)tileEntity);
 			case 7:
-				return new TurbineStatsGui(player.inventory, (TileEntityTurbineCasing)tileEntity);
+				return new TurbineStatsGui(player.inventory, (TurbineCasingTileEntity)tileEntity);
 			case 10:
 				return new ReactorControllerGui(player.inventory, (TileEntityReactorController)tileEntity);
 			case 11:
@@ -128,6 +128,6 @@ public class GeneratorsClientProxy extends GeneratorsCommonProxy
 	@SubscribeEvent
 	public void onStitch(TextureStitchEvent.Pre event)
 	{
-		RenderIndustrialTurbine.resetDisplayInts();
+		IndustrialTurbineRenderer.resetDisplayInts();
 	}
 }

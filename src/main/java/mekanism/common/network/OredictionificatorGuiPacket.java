@@ -2,15 +2,15 @@ package mekanism.common.network;
 
 import mekanism.api.Coord4D;
 import mekanism.client.gui.OredictionificatorGui;
-import mekanism.client.gui.GuiOredictionificatorFilter;
+import mekanism.client.gui.OredictionificatorFilterGui;
 import mekanism.common.Mekanism;
 import mekanism.common.PacketHandler;
 import mekanism.common.inventory.container.FilterContainer;
-import mekanism.common.inventory.container.ContainerOredictionificator;
+import mekanism.common.inventory.container.OredictionificatorContainer;
 import mekanism.common.network.OredictionificatorGuiPacket.OredictionificatorGuiMessage;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.tile.ContainerTileEntity;
-import mekanism.common.tile.TileEntityOredictionificator;
+import mekanism.common.tile.OredictionificatorTileEntity;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -34,13 +34,13 @@ public class OredictionificatorGuiPacket implements IMessageHandler<Oredictionif
 		{
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.coord4D.dimensionId);
 
-			if(world != null && message.coord4D.getTileEntity(world) instanceof TileEntityOredictionificator)
+			if(world != null && message.coord4D.getTileEntity(world) instanceof OredictionificatorTileEntity)
 			{
 				OredictionificatorGuiMessage.openServerGui(message.packetType, message.guiType, world, (EntityPlayerMP)player, message.coord4D, message.index);
 			}
 		}
 		else {
-			if(message.coord4D.getTileEntity(player.worldObj) instanceof TileEntityOredictionificator)
+			if(message.coord4D.getTileEntity(player.worldObj) instanceof OredictionificatorTileEntity)
 			{
 				try {
 					if(message.packetType == OredictionificatorGuiPacketType.CLIENT)
@@ -101,7 +101,7 @@ public class OredictionificatorGuiPacket implements IMessageHandler<Oredictionif
 			player.closeContainer();
 			if(guiType == 0)
 			{
-				container = new ContainerOredictionificator(player.inventory, (TileEntityOredictionificator)obj.getTileEntity(world));
+				container = new OredictionificatorContainer(player.inventory, (OredictionificatorTileEntity)obj.getTileEntity(world));
 			}
 			else if(guiType == 1)
 			{
@@ -122,7 +122,7 @@ public class OredictionificatorGuiPacket implements IMessageHandler<Oredictionif
 			player.openContainer.addCraftingToCrafters(player);
 			if(guiType == 0)
 			{
-				TileEntityOredictionificator tile = (TileEntityOredictionificator)obj.getTileEntity(world);
+				OredictionificatorTileEntity tile = (OredictionificatorTileEntity)obj.getTileEntity(world);
 				for(EntityPlayer p : tile.playersUsing)
 				{
 					Mekanism.packetHandler.sendTo(new TileEntityMessage(obj, tile.getFilterPacket(new ArrayList())), (EntityPlayerMP)p);
@@ -135,21 +135,21 @@ public class OredictionificatorGuiPacket implements IMessageHandler<Oredictionif
 		{
 			if(type == 0)
 			{
-				return new OredictionificatorGui(player.inventory, (TileEntityOredictionificator)world.getTileEntity(x, y, z));
+				return new OredictionificatorGui(player.inventory, (OredictionificatorTileEntity)world.getTileEntity(x, y, z));
 			}
 			else {
 				if(packetType == OredictionificatorGuiPacketType.CLIENT)
 				{
 					if(type == 1)
 					{
-						return new GuiOredictionificatorFilter(player, (TileEntityOredictionificator)world.getTileEntity(x, y, z));
+						return new OredictionificatorFilterGui(player, (OredictionificatorTileEntity)world.getTileEntity(x, y, z));
 					}
 				}
 				else if(packetType == OredictionificatorGuiPacketType.CLIENT_INDEX)
 				{
 					if(type == 1)
 					{
-						return new GuiOredictionificatorFilter(player, (TileEntityOredictionificator)world.getTileEntity(x, y, z), index);
+						return new OredictionificatorFilterGui(player, (OredictionificatorTileEntity)world.getTileEntity(x, y, z), index);
 					}
 				}
 			}

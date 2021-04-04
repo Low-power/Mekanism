@@ -126,7 +126,6 @@ public abstract class AdvancedElectricMachineTileEntity<RECIPE extends AdvancedM
 		factory.ejectorComponent.setOutputData(TransmissionType.ITEM, factory.configComponent.getOutputs(TransmissionType.ITEM).get(2));
 		factory.recipeType = type;
 		factory.upgradeComponent.setSupported(Upgrade.GAS, type.fuelEnergyUpgrades());
-		factory.securityComponent.readFrom(securityComponent);
 
 		for(TransmissionType transmission : configComponent.transmissions)
 		{
@@ -334,14 +333,15 @@ public abstract class AdvancedElectricMachineTileEntity<RECIPE extends AdvancedM
 	{
 		super.getNetworkedData(data);
 
-		if(gasTank.getGas() != null)
+		GasStack gas_stack = gasTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(gasTank.getGas().getGas().getID());
-			data.add(gasTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(gasTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;

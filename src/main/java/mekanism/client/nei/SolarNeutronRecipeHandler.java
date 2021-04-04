@@ -2,28 +2,24 @@ package mekanism.client.nei;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.GasStack;
-import mekanism.client.gui.GuiSolarNeutronActivator;
+import mekanism.client.gui.SolarNeutronActivatorGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.SolarNeutronRecipe;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import org.lwjgl.opengl.GL11;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.List;
 
 public class SolarNeutronRecipeHandler extends BaseRecipeHandler
 {
@@ -47,13 +43,13 @@ public class SolarNeutronRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiSolarNeutronActivator.png";
+		return "mekanism:gui/nei/SolarNeutronActivatorGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiSolarNeutronActivator.class;
+		return SolarNeutronActivatorGui.class;
 	}
 
 	public String getRecipeId()
@@ -69,7 +65,7 @@ public class SolarNeutronRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(-2, 0, 3, yOffset, 170, 70);
 	}

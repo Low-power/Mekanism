@@ -32,8 +32,6 @@ import mekanism.common.item.MachineItem;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.SorterGuiPacket;
 import mekanism.common.recipe.ShapedMekanismRecipe;
-import mekanism.common.security.ISecurityItem;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.AdvancedFactoryTileEntity;
 import mekanism.common.tile.TileEntityAmbientAccumulator;
 import mekanism.common.tile.BasicBlockTileEntity;
@@ -47,38 +45,37 @@ import mekanism.common.tile.ChemicalWasherTileEntity;
 import mekanism.common.tile.TileEntityCombiner;
 import mekanism.common.tile.ContainerTileEntity;
 import mekanism.common.tile.TileEntityCrusher;
-import mekanism.common.tile.TileEntityDigitalMiner;
-import mekanism.common.tile.TileEntityElectricPump;
-import mekanism.common.tile.TileEntityElectrolyticSeparator;
+import mekanism.common.tile.DigitalMinerTileEntity;
+import mekanism.common.tile.ElectricPumpTileEntity;
+import mekanism.common.tile.ElectrolyticSeparatorTileEntity;
 import mekanism.common.tile.EliteFactoryTileEntity;
 import mekanism.common.tile.TileEntityEnergizedSmelter;
 import mekanism.common.tile.TileEntityEnrichmentChamber;
 import mekanism.common.tile.FactoryTileEntity;
-import mekanism.common.tile.TileEntityFluidTank;
-import mekanism.common.tile.TileEntityFluidicPlenisher;
-import mekanism.common.tile.TileEntityFormulaicAssemblicator;
-import mekanism.common.tile.TileEntityFuelwoodHeater;
+import mekanism.common.tile.FluidTankTileEntity;
+import mekanism.common.tile.FluidicPlenisherTileEntity;
+import mekanism.common.tile.FormulaicAssemblicatorTileEntity;
+import mekanism.common.tile.FuelwoodHeaterTileEntity;
 import mekanism.common.tile.LaserTileEntity;
-import mekanism.common.tile.TileEntityLaserAmplifier;
-import mekanism.common.tile.TileEntityLaserTractorBeam;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LaserAmplifierTileEntity;
+import mekanism.common.tile.LaserTractorBeamTileEntity;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.tile.MetallurgicInfuserTileEntity;
-import mekanism.common.tile.TileEntityOredictionificator;
+import mekanism.common.tile.OredictionificatorTileEntity;
 import mekanism.common.tile.TileEntityOsmiumCompressor;
 import mekanism.common.tile.PRCTileEntity;
 import mekanism.common.tile.PersonalChestTileEntity;
 import mekanism.common.tile.TileEntityPrecisionSawmill;
 import mekanism.common.tile.TileEntityPurificationChamber;
-import mekanism.common.tile.TileEntityQuantumEntangloporter;
+import mekanism.common.tile.QuantumEntangloporterTileEntity;
 import mekanism.common.tile.ResistiveHeaterTileEntity;
-import mekanism.common.tile.TileEntityRotaryCondensentrator;
-import mekanism.common.tile.TileEntitySeismicVibrator;
-import mekanism.common.tile.TileEntitySolarNeutronActivator;
-import mekanism.common.tile.TileEntityTeleporter;
+import mekanism.common.tile.RotaryCondensentratorTileEntity;
+import mekanism.common.tile.SeismicVibratorTileEntity;
+import mekanism.common.tile.SolarNeutronActivatorTileEntity;
+import mekanism.common.tile.TeleporterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.PipeUtils;
-import mekanism.common.util.SecurityUtils;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -288,9 +285,9 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 			}
 		}
 
-		if(tileEntity instanceof TileEntityLogisticalSorter)
+		if(tileEntity instanceof LogisticalSorterTileEntity)
 		{
-			TileEntityLogisticalSorter transporter = (TileEntityLogisticalSorter)tileEntity;
+			LogisticalSorterTileEntity transporter = (LogisticalSorterTileEntity)tileEntity;
 
 			if(!transporter.hasInventory())
 			{
@@ -560,40 +557,33 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 
 			if(MekanismUtils.hasUsableWrench(player, x, y, z))
 			{
-				if(SecurityUtils.canAccess(player, tileEntity))
+				if(player.isSneaking())
 				{
-					if(player.isSneaking())
+					dismantleBlock(world, x, y, z, false);
+					return true;
+				}
+				if(MekanismUtils.isBCWrench(tool))
+				{
+					((IToolWrench)tool).wrenchUsed(player, x, y, z);
+				}
+				int change = ForgeDirection.ROTATION_MATRIX[ForgeDirection.UP.ordinal()][tileEntity.facing];
+				if(tileEntity instanceof LogisticalSorterTileEntity)
+				{
+					if(!((LogisticalSorterTileEntity)tileEntity).hasInventory())
 					{
-						dismantleBlock(world, x, y, z, false);
-						return true;
-					}
-					if(MekanismUtils.isBCWrench(tool))
-					{
-						((IToolWrench)tool).wrenchUsed(player, x, y, z);
-					}
-					int change = ForgeDirection.ROTATION_MATRIX[ForgeDirection.UP.ordinal()][tileEntity.facing];
-					if(tileEntity instanceof TileEntityLogisticalSorter)
-					{
-						if(!((TileEntityLogisticalSorter)tileEntity).hasInventory())
+						for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
 						{
-							for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
+							TileEntity tile = Coord4D.get(tileEntity).getFromSide(dir).getTileEntity(world);
+							if(tile instanceof IInventory)
 							{
-								TileEntity tile = Coord4D.get(tileEntity).getFromSide(dir).getTileEntity(world);
-								if(tile instanceof IInventory)
-								{
-									change = dir.getOpposite().ordinal();
-									break;
-								}
+								change = dir.getOpposite().ordinal();
+								break;
 							}
 						}
 					}
-					tileEntity.setFacing((short)change);
-					world.notifyBlocksOfNeighborChange(x, y, z, this);
 				}
-				else {
-					SecurityUtils.displayNoAccess(player);
-				}
-				return true;
+				tileEntity.setFacing((short)change);
+				world.notifyBlocksOfNeighborChange(x, y, z, this);
 			}
 		}
 
@@ -607,34 +597,23 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 					if(!player.isSneaking() && !world.isSideSolid(x, y + 1, z, ForgeDirection.DOWN))
 					{
 						PersonalChestTileEntity chest = (PersonalChestTileEntity)tileEntity;
-						if(SecurityUtils.canAccess(player, tileEntity))
-						{
-							MekanismUtils.openPersonalChestGui((EntityPlayerMP)player, chest, null, true);
-						}
-						else {
-							SecurityUtils.displayNoAccess(player);
-						}
+						MekanismUtils.openPersonalChestGui((EntityPlayerMP)player, chest, null, true);
 						return true;
 					}
 					break;
 				case FLUID_TANK:
 					if(!player.isSneaking())
 					{
-						if(SecurityUtils.canAccess(player, tileEntity))
+						ItemStack item_stack = player.getCurrentEquippedItem();
+						if(item_stack != null && FluidContainerRegistry.isContainer(item_stack))
 						{
-							if(player.getCurrentEquippedItem() != null && FluidContainerRegistry.isContainer(player.getCurrentEquippedItem()))
+							if(manageInventory(player, (FluidTankTileEntity)tileEntity))
 							{
-								if(manageInventory(player, (TileEntityFluidTank)tileEntity))
-								{
-									player.inventory.markDirty();
-									return true;
-								}
-							} else {
-								player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
+								player.inventory.markDirty();
+								return true;
 							}
-						}
-						else {
-							SecurityUtils.displayNoAccess(player);
+						} else {
+							player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
 						}
 						return true;
 					}
@@ -642,13 +621,7 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 				case LOGISTICAL_SORTER:
 					if(!player.isSneaking())
 					{
-						if(SecurityUtils.canAccess(player, tileEntity))
-						{
-							LogisticalSorterGuiMessage.openServerGui(SorterGuiPacket.SERVER, 0, world, (EntityPlayerMP)player, Coord4D.get(tileEntity), -1);
-						}
-						else {
-							SecurityUtils.displayNoAccess(player);
-						}
+						LogisticalSorterGuiMessage.openServerGui(SorterGuiPacket.SERVER, 0, world, (EntityPlayerMP)player, Coord4D.get(tileEntity), -1);
 						return true;
 					}
 					break;
@@ -656,27 +629,14 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 				case QUANTUM_ENTANGLOPORTER:
 					if(!player.isSneaking())
 					{
-						String owner = ((ISecurityTile)tileEntity).getSecurity().getOwner();
-						if(MekanismUtils.isOp((EntityPlayerMP)player) || owner == null || player.getCommandSenderName().equals(owner))
-						{
-							player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
-						}
-						else {
-							SecurityUtils.displayNoAccess(player);
-						}
+						player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
 						return true;
 					}
 					break;
 				default:
 					if(!player.isSneaking() && type.guiId != -1)
 					{
-						if(SecurityUtils.canAccess(player, tileEntity))
-						{
-							player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
-						}
-						else {
-							SecurityUtils.displayNoAccess(player);
-						}
+						player.openGui(Mekanism.instance, type.guiId, world, x, y, z);
 						return true;
 					}
 					break;
@@ -727,13 +687,6 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 	}
 
 	@Override
-	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z)
-	{
-		TileEntity tile = world.getTileEntity(x, y, z);
-		return SecurityUtils.canAccess(player, tile) ? super.getPlayerRelativeBlockHardness(player, world, x, y, z) : 0F;
-	}
-
-	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
 		if(MachineType.get(blockType, world.getBlockMetadata(x, y, z)) != MachineType.PERSONAL_CHEST)
 		{
@@ -771,14 +724,14 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 	public int getComparatorInputOverride(World world, int x, int y, int z, int par5)
 	{
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if(tileEntity instanceof TileEntityFluidTank)
+		if(tileEntity instanceof FluidTankTileEntity)
 		{
-			return ((TileEntityFluidTank)tileEntity).getRedstoneLevel();
+			return ((FluidTankTileEntity)tileEntity).getRedstoneLevel();
 		}
-		if(tileEntity instanceof TileEntityLaserAmplifier)
+		if(tileEntity instanceof LaserAmplifierTileEntity)
 		{
-			TileEntityLaserAmplifier amplifier = (TileEntityLaserAmplifier)tileEntity;
-			if(amplifier.outputMode == TileEntityLaserAmplifier.RedstoneOutput.ENERGY_CONTENTS)
+			LaserAmplifierTileEntity amplifier = (LaserAmplifierTileEntity)tileEntity;
+			if(amplifier.outputMode == LaserAmplifierTileEntity.RedstoneOutput.ENERGY_CONTENTS)
 			{
 				return amplifier.getRedstoneLevel();
 			}
@@ -789,7 +742,7 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 		return 0;
 	}
 
-	private boolean manageInventory(EntityPlayer player, TileEntityFluidTank tileEntity)
+	private boolean manageInventory(EntityPlayer player, FluidTankTileEntity tileEntity)
 	{
 		ItemStack itemStack = player.getCurrentEquippedItem();
 
@@ -797,15 +750,16 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 		{
 			if(FluidContainerRegistry.isEmptyContainer(itemStack))
 			{
-				if(tileEntity.fluidTank.getFluid() != null && tileEntity.fluidTank.getFluid().amount >= FluidContainerRegistry.BUCKET_VOLUME)
+				FluidStack fluid_stack = tileEntity.fluidTank.getFluid();
+				if(fluid_stack != null && fluid_stack.amount >= FluidContainerRegistry.BUCKET_VOLUME)
 				{
-					ItemStack filled = FluidContainerRegistry.fillFluidContainer(tileEntity.fluidTank.getFluid(), itemStack);
-
+					ItemStack filled = FluidContainerRegistry.fillFluidContainer(fluid_stack, itemStack);
 					if(filled != null)
 					{
+						fluid_stack = FluidContainerRegistry.getFluidForFilledItem(filled);
 						if(player.capabilities.isCreativeMode)
 						{
-							tileEntity.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+							tileEntity.fluidTank.drain(fluid_stack.amount, true);
 
 							return true;
 						}
@@ -816,14 +770,14 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 							{
 								itemStack.stackSize--;
 
-								tileEntity.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+								tileEntity.fluidTank.drain(fluid_stack.amount, true);
 							}
 						}
 						else if(itemStack.stackSize == 1)
 						{
 							player.setCurrentItemOrArmor(0, filled);
 
-							tileEntity.fluidTank.drain(FluidContainerRegistry.getFluidForFilledItem(filled).amount, true);
+							tileEntity.fluidTank.drain(fluid_stack.amount, true);
 
 							return true;
 						}
@@ -834,9 +788,10 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 			{
 				FluidStack itemFluid = FluidContainerRegistry.getFluidForFilledItem(itemStack);
 				int needed = tileEntity.getCurrentNeeded();
-				if((tileEntity.fluidTank.getFluid() == null && itemFluid.amount <= tileEntity.fluidTank.getCapacity()) || itemFluid.amount <= needed)
+				FluidStack tank_fluid_stack = tileEntity.fluidTank.getFluid();
+				if((tank_fluid_stack == null && itemFluid.amount <= tileEntity.fluidTank.getCapacity()) || itemFluid.amount <= needed)
 				{
-					if(tileEntity.fluidTank.getFluid() != null && !tileEntity.fluidTank.getFluid().isFluidEqual(itemFluid))
+					if(tank_fluid_stack != null && !tank_fluid_stack.isFluidEqual(itemFluid))
 					{
 						return false;
 					}
@@ -900,9 +855,9 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 			{
 				((BasicBlockTileEntity)tileEntity).onNeighborChange(block);
 			}
-			if(tileEntity instanceof TileEntityLogisticalSorter)
+			if(tileEntity instanceof LogisticalSorterTileEntity)
 			{
-				TileEntityLogisticalSorter sorter = (TileEntityLogisticalSorter)tileEntity;
+				LogisticalSorterTileEntity sorter = (LogisticalSorterTileEntity)tileEntity;
 
 				if(!sorter.hasInventory())
 				{
@@ -931,19 +886,10 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 		{
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
-		if(tileEntity instanceof TileEntityFluidTank)
+		if(tileEntity instanceof FluidTankTileEntity)
 		{
 			ITierItem tierItem = (ITierItem)itemStack.getItem();
-			tierItem.setBaseTier(itemStack, ((TileEntityFluidTank)tileEntity).tier.getBaseTier());
-		}
-		if(tileEntity instanceof ISecurityTile)
-		{
-			ISecurityItem securityItem = (ISecurityItem)itemStack.getItem();
-			if(securityItem.hasSecurity(itemStack))
-			{
-				securityItem.setOwner(itemStack, ((ISecurityTile)tileEntity).getSecurity().getOwner());
-				securityItem.setSecurity(itemStack, ((ISecurityTile)tileEntity).getSecurity().getMode());
-			}
+			tierItem.setBaseTier(itemStack, ((FluidTankTileEntity)tileEntity).tier.getBaseTier());
 		}
 
 		if(tileEntity instanceof IUpgradeTile)
@@ -984,9 +930,10 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 		{
 			if(tileEntity instanceof ISustainedTank)
 			{
-				if(((ISustainedTank)tileEntity).getFluidStack() != null)
+				FluidStack fluid_stack = ((ISustainedTank)tileEntity).getFluidStack();
+				if(fluid_stack != null)
 				{
-					((ISustainedTank)itemStack.getItem()).setFluidStack(((ISustainedTank)tileEntity).getFluidStack(), itemStack);
+					((ISustainedTank)itemStack.getItem()).setFluidStack(fluid_stack, itemStack);
 				}
 			}
 		}
@@ -1127,41 +1074,41 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 		OSMIUM_COMPRESSOR(MachineBlock.MACHINE_BLOCK_1, 1, "OsmiumCompressor", 4, TileEntityOsmiumCompressor.class, true, false, true),
 		COMBINER(MachineBlock.MACHINE_BLOCK_1, 2, "Combiner", 5, TileEntityCombiner.class, true, false, true),
 		CRUSHER(MachineBlock.MACHINE_BLOCK_1, 3, "Crusher", 6, TileEntityCrusher.class, true, false, true),
-		DIGITAL_MINER(MachineBlock.MACHINE_BLOCK_1, 4, "DigitalMiner", 2, TileEntityDigitalMiner.class, true, true, true),
+		DIGITAL_MINER(MachineBlock.MACHINE_BLOCK_1, 4, "DigitalMiner", 2, DigitalMinerTileEntity.class, true, true, true),
 		BASIC_FACTORY(MachineBlock.MACHINE_BLOCK_1, 5, "Factory", 11, FactoryTileEntity.class, true, false, true),
 		ADVANCED_FACTORY(MachineBlock.MACHINE_BLOCK_1, 6, "Factory", 11, AdvancedFactoryTileEntity.class, true, false, true),
 		ELITE_FACTORY(MachineBlock.MACHINE_BLOCK_1, 7, "Factory", 11, EliteFactoryTileEntity.class, true, false, true),
 		METALLURGIC_INFUSER(MachineBlock.MACHINE_BLOCK_1, 8, "MetallurgicInfuser", 12, MetallurgicInfuserTileEntity.class, true, true, true),
 		PURIFICATION_CHAMBER(MachineBlock.MACHINE_BLOCK_1, 9, "PurificationChamber", 15, TileEntityPurificationChamber.class, true, false, true),
 		ENERGIZED_SMELTER(MachineBlock.MACHINE_BLOCK_1, 10, "EnergizedSmelter", 16, TileEntityEnergizedSmelter.class, true, false, true),
-		TELEPORTER(MachineBlock.MACHINE_BLOCK_1, 11, "Teleporter", 13, TileEntityTeleporter.class, true, false, false),
-		ELECTRIC_PUMP(MachineBlock.MACHINE_BLOCK_1, 12, "ElectricPump", 17, TileEntityElectricPump.class, true, true, false),
+		TELEPORTER(MachineBlock.MACHINE_BLOCK_1, 11, "Teleporter", 13, TeleporterTileEntity.class, true, false, false),
+		ELECTRIC_PUMP(MachineBlock.MACHINE_BLOCK_1, 12, "ElectricPump", 17, ElectricPumpTileEntity.class, true, true, false),
 		PERSONAL_CHEST(MachineBlock.MACHINE_BLOCK_1, 13, "PersonalChest", -1, PersonalChestTileEntity.class, false, true, false),
 		CHARGEPAD(MachineBlock.MACHINE_BLOCK_1, 14, "Chargepad", -1, ChargepadTileEntity.class, true, true, false),
-		LOGISTICAL_SORTER(MachineBlock.MACHINE_BLOCK_1, 15, "LogisticalSorter", -1, TileEntityLogisticalSorter.class, false, true, false),
-		ROTARY_CONDENSENTRATOR(MachineBlock.MACHINE_BLOCK_2, 0, "RotaryCondensentrator", 7, TileEntityRotaryCondensentrator.class, true, true, false),
+		LOGISTICAL_SORTER(MachineBlock.MACHINE_BLOCK_1, 15, "LogisticalSorter", -1, LogisticalSorterTileEntity.class, false, true, false),
+		ROTARY_CONDENSENTRATOR(MachineBlock.MACHINE_BLOCK_2, 0, "RotaryCondensentrator", 7, RotaryCondensentratorTileEntity.class, true, true, false),
 		CHEMICAL_OXIDIZER(MachineBlock.MACHINE_BLOCK_2, 1, "ChemicalOxidizer", 29, ChemicalOxidizerTileEntity.class, true, true, true),
 		CHEMICAL_INFUSER(MachineBlock.MACHINE_BLOCK_2, 2, "ChemicalInfuser", 30, ChemicalInfuserTileEntity.class, true, true, false),
 		CHEMICAL_INJECTION_CHAMBER(MachineBlock.MACHINE_BLOCK_2, 3, "ChemicalInjectionChamber", 31, TileEntityChemicalInjectionChamber.class, true, false, true),
-		ELECTROLYTIC_SEPARATOR(MachineBlock.MACHINE_BLOCK_2, 4, "ElectrolyticSeparator", 32, TileEntityElectrolyticSeparator.class, true, true, false),
+		ELECTROLYTIC_SEPARATOR(MachineBlock.MACHINE_BLOCK_2, 4, "ElectrolyticSeparator", 32, ElectrolyticSeparatorTileEntity.class, true, true, false),
 		PRECISION_SAWMILL(MachineBlock.MACHINE_BLOCK_2, 5, "PrecisionSawmill", 34, TileEntityPrecisionSawmill.class, true, false, true),
 		CHEMICAL_DISSOLUTION_CHAMBER(MachineBlock.MACHINE_BLOCK_2, 6, "ChemicalDissolutionChamber", 35, ChemicalDissolutionChamberTileEntity.class, true, true, true),
 		CHEMICAL_WASHER(MachineBlock.MACHINE_BLOCK_2, 7, "ChemicalWasher", 36, ChemicalWasherTileEntity.class, true, true, false),
 		CHEMICAL_CRYSTALLIZER(MachineBlock.MACHINE_BLOCK_2, 8, "ChemicalCrystallizer", 37, ChemicalCrystallizerTileEntity.class, true, true, true),
-		SEISMIC_VIBRATOR(MachineBlock.MACHINE_BLOCK_2, 9, "SeismicVibrator", 39, TileEntitySeismicVibrator.class, true, true, false),
+		SEISMIC_VIBRATOR(MachineBlock.MACHINE_BLOCK_2, 9, "SeismicVibrator", 39, SeismicVibratorTileEntity.class, true, true, false),
 		PRESSURIZED_REACTION_CHAMBER(MachineBlock.MACHINE_BLOCK_2, 10, "PressurizedReactionChamber", 40, PRCTileEntity.class, true, true, false),
-		FLUID_TANK(MachineBlock.MACHINE_BLOCK_2, 11, "FluidTank", 41, TileEntityFluidTank.class, false, true, false),
-		FLUIDIC_PLENISHER(MachineBlock.MACHINE_BLOCK_2, 12, "FluidicPlenisher", 42, TileEntityFluidicPlenisher.class, true, true, false),
+		FLUID_TANK(MachineBlock.MACHINE_BLOCK_2, 11, "FluidTank", 41, FluidTankTileEntity.class, false, true, false),
+		FLUIDIC_PLENISHER(MachineBlock.MACHINE_BLOCK_2, 12, "FluidicPlenisher", 42, FluidicPlenisherTileEntity.class, true, true, false),
 		LASER(MachineBlock.MACHINE_BLOCK_2, 13, "Laser", -1, LaserTileEntity.class, true, true, false),
-		LASER_AMPLIFIER(MachineBlock.MACHINE_BLOCK_2, 14, "LaserAmplifier", 44, TileEntityLaserAmplifier.class, false, true, false),
-		LASER_TRACTOR_BEAM(MachineBlock.MACHINE_BLOCK_2, 15, "LaserTractorBeam", 45, TileEntityLaserTractorBeam.class, false, true, false),
-		QUANTUM_ENTANGLOPORTER(MachineBlock.MACHINE_BLOCK_3, 0, "QuantumEntangloporter", 46, TileEntityQuantumEntangloporter.class, true, true, false),
-		SOLAR_NEUTRON_ACTIVATOR(MachineBlock.MACHINE_BLOCK_3, 1, "SolarNeutronActivator", 47, TileEntitySolarNeutronActivator.class, false, true, false),
+		LASER_AMPLIFIER(MachineBlock.MACHINE_BLOCK_2, 14, "LaserAmplifier", 44, LaserAmplifierTileEntity.class, false, true, false),
+		LASER_TRACTOR_BEAM(MachineBlock.MACHINE_BLOCK_2, 15, "LaserTractorBeam", 45, LaserTractorBeamTileEntity.class, false, true, false),
+		QUANTUM_ENTANGLOPORTER(MachineBlock.MACHINE_BLOCK_3, 0, "QuantumEntangloporter", 46, QuantumEntangloporterTileEntity.class, true, true, false),
+		SOLAR_NEUTRON_ACTIVATOR(MachineBlock.MACHINE_BLOCK_3, 1, "SolarNeutronActivator", 47, SolarNeutronActivatorTileEntity.class, false, true, false),
 		AMBIENT_ACCUMULATOR(MachineBlock.MACHINE_BLOCK_3, 2, "AmbientAccumulator", 48, TileEntityAmbientAccumulator.class, true, false, false),
-		OREDICTIONIFICATOR(MachineBlock.MACHINE_BLOCK_3, 3, "Oredictionificator", 52, TileEntityOredictionificator.class, false, false, false),
+		OREDICTIONIFICATOR(MachineBlock.MACHINE_BLOCK_3, 3, "Oredictionificator", 52, OredictionificatorTileEntity.class, false, false, false),
 		RESISTIVE_HEATER(MachineBlock.MACHINE_BLOCK_3, 4, "ResistiveHeater", 53, ResistiveHeaterTileEntity.class, true, true, false),
-		FORMULAIC_ASSEMBLICATOR(MachineBlock.MACHINE_BLOCK_3, 5, "FormulaicAssemblicator", 56, TileEntityFormulaicAssemblicator.class, true, false, true),
-		FUELWOOD_HEATER(MachineBlock.MACHINE_BLOCK_3, 6, "FuelwoodHeater", 58, TileEntityFuelwoodHeater.class, false, false, false);
+		FORMULAIC_ASSEMBLICATOR(MachineBlock.MACHINE_BLOCK_3, 5, "FormulaicAssemblicator", 56, FormulaicAssemblicatorTileEntity.class, true, false, true),
+		FUELWOOD_HEATER(MachineBlock.MACHINE_BLOCK_3, 6, "FuelwoodHeater", 58, FuelwoodHeaterTileEntity.class, false, false, false);
 
 		public MachineBlock typeBlock;
 		public int meta;
@@ -1406,9 +1353,9 @@ public class Machine extends BlockContainer implements ISpecialBounds, IBlockCTM
 	@Override
 	public int isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side) {
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if(tile instanceof TileEntityLaserAmplifier)
+		if(tile instanceof LaserAmplifierTileEntity)
 		{
-			return ((TileEntityLaserAmplifier)tile).emittingRedstone ? 15 : 0;
+			return ((LaserAmplifierTileEntity)tile).emittingRedstone ? 15 : 0;
 		}
 		return 0;
 	}

@@ -15,14 +15,14 @@ import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityGasTank;
+import mekanism.common.tile.GasTankTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.client.gui.element.GuiTurbineTab;
 import mekanism.generators.client.gui.element.GuiTurbineTab.TurbineTab;
 import mekanism.generators.common.content.turbine.TurbineUpdateProtocol;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraftforge.fluids.FluidStack;
@@ -34,9 +34,9 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class IndustrialTurbineGui extends GuiMekanism
 {
-	public TileEntityTurbineCasing tileEntity;
+	public TurbineCasingTileEntity tileEntity;
 
-	public IndustrialTurbineGui(InventoryPlayer inventory, TileEntityTurbineCasing tentity)
+	public IndustrialTurbineGui(InventoryPlayer inventory, TurbineCasingTileEntity tentity)
 	{
 		super(tentity, new FilterContainer(inventory, tentity));
 		tileEntity = tentity;
@@ -175,17 +175,17 @@ public class IndustrialTurbineGui extends GuiMekanism
 		}
 	}
 
-	private <T> T chooseByMode(TileEntityGasTank.GasMode dumping, T idleOption, T dumpingOption, T dumpingExcessOption)
+	private <T> T chooseByMode(GasTankTileEntity.GasMode dumping, T idleOption, T dumpingOption, T dumpingExcessOption)
 	{
-		if(dumping.equals(TileEntityGasTank.GasMode.IDLE))
+		if(dumping.equals(GasTankTileEntity.GasMode.IDLE))
 		{
 			return idleOption;
 		}
-		else if(dumping.equals(TileEntityGasTank.GasMode.DUMPING))
+		else if(dumping.equals(GasTankTileEntity.GasMode.DUMPING))
 		{
 			return dumpingOption;
 		}
-		else if(dumping.equals(TileEntityGasTank.GasMode.DUMPING_EXCESS))
+		else if(dumping.equals(GasTankTileEntity.GasMode.DUMPING_EXCESS))
 		{
 			return dumpingExcessOption;
 		}

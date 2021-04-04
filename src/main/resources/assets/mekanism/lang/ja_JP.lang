@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=発熱ブロック
 tile.BasicBlock2.PressureDisperser.name=減圧ブロック
 tile.BasicBlock2.BoilerCasing.name=ボイラーケース
 tile.BasicBlock2.BoilerValve.name=ボイラーバルブ
-tile.BasicBlock2.SecurityDesk.name=セキュリティーデスク
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=濃縮チャンバー
@@ -482,13 +481,11 @@ gui.thermoelectricBoiler=ボイラー室
 gui.visuals=範囲表示
 gui.noEject=搬出不能
 gui.undefined=未定義
-gui.owner=オーナー
 gui.public=公開
 gui.private=非公開
 gui.add=追加
 gui.set=設定
 gui.freq=周波数
-gui.security=セキュリティ
 gui.index=インデックス
 gui.producing=生成
 gui.maxOutput=最大出力
@@ -542,17 +539,7 @@ gui.autoModeToggle=オートモード
 gui.craftSingle=一個だけ
 gui.craftAvailable=出来るだけ
 gui.fillEmpty=アイテムの配置/除去
-gui.noOwner=所有者なし
-gui.securityOverride=セキュリティの上書き
 gui.remove=消去
-gui.trustedPlayers=認可されたプレイヤー
-gui.publicMode=公開モード
-gui.privateMode=非公開モード
-gui.trustedMode=認可モード
-gui.securityOffline=Security Offline
-gui.noAccessDesc=貴方はアクセスできません
-gui.overridden=Overridden
-gui.nowOwn=貴方はこのアイテムの所有者になりました。
 gui.frequency=Frequency
 gui.mode=モード
 gui.burnRate=燃焼効率
@@ -676,11 +663,6 @@ gui.digitalMiner.missingBlock=ブロックがありません
 recipe.mekanismShaped=Shaped
 recipe.mekanismShapeless=Shapeless
 
-//Security types
-security.public=公開
-security.private=非公開
-security.trusted=許可プレイヤーのみ
-
 //Item and block tooltip text
 tooltip.configurator.configurate=コンフィギュレーター
 tooltip.configurator.empty=空
@@ -793,7 +775,6 @@ tooltip.SuperheatingElement=周囲に高熱を放出する、何だか危ない�
 tooltip.PressureDisperser=蒸気を分散させるためのマルチブロックの部品です。 蒸気の流れを適切に制御するために、隙間なく水平に置く必要があります。
 tooltip.BoilerCasing=耐圧性の高密な筐体です。ボイラー室の組み立てに使います。
 tooltip.BoilerValve=ボイラー室の組み立てに使用し、水と熱の搬入、そして蒸気の搬出を行います。
-tooltip.SecurityDesk=あなたの保有するマシンのセキュリティ管理の中心となる機械です。
 
 tooltip.EnrichmentChamber=鉱石を2つの粉にする簡単な機械です。他の類似する処理も行います。
 tooltip.OsmiumCompressor=オスミウムを様々な粉に詰め込み、新たなインゴットへと加工する先進的な機械です。

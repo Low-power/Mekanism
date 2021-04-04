@@ -9,8 +9,6 @@ import mekanism.common.base.IRedstoneControl;
 import mekanism.common.block.Machine.MachineType;
 import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.HeatUtils;
 import mekanism.common.util.MekanismUtils;
@@ -22,7 +20,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-public class ResistiveHeaterTileEntity extends NoisyElectricBlockTileEntity implements IHeatTransfer, IComputerIntegration, IRedstoneControl, ISecurityTile
+public class ResistiveHeaterTileEntity extends NoisyElectricBlockTileEntity implements IHeatTransfer, IComputerIntegration, IRedstoneControl
 {
 	public double energyUsage = 100;
 	public double temperature;
@@ -42,8 +40,6 @@ public class ResistiveHeaterTileEntity extends NoisyElectricBlockTileEntity impl
 	public double lastEnvironmentLoss;
 
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
-
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	public ResistiveHeaterTileEntity()
 	{
@@ -321,11 +317,5 @@ public class ResistiveHeaterTileEntity extends NoisyElectricBlockTileEntity impl
 	public boolean canPulse()
 	{
 		return false;
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 }

@@ -27,10 +27,8 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.CrystallizerRecipe;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.component.ConfigTileComponent;
 import mekanism.common.tile.component.EjectorTileComponent;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -41,7 +39,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 
-public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, ISideConfiguration, IUpgradeTile, ISustainedData, ITankManager, IConfigCardAccess, ISecurityTile
+public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity implements IGasHandler, ITubeConnection, IRedstoneControl, ISideConfiguration, IUpgradeTile, ISustainedData, ITankManager, IConfigCardAccess
 {
 	public static final int MAX_GAS = 10000;
 
@@ -77,7 +75,6 @@ public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity
 	public TileComponentUpgrade upgradeComponent;
 	public EjectorTileComponent ejectorComponent;
 	public ConfigTileComponent configComponent;
-	public TileComponentSecurity securityComponent;
 
 	public ChemicalCrystallizerTileEntity()
 	{
@@ -99,7 +96,6 @@ public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity
 		upgradeComponent.setSupported(Upgrade.MUFFLING);
 		ejectorComponent = new EjectorTileComponent(this);
 		ejectorComponent.setOutputData(TransmissionType.ITEM, configComponent.getOutputs(TransmissionType.ITEM).get(2));
-		securityComponent = new TileComponentSecurity(this);
 	}
 
 	@Override
@@ -224,18 +220,19 @@ public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(operatingTicks);
-		data.add(controlType.ordinal());
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(operatingTicks));
+		data.add(Integer.valueOf(controlType.ordinal()));
 
-		if(inputTank.getGas() != null)
+		GasStack gas_stack = inputTank.getGas();
+		if(gas_stack != null)
 		{
-			data.add(true);
-			data.add(inputTank.getGas().getGas().getID());
-			data.add(inputTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(inputTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;
@@ -475,11 +472,5 @@ public class ChemicalCrystallizerTileEntity extends NoisyElectricBlockTileEntity
 	@Override
 	public Object[] getTanks() {
 		return new Object[] {inputTank};
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 }

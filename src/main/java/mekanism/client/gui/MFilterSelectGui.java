@@ -6,7 +6,7 @@ import mekanism.common.Mekanism;
 import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.DigitalMinerGuiPacket.DigitalMinerGuiMessage;
 import mekanism.common.network.DigitalMinerGuiPacket.MinerGuiPacket;
-import mekanism.common.tile.TileEntityDigitalMiner;
+import mekanism.common.tile.DigitalMinerTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -19,9 +19,9 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class MFilterSelectGui extends GuiMekanism
 {
-	public TileEntityDigitalMiner tileEntity;
+	public DigitalMinerTileEntity tileEntity;
 
-	public MFilterSelectGui(EntityPlayer player, TileEntityDigitalMiner tentity)
+	public MFilterSelectGui(EntityPlayer player, DigitalMinerTileEntity tentity)
 	{
 		super(tentity, new NullContainer(player, tentity));
 		tileEntity = tentity;

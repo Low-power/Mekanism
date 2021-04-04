@@ -1,7 +1,6 @@
 package mekanism.client.render.block;
 
 import mekanism.client.ClientProxy;
-import mekanism.client.model.ModelSecurityDesk;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.block.BasicBlock.BasicType;
@@ -21,8 +20,6 @@ public class BasicRenderingHandler implements ISimpleBlockRenderingHandler
 {
 	private Minecraft mc = Minecraft.getMinecraft();
 
-	public ModelSecurityDesk securityDesk = new ModelSecurityDesk();
-
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
 	{
@@ -36,18 +33,8 @@ public class BasicRenderingHandler implements ISimpleBlockRenderingHandler
 			{
 				MekanismRenderer.blendOn();
 			}
-			if(type != BasicType.SECURITY_DESK)
-			{
-				GL11.glRotatef(180, 0F, 1F, 0F);
-				MekanismRenderer.renderItem(renderer, metadata, block);
-			}
-			else {
-				GL11.glRotatef(180, 1F, 0F, 0F);
-				GL11.glScalef(0.8F, 0.8F, 0.8F);
-				GL11.glTranslatef(0F, -0.8F, 0F);
-				mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.RENDER, "SecurityDesk.png"));
-				securityDesk.render(0.0625F, mc.renderEngine);
-			}
+			GL11.glRotatef(180, 0F, 1F, 0F);
+			MekanismRenderer.renderItem(renderer, metadata, block);
 			if(type == BasicType.STRUCTURAL_GLASS)
 			{
 				MekanismRenderer.blendOff();

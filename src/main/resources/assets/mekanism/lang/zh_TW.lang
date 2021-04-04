@@ -432,13 +432,11 @@ gui.dynamicTank=動態儲罐
 gui.visuals=外觀
 gui.noEject=無法輸出
 gui.undefined=未定義
-gui.owner=所有者
 gui.public=公共
 gui.private=私有
 gui.add=添加
 gui.set=設定
 gui.freq=頻率
-gui.security=安全性
 gui.index=Index
 
 gui.reactor.injectionRate=輸入速率

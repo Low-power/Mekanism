@@ -1,7 +1,5 @@
 package mekanism.common.util;
 
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.api.transmitters.ITransmitterTile;
@@ -10,14 +8,15 @@ import mekanism.common.base.ILogisticalTransporter;
 import mekanism.common.base.ITransporterTile;
 import mekanism.common.content.transporter.TransporterManager;
 import mekanism.common.content.transporter.TransporterStack;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import java.util.List;
 
 public final class TransporterUtils
 {
@@ -44,7 +43,7 @@ public final class TransporterUtils
 
 			return (slots != null && slots.length > 0);
 		}
-		
+
 		return false;
 	}
 
@@ -75,7 +74,7 @@ public final class TransporterUtils
 		return transporter.insert(Coord4D.get(outputter), itemStack.copy(), color, doEmit, min);
 	}
 
-	public static ItemStack insertRR(TileEntityLogisticalSorter outputter, ILogisticalTransporter transporter, ItemStack itemStack, EnumColor color, boolean doEmit, int min)
+	public static ItemStack insertRR(LogisticalSorterTileEntity outputter, ILogisticalTransporter transporter, ItemStack itemStack, EnumColor color, boolean doEmit, int min)
 	{
 		return transporter.insertRR(outputter, itemStack.copy(), color, doEmit, min);
 	}
@@ -122,13 +121,11 @@ public final class TransporterUtils
 
 		TransporterManager.remove(stack);
 
-		EntityItem entityItem = new EntityItem(tileEntity.world(), tileEntity.coord().xCoord + pos[0], tileEntity.coord().yCoord + pos[1], tileEntity.coord().zCoord + pos[2], stack.itemStack);
-
-		entityItem.motionX = 0;
-		entityItem.motionY = 0;
-		entityItem.motionZ = 0;
-
-		tileEntity.world().spawnEntityInWorld(entityItem);
+		EntityItem item_entity = new EntityItem(tileEntity.world(), tileEntity.coord().xCoord + pos[0], tileEntity.coord().yCoord + pos[1], tileEntity.coord().zCoord + pos[2], stack.itemStack);
+		item_entity.motionX = 0;
+		item_entity.motionY = 0;
+		item_entity.motionZ = 0;
+		tileEntity.world().spawnEntityInWorld(item_entity);
 	}
 
 	public static float[] getStackPosition(ILogisticalTransporter tileEntity, TransporterStack stack, float partial)

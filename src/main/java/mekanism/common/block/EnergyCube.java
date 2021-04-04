@@ -6,13 +6,10 @@ import mekanism.common.MekanismBlocks;
 import mekanism.common.Tier.EnergyCubeTier;
 import mekanism.common.base.IEnergyCube;
 import mekanism.common.base.ISustainedInventory;
-import mekanism.common.item.ItemBlockEnergyCube;
-import mekanism.common.security.ISecurityItem;
-import mekanism.common.security.ISecurityTile;
+import mekanism.common.item.EnergyCubeItem;
 import mekanism.common.tile.BasicBlockTileEntity;
-import mekanism.common.tile.TileEntityEnergyCube;
+import mekanism.common.tile.EnergyCubeTileEntity;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.util.SecurityUtils;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -125,20 +122,13 @@ public class EnergyCube extends BlockContainer
 		for(EnergyCubeTier tier : EnergyCubeTier.values())
 		{
 			ItemStack discharged = new ItemStack(this);
-			((ItemBlockEnergyCube)discharged.getItem()).setEnergyCubeTier(discharged, tier);
+			((EnergyCubeItem)discharged.getItem()).setEnergyCubeTier(discharged, tier);
 			list.add(discharged);
 			ItemStack charged = new ItemStack(this);
-			((ItemBlockEnergyCube)charged.getItem()).setEnergyCubeTier(charged, tier);
-			((ItemBlockEnergyCube)charged.getItem()).setEnergy(charged, tier.maxEnergy);
+			((EnergyCubeItem)charged.getItem()).setEnergyCubeTier(charged, tier);
+			((EnergyCubeItem)charged.getItem()).setEnergy(charged, tier.maxEnergy);
 			list.add(charged);
 		}
-	}
-
-	@Override
-	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z)
-	{
-		TileEntity tile = world.getTileEntity(x, y, z);
-		return SecurityUtils.canAccess(player, tile) ? super.getPlayerRelativeBlockHardness(player, world, x, y, z) : 0F;
 	}
 
 	@Override
@@ -149,7 +139,7 @@ public class EnergyCube extends BlockContainer
 			return true;
 		}
 
-		TileEntityEnergyCube tileEntity = (TileEntityEnergyCube)world.getTileEntity(x, y, z);
+		EnergyCubeTileEntity tileEntity = (EnergyCubeTileEntity)world.getTileEntity(x, y, z);
 
 		if(player.getCurrentEquippedItem() != null)
 		{
@@ -157,23 +147,17 @@ public class EnergyCube extends BlockContainer
 
 			if(MekanismUtils.hasUsableWrench(player, x, y, z))
 			{
-				if(SecurityUtils.canAccess(player, tileEntity))
+				if(player.isSneaking())
 				{
-					if(player.isSneaking())
-					{
-						dismantleBlock(world, x, y, z, false);
-						return true;
-					}
-					if(MekanismUtils.isBCWrench(tool)) {
-						((IToolWrench) tool).wrenchUsed(player, x, y, z);
-					}
-					int change = ForgeDirection.ROTATION_MATRIX[side][tileEntity.facing];
-					tileEntity.setFacing((short)change);
-					world.notifyBlocksOfNeighborChange(x, y, z, this);
+					dismantleBlock(world, x, y, z, false);
+					return true;
 				}
-				else {
-					SecurityUtils.displayNoAccess(player);
+				if(MekanismUtils.isBCWrench(tool)) {
+					((IToolWrench) tool).wrenchUsed(player, x, y, z);
 				}
+				int change = ForgeDirection.ROTATION_MATRIX[side][tileEntity.facing];
+				tileEntity.setFacing((short)change);
+				world.notifyBlocksOfNeighborChange(x, y, z, this);
 				return true;
 			}
 		}
@@ -182,13 +166,7 @@ public class EnergyCube extends BlockContainer
 		{
 			if(!player.isSneaking())
 			{
-				if(SecurityUtils.canAccess(player, tileEntity))
-				{
-					player.openGui(Mekanism.instance, 8, world, x, y, z);
-				}
-				else {
-					SecurityUtils.displayNoAccess(player);
-				}
+				player.openGui(Mekanism.instance, 8, world, x, y, z);
 				return true;
 			}
 		}
@@ -215,7 +193,7 @@ public class EnergyCube extends BlockContainer
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta)
 	{
-		return new TileEntityEnergyCube();
+		return new EnergyCubeTileEntity();
 	}
 
 	@Override
@@ -238,20 +216,11 @@ public class EnergyCube extends BlockContainer
 
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
-		TileEntityEnergyCube tileEntity = (TileEntityEnergyCube)world.getTileEntity(x, y, z);
+		EnergyCubeTileEntity tileEntity = (EnergyCubeTileEntity)world.getTileEntity(x, y, z);
 		ItemStack itemStack = new ItemStack(MekanismBlocks.EnergyCube);
 		if(itemStack.stackTagCompound == null)
 		{
 			itemStack.setTagCompound(new NBTTagCompound());
-		}
-		if(tileEntity instanceof ISecurityTile)
-		{
-			ISecurityItem securityItem = (ISecurityItem)itemStack.getItem();
-			if(securityItem.hasSecurity(itemStack))
-			{
-				securityItem.setOwner(itemStack, ((ISecurityTile)tileEntity).getSecurity().getOwner());
-				securityItem.setSecurity(itemStack, ((ISecurityTile)tileEntity).getSecurity().getMode());
-			}
 		}
 
 		IEnergyCube energyCube = (IEnergyCube)itemStack.getItem();
@@ -294,7 +263,7 @@ public class EnergyCube extends BlockContainer
 	@Override
 	public int getComparatorInputOverride(World world, int x, int y, int z, int par5)
 	{
-		TileEntityEnergyCube tileEntity = (TileEntityEnergyCube)world.getTileEntity(x, y, z);
+		EnergyCubeTileEntity tileEntity = (EnergyCubeTileEntity)world.getTileEntity(x, y, z);
 		return tileEntity.getRedstoneLevel();
 	}
 

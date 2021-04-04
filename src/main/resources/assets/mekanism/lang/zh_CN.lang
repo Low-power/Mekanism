@@ -115,7 +115,6 @@ tile.BasicBlock2.SuperheatingElement.name=热导元件
 tile.BasicBlock2.PressureDisperser.name=分压元件
 tile.BasicBlock2.BoilerCasing.name=锅炉外壳
 tile.BasicBlock2.BoilerValve.name=锅炉阀门
-tile.BasicBlock2.SecurityDesk.name=机密桌
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=富集仓
@@ -482,13 +481,11 @@ gui.thermoelectricBoiler=热力锅炉
 gui.visuals=外观
 gui.noEject=无法输出
 gui.undefined=未定义
-gui.owner=所有者
 gui.public=公共
 gui.private=私有
 gui.add=添加
 gui.set=设定
 gui.freq=频率
-gui.security=安全性
 gui.index=列表
 gui.producing=产出
 gui.maxOutput=最大输出
@@ -542,17 +539,7 @@ gui.autoModeToggle=切换到自动模式
 gui.craftSingle=制作单个物品
 gui.craftAvailable=连续制作物品
 gui.fillEmpty=填充/清空格子
-gui.noOwner=无所有者
-gui.securityOverride=安全设置覆写
 gui.remove=移除
-gui.trustedPlayers=白名单
-gui.publicMode=公用模式
-gui.privateMode=私用模式
-gui.trustedMode=限制模式
-gui.securityOffline=安全系统离线
-gui.noAccessDesc=你没有权限访问
-gui.overridden=覆写
-gui.nowOwn=你拥有这个物品.
 gui.frequency=频率
 gui.mode=模式
 gui.burnRate=消耗速度
@@ -664,11 +651,6 @@ gui.digitalMiner.missingBlock=缺失方块
 recipe.mekanismShaped=有序
 recipe.mekanismShapeless=无序
 
-//Security types
-security.public=公用
-security.private=私有
-security.trusted=专用
-
 //Item and block tooltip text
 tooltip.configurator.configurate=配置
 tooltip.configurator.empty=空
@@ -777,11 +759,6 @@ tooltip.SuperheatingElement=一种模块化的导热元件,能够叫热量高效
 tooltip.PressureDisperser=一种能保证蒸汽压力的多方块结构方块,它们应该无间隙的放置来保证蒸汽能平稳传送.
 tooltip.BoilerCasing=一种耐压方块,用于制作锅炉结构的外壳
 tooltip.BoilerValve=用于锅炉结构的阀门,能让水进入锅炉并导出产生的蒸汽
-tooltip.SecurityDesk=一个中央控制系统,用于管理你所有机器的安全设置
-
-
-
-
 
 tooltip.EnrichmentChamber=一台能将矿石磨成两份粉末的机器, !n也可以进行一些其他操作.
 tooltip.OsmiumCompressor=一台非常高级的设备,能够将锇矿石压缩成 !n多种粉末以制造相应金属锭.

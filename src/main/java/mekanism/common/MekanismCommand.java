@@ -5,7 +5,7 @@ import mekanism.api.MekanismAPI;
 import mekanism.api.MekanismConfig.general;
 import mekanism.common.frequency.Frequency;
 import mekanism.common.frequency.FrequencyManager;
-import mekanism.common.tile.TileEntityTeleporter;
+import mekanism.common.tile.TeleporterTileEntity;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -67,7 +67,7 @@ public class MekanismCommand extends CommandBase
 					sender.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " /mekanism teleporter freq delete <freq>" + EnumColor.GREY + " -- removes a frequency from the public list."));
 					sender.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " /mekanism teleporter freq delete <user> <freq>" + EnumColor.GREY + " -- removes a freqency from a certain user's private list."));
 					sender.addChatMessage(new ChatComponentText(EnumColor.INDIGO + " /mekanism teleporter freq deleteAll <user>" + EnumColor.GREY + " -- removes all frequencies owned by a certain user."));
-					sender.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[=======]" + EnumColor.GREY + " -------------"));
+					sender.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[========]" + EnumColor.GREY + " -------------"));
 				}
 			}
 			else if(params[0].equalsIgnoreCase("version"))
@@ -93,7 +93,7 @@ public class MekanismCommand extends CommandBase
 							}
 						}
 						else {
-							FrequencyManager manager = TileEntityTeleporter.loadManager(params[3].trim(), sender.getEntityWorld());
+							FrequencyManager manager = TeleporterTileEntity.loadManager(params[3].trim(), sender.getEntityWorld());
 							if(manager != null)
 							{
 								for(Frequency freq : manager.getFrequencies())
@@ -105,7 +105,7 @@ public class MekanismCommand extends CommandBase
 								sender.addChatMessage(new ChatComponentText(EnumColor.DARK_BLUE + "[Mekanism]" + EnumColor.GREY + " User profile doesn't exist."));
 							}
 						}
-						sender.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[=======]" + EnumColor.GREY + " -------------"));
+						sender.addChatMessage(new ChatComponentText(EnumColor.GREY + "------------- " + EnumColor.DARK_BLUE + "[========]" + EnumColor.GREY + " -------------"));
 					}
 					else if(params[2].equalsIgnoreCase("delete"))
 					{
@@ -122,7 +122,7 @@ public class MekanismCommand extends CommandBase
 						}
 						else if(params.length == 5)
 						{
-							FrequencyManager manager = TileEntityTeleporter.loadManager(params[3].trim(), sender.getEntityWorld());
+							FrequencyManager manager = TeleporterTileEntity.loadManager(params[3].trim(), sender.getEntityWorld());
 							if(manager != null)
 							{
 								if(manager.containsFrequency(params[4].trim()))
@@ -144,7 +144,7 @@ public class MekanismCommand extends CommandBase
 						if(params.length == 4)
 						{
 							String owner = params[3].trim();
-							FrequencyManager manager = TileEntityTeleporter.loadManager(owner, sender.getEntityWorld());
+							FrequencyManager manager = TeleporterTileEntity.loadManager(owner, sender.getEntityWorld());
 							if(manager != null)
 							{
 								int amount = Mekanism.publicTeleporters.removeAll(owner);

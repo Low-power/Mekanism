@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=Überhitzungselement
 tile.BasicBlock2.PressureDisperser.name=Druckventil
 tile.BasicBlock2.BoilerCasing.name=Dampfkesselhülle
 tile.BasicBlock2.BoilerValve.name=Dampfkesselventil
-tile.BasicBlock2.SecurityDesk.name=Sicherungstisch
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Anreicherungskammer
@@ -482,13 +481,11 @@ gui.thermoelectricBoiler=Thermoelektrischer Dampfkessel
 gui.visuals=Visuelles
 gui.noEject=Kein Auswerfen möglich
 gui.undefined=Undefiniert
-gui.owner=Eigentümer
 gui.public=Öffentlich
 gui.private=Privat
 gui.add=Hinzufügen
 gui.set=Setzen
 gui.freq=Freq
-gui.security=Sicherheit
 gui.index=Index
 gui.producing=Produziert
 gui.maxOutput=Max-Output
@@ -542,17 +539,7 @@ gui.autoModeToggle=Auto-Modus
 gui.craftSingle=Einelnes Item fertigen
 gui.craftAvailable=Verfügbare Items fertigen
 gui.fillEmpty=Gitter leeren/füllen
-gui.noOwner=Kein Eigentümer
-gui.securityOverride=Sicherungs-Override
 gui.remove=Entfernen
-gui.trustedPlayers=Vertraute Spieler
-gui.publicMode=Öffentlich
-gui.privateMode=Privat
-gui.trustedMode=Vertraut
-gui.securityOffline=Sicherheit offline
-gui.noAccessDesc=Du hast keinen Zugriff.
-gui.overridden=Übergangen
-gui.nowOwn=Die gehört dieses Item nicht
 gui.frequency=Frequenz
 gui.mode=Modus
 gui.burnRate=Brennrate
@@ -676,11 +663,6 @@ gui.digitalMiner.missingBlock=Fehlender Block
 recipe.mekanismShaped=Geformt
 recipe.mekanismShapeless=Formlos
 
-//Security types
-security.public=Öffentlich
-security.private=Privat
-security.trusted=Vertraut
-
 //Item and block tooltip text
 tooltip.configurator.configurate=Konfigurieren
 tooltip.configurator.empty=Leeren
@@ -793,7 +775,6 @@ tooltip.SuperheatingElement=Ein modularer, etwas gefährlicher Heizkörper, der 
 tooltip.PressureDisperser=Ein Block, mit welchem Dampf in einer Multiblockstruktur verteilt wird. Mit ihnen sollte eine lückenlose horizontale Fläche gebildet werden, um den Dampffluss vernünftig kontrollieren zu können.
 tooltip.BoilerCasing=Ein druckresistentes, dichtes Gehäuse für den Thermoelektrischen Dampfkessel.
 tooltip.BoilerValve=Ein Ventil für Thermoelektrische Dampfkessel, welches Energie-, Wasser- und Dampftransfer ermöglicht.
-tooltip.SecurityDesk=Eine zentrale Steuereinheit, um die Sicherheitseinstellungen all deiner Maschienen zu kontrollieren.
 
 tooltip.EnrichmentChamber=Eine einfache Maschine, genutzt, um Erze zu !nzwei ihrer entsprechenden Stäube anzureichern !nsowie viele andere Operationen auszuführen.
 tooltip.OsmiumCompressor=Eine ziemlich fortschrittliche Maschine, genutzt, !num Osmium in verschiedene Stäube zu pressen, !num ihre entsprechenden Barren zu kreieren.

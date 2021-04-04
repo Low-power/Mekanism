@@ -64,7 +64,6 @@ import java.util.List;
  * 1:6: Pressure Disperser
  * 1:7: Boiler Casing
  * 1:8: Boiler Valve
- * 1:9: Security Desk
  * @author AidanBrady
  *
  */
@@ -222,14 +221,6 @@ public class BasicBlockItem extends ItemBlock implements IEnergizedItem, ITierIt
 	{
 		boolean place = true;
 		BasicType type = BasicType.get(stack);
-		if(type == BasicType.SECURITY_DESK)
-		{
-			if(y+1 > 255 || !world.getBlock(x, y+1, z).isReplaceable(world, x, y+1, z))
-			{
-				place = false;
-			}
-		}
-
 		if(place && super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata))
 		{
 			if(type == BasicType.BIN && stack.stackTagCompound != null)

@@ -27,7 +27,7 @@ public class AmbientAccumulatorGui extends GuiMekanism
 			{
 				return tileEntity.collectedGas;
 			}
-		}, Type.WIDE, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 26, 16));
+		}, Type.WIDE, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 26, 16));
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class AmbientAccumulatorGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

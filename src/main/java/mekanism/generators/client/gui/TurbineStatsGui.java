@@ -14,7 +14,7 @@ import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.client.gui.element.GuiTurbineTab;
 import mekanism.generators.client.gui.element.GuiTurbineTab.TurbineTab;
 import mekanism.generators.common.content.turbine.TurbineUpdateProtocol;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -24,9 +24,9 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TurbineStatsGui extends GuiMekanism
 {
-	public TileEntityTurbineCasing tileEntity;
+	public TurbineCasingTileEntity tileEntity;
 
-	public TurbineStatsGui(InventoryPlayer inventory, TileEntityTurbineCasing tentity)
+	public TurbineStatsGui(InventoryPlayer inventory, TurbineCasingTileEntity tentity)
 	{
 		super(tentity, new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;

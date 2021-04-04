@@ -1,14 +1,11 @@
 package mekanism.common.tile;
 
-import mekanism.common.security.ISecurityTile;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.InventoryUtils;
-import mekanism.common.util.SecurityUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 
-public class PersonalChestTileEntity extends ContainerTileEntity implements ISecurityTile
+public class PersonalChestTileEntity extends ContainerTileEntity
 {
 	public static int[] INV;
 
@@ -16,13 +13,10 @@ public class PersonalChestTileEntity extends ContainerTileEntity implements ISec
 
 	public float prevLidAngle;
 
-	public TileComponentSecurity securityComponent;
-
 	public PersonalChestTileEntity()
 	{
 		super("PersonalChest");
 		inventory = new ItemStack[54];
-		securityComponent = new TileComponentSecurity(this);
 	}
 
 	@Override
@@ -76,23 +70,19 @@ public class PersonalChestTileEntity extends ContainerTileEntity implements ISec
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side)
 	{
-		if(side == 0 || SecurityUtils.getSecurity(this, Side.SERVER) != SecurityMode.PUBLIC)
+		if(side == 0) return InventoryUtils.EMPTY;
+
+		if(INV == null)
 		{
-			return InventoryUtils.EMPTY;
-		}
-		else {
-			if(INV == null)
+			INV = new int[54];
+
+			for(int i = 0; i < INV.length; i++)
 			{
-				INV = new int[54];
-
-				for(int i = 0; i < INV.length; i++)
-				{
-					INV[i] = i;
-				}
+				INV[i] = i;
 			}
-
-			return INV;
 		}
+
+		return INV;
 	}
 
 	@Override
@@ -104,17 +94,12 @@ public class PersonalChestTileEntity extends ContainerTileEntity implements ISec
 	@Override
 	public boolean wrenchCanRemove(EntityPlayer player)
 	{
-		return SecurityUtils.canAccess(player, this);
+		return true;
 	}
 
 	@Override
 	public boolean canSetFacing(int side)
 	{
 		return side != 0 && side != 1;
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity() {
-		return securityComponent;
 	}
 }

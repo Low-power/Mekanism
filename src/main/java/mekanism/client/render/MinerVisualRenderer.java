@@ -1,56 +1,53 @@
 package mekanism.client.render;
 
+import mekanism.api.Coord4D;
+import mekanism.api.EnumColor;
+import mekanism.client.render.MekanismRenderer.DisplayInteger;
+import mekanism.client.render.MekanismRenderer.Model3D;
+import mekanism.common.tile.DigitalMinerTileEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.init.Blocks;
+import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mekanism.api.Coord4D;
-import mekanism.api.EnumColor;
-import mekanism.client.render.MekanismRenderer.DisplayInteger;
-import mekanism.client.render.MekanismRenderer.Model3D;
-import mekanism.common.tile.TileEntityDigitalMiner;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.init.Blocks;
-
-import org.lwjgl.opengl.GL11;
-
-public final class MinerVisualRenderer 
-{
+public final class MinerVisualRenderer {
 	private static Minecraft mc = Minecraft.getMinecraft();
-	
+
 	private static Map<MinerRenderData, DisplayInteger> cachedVisuals = new HashMap<MinerRenderData, DisplayInteger>();
-	
+
 	private static final double offset = 0.01;
-	
-	public static void render(TileEntityDigitalMiner miner)
+
+	public static void render(DigitalMinerTileEntity miner)
 	{
 		GL11.glPushMatrix();
 		GL11.glTranslated(getX(miner.xCoord), getY(miner.yCoord), getZ(miner.zCoord));
 		MekanismRenderer.blendOn();
 		MekanismRenderer.glowOn();
 		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.8F);
+		GL11.glColor4f(1F, 1F, 1F, 0.8F);
 		mc.getTextureManager().bindTexture(MekanismRenderer.getBlocksTexture());
 		getList(new MinerRenderData(miner)).render();
 		MekanismRenderer.glowOff();
 		MekanismRenderer.blendOff();
 		GL11.glPopMatrix();
 	}
-	
+
 	private static DisplayInteger getList(MinerRenderData data)
 	{
 		if(cachedVisuals.containsKey(data))
 		{
 			return cachedVisuals.get(data);
 		}
-		
+
 		DisplayInteger display = DisplayInteger.createAndStart();
 		cachedVisuals.put(data, display);
-		
+
 		List<Model3D> models = new ArrayList<Model3D>();
-		
+
 		for(int x = -data.radius; x <= data.radius; x++)
 		{
 			for(int y = data.minY-data.yCoord; y <= data.maxY-data.yCoord; y++)
@@ -64,28 +61,26 @@ public final class MinerVisualRenderer
 				}
 			}
 		}
-		
+
 		for(Model3D model : models)
 		{
 			MekanismRenderer.renderObject(model);
 		}
-		
+
 		display.endList();
-		
+
 		return display;
 	}
-	
+
 	private static Model3D createModel(Coord4D rel)
 	{
 		Model3D toReturn = new Model3D();
-		
 		toReturn.setBlockBounds(rel.xCoord + 0.4, rel.yCoord + 0.4, rel.zCoord + 0.4, rel.xCoord + 0.6, rel.yCoord + 0.6, rel.zCoord + 0.6);
 		toReturn.baseBlock = Blocks.water;
 		toReturn.setTexture(MekanismRenderer.getColorIcon(EnumColor.WHITE));
-		
 		return toReturn;
 	}
-	
+
 	private static double getX(int x)
 	{
 		return x - TileEntityRendererDispatcher.staticPlayerX;
@@ -100,14 +95,14 @@ public final class MinerVisualRenderer
 	{
 		return z - TileEntityRendererDispatcher.staticPlayerZ;
 	}
-	
+
 	public static class MinerRenderData
 	{
 		public int minY;
 		public int maxY;
 		public int radius;
 		public int yCoord;
-		
+
 		public MinerRenderData(int min, int max, int rad, int y)
 		{
 			minY = min;
@@ -115,17 +110,17 @@ public final class MinerVisualRenderer
 			radius = rad;
 			yCoord = y;
 		}
-		
-		public MinerRenderData(TileEntityDigitalMiner miner)
+
+		public MinerRenderData(DigitalMinerTileEntity miner)
 		{
 			this(miner.minY, miner.maxY, miner.radius, miner.yCoord);
 		}
-		
+
 		@Override
 		public boolean equals(Object data)
 		{
-			return data instanceof MinerRenderData && ((MinerRenderData)data).minY == minY && 
-					((MinerRenderData)data).maxY == maxY && ((MinerRenderData)data).radius == radius && 
+			return data instanceof MinerRenderData && ((MinerRenderData)data).minY == minY &&
+					((MinerRenderData)data).maxY == maxY && ((MinerRenderData)data).radius == radius &&
 					((MinerRenderData)data).yCoord == yCoord;
 		}
 

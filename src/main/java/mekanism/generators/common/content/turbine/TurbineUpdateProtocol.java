@@ -12,9 +12,9 @@ import mekanism.generators.common.block.Generator.GeneratorType;
 import mekanism.generators.common.tile.turbine.TileEntityElectromagneticCoil;
 import mekanism.generators.common.tile.turbine.TileEntityRotationalComplex;
 import mekanism.generators.common.tile.turbine.TileEntitySaturatingCondenser;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineRotor;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineVent;
+import mekanism.generators.common.tile.turbine.TurbineVentTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +27,7 @@ public class TurbineUpdateProtocol extends UpdateProtocol<SynchronizedTurbineDat
 	public static final int FLUID_PER_TANK = TankUpdateProtocol.FLUID_PER_TANK;
 	public static final int MAX_BLADES = 28;
 
-	public TurbineUpdateProtocol(TileEntityTurbineCasing tileEntity) {
+	public TurbineUpdateProtocol(TurbineCasingTileEntity tileEntity) {
 		super(tileEntity);
 	}
 
@@ -179,7 +179,7 @@ public class TurbineUpdateProtocol extends UpdateProtocol<SynchronizedTurbineDat
 				}
 				for(Coord4D coord : structure.locations)
 				{
-					if(coord.getTileEntity(pointer.getWorldObj()) instanceof TileEntityTurbineVent)
+					if(coord.getTileEntity(pointer.getWorldObj()) instanceof TurbineVentTileEntity)
 					{
 						if(coord.yCoord >= complex.yCoord)
 						{

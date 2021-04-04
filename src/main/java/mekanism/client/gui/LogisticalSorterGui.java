@@ -3,7 +3,6 @@ package mekanism.client.gui;
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
@@ -17,7 +16,7 @@ import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.SorterGuiPacket;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -40,7 +39,7 @@ import java.util.Set;
 @SideOnly(Side.CLIENT)
 public class LogisticalSorterGui extends GuiMekanism
 {
-	public TileEntityLogisticalSorter tileEntity;
+	public LogisticalSorterTileEntity tileEntity;
 
 	/**
 	 * True if the left mouse button was held down last time drawScreen was
@@ -79,7 +78,7 @@ public class LogisticalSorterGui extends GuiMekanism
 
 	public Map<TModIDFilter, StackData> modIDStacks = new HashMap<TModIDFilter, StackData>();
 
-	public LogisticalSorterGui(EntityPlayer player, TileEntityLogisticalSorter entity)
+	public LogisticalSorterGui(EntityPlayer player, LogisticalSorterTileEntity entity)
 	{
 		super(entity, new NullContainer(player, entity));
 		tileEntity = entity;
@@ -90,7 +89,6 @@ public class LogisticalSorterGui extends GuiMekanism
 
 		// Add common Mekanism gui elements
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "LogisticalSorterGui.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "LogisticalSorterGui.png")));
 	}
 
 	public int getScroll()
@@ -253,8 +251,8 @@ public class LogisticalSorterGui extends GuiMekanism
 							{
 								// Process up button click
 								final ArrayList data = new ArrayList();
-								data.add(3);
-								data.add(getFilterIndex() + i);
+								data.add(Integer.valueOf(3));
+								data.add(Integer.valueOf(getFilterIndex() + i));
 
 								Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 								SoundHandler.playSound("gui.button.press");
@@ -267,8 +265,8 @@ public class LogisticalSorterGui extends GuiMekanism
 							{
 								// Process down button click
 								final ArrayList data = new ArrayList();
-								data.add(4);
-								data.add(getFilterIndex() + i);
+								data.add(Integer.valueOf(4));
+								data.add(Integer.valueOf(getFilterIndex() + i));
 
 								Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 								SoundHandler.playSound("gui.button.press");
@@ -306,7 +304,7 @@ public class LogisticalSorterGui extends GuiMekanism
 			if(xAxis >= 12 && xAxis <= 26 && yAxis >= 110 && yAxis <= 124)
 			{
 				final ArrayList data = new ArrayList();
-				data.add(1);
+				data.add(Integer.valueOf(1));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 				SoundHandler.playSound("gui.button.press");
@@ -316,7 +314,7 @@ public class LogisticalSorterGui extends GuiMekanism
 			if(xAxis >= 12 && xAxis <= 26 && yAxis >= 84 && yAxis <= 98)
 			{
 				final ArrayList data = new ArrayList();
-				data.add(2);
+				data.add(Integer.valueOf(2));
 
 				Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 				SoundHandler.playSound("gui.button.press");
@@ -332,8 +330,8 @@ public class LogisticalSorterGui extends GuiMekanism
 		if(xAxis >= 13 && xAxis <= 29 && yAxis >= 137 && yAxis <= 153)
 		{
 			final ArrayList data = new ArrayList();
-			data.add(0);
-			data.add(mouseBtn);
+			data.add(Integer.valueOf(0));
+			data.add(Integer.valueOf(mouseBtn));
 
 			Mekanism.packetHandler.sendToServer(new TileEntityMessage(Coord4D.get(tileEntity), data));
 			SoundHandler.playSound("mekanism:etc.Ding");

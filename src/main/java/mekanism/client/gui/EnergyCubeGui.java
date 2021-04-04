@@ -1,7 +1,5 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.energy.IStrictEnergyStorage;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -9,35 +7,32 @@ import mekanism.client.gui.element.GuiEnergyGauge;
 import mekanism.client.gui.element.GuiEnergyGauge.IEnergyInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
-import mekanism.common.inventory.container.ContainerEnergyCube;
-import mekanism.common.tile.TileEntityEnergyCube;
+import mekanism.common.inventory.container.EnergyCubeContainer;
+import mekanism.common.tile.EnergyCubeTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class EnergyCubeGui extends GuiMekanism
 {
-	public TileEntityEnergyCube tileEntity;
+	public EnergyCubeTileEntity tileEntity;
 
-	public EnergyCubeGui(InventoryPlayer inventory, TileEntityEnergyCube tentity)
+	public EnergyCubeGui(InventoryPlayer inventory, EnergyCubeTileEntity tentity)
 	{
-		super(tentity, new ContainerEnergyCube(inventory, tentity));
+		super(tentity, new EnergyCubeContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "EnergyCubeGui.png")));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "EnergyCubeGui.png")));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "EnergyCubeGui.png")));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "EnergyCubeGui.png")));
 		guiElements.add(new GuiEnergyGauge(new IEnergyInfoHandler()
@@ -75,7 +70,7 @@ public class EnergyCubeGui extends GuiMekanism
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "EnergyCubeGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

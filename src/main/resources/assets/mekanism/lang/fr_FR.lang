@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=Elément de surchauffe
 tile.BasicBlock2.PressureDisperser.name=Disperseur de pression
 tile.BasicBlock2.BoilerCasing.name=Revêtement de chaudière
 tile.BasicBlock2.BoilerValve.name=Valve de chaudière
-tile.BasicBlock2.SecurityDesk.name=Bureau de Sécurité
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Chambre d'enrichissement
@@ -481,13 +480,11 @@ gui.thermoelectricBoiler=Chaudière Thermoélectrique
 gui.visuals=Visuels
 gui.noEject=Impossible d'éjecter
 gui.undefined=Indéfinit
-gui.owner=Propriétaire
 gui.public=Public
 gui.private=Privé
 gui.add=Ajouter
 gui.set=Mettre
 gui.freq=Freq.
-gui.security=Securité
 gui.index=Index
 gui.producing=Production
 gui.maxOutput=Sortie maxi
@@ -541,16 +538,7 @@ gui.autoModeToggle=Activer le Mode Auto
 gui.craftSingle=Fabriquer un Seul Item
 gui.craftAvailable=Fabriquer autant d'Items que disponible
 gui.fillEmpty=Remplir/Vider la Grille
-gui.noOwner=Pas de Propriétaire
-gui.securityOverride=Outrepasser la Sécurité
 gui.remove=Retirer
-gui.trustedPlayers=Joueurs de Confiance
-gui.publicMode=Mode Public
-gui.privateMode=Mode Privé
-gui.trustedMode=Mode Confiance
-gui.securityOffline=Securité Désactivée
-gui.noAccessDesc=Vous n'avez pas accès à ce bloc.
-gui.overridden=Outrepassé
 
 gui.reactor.injectionRate=Taux d'injection
 
@@ -671,11 +659,6 @@ gui.digitalMiner.missingBlock=bloc manquant
 recipe.mekanismShaped=Avec forme
 recipe.mekanismShapeless=Sans Forme
 
-//Security types
-security.public=Public
-security.private=Privé
-security.trusted=Confiance
-
 //Item and block tooltip text
 tooltip.configurator.configurate=Configurer
 tooltip.configurator.empty=Vide
@@ -788,7 +771,6 @@ tooltip.SuperheatingElement=Un modulaire et quelque peu dangereux radiateur capa
 tooltip.PressureDisperser=Un bloc utilisé pour disperser la vapeur à travers une structure multiblocs. Ils doivent former une plaque horizontale sans trou pour contrôler correctement le débit de vapeur.
 tooltip.BoilerCasing=Un dense encadrement résistant à la pression utilisé dans la construction d'une Chaudière Thermoélectrique multiblocs.
 tooltip.BoilerValve=Une valve qui peut être placée sur une Chaudière Thermoélectrique multiblocs, permettant l'insertion d'énergie et d'eau iansi que l'extraction de la vapeur produite.
-tooltip.SecurityDesk=Un centre de contrôle pour gérer la sécurité de toutes vos machines.
 
 tooltip.EnrichmentChamber=Une machine simple utilisée pour enrichir !nles minerais dans deux de leurs équivalents !nen poussière, aussi bien qu'exécuter beaucoup !nd'autres opérations.
 tooltip.OsmiumCompressor=Une machine assez avancée utilisée pour !ncomprimer l'osmium dans diverses poussières pour !ncréer leurs équivalents en lingot.

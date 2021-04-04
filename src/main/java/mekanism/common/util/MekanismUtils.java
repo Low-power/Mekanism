@@ -35,8 +35,8 @@ import mekanism.common.base.ISideConfiguration;
 import mekanism.common.base.IUpgradeTile;
 import mekanism.common.inventory.container.PersonalChestContainer;
 import mekanism.common.item.BasicBlockItem;
-import mekanism.common.item.ItemBlockEnergyCube;
-import mekanism.common.item.ItemBlockGasTank;
+import mekanism.common.item.EnergyCubeItem;
+import mekanism.common.item.GasTankItem;
 import mekanism.common.item.MachineItem;
 import mekanism.common.network.PacketPersonalChest.PersonalChestMessage;
 import mekanism.common.network.PacketPersonalChest.PersonalChestPacketType;
@@ -252,7 +252,7 @@ public final class MekanismUtils
 	 */
 	public static ItemStack getEnergyCube(EnergyCubeTier tier)
 	{
-		return ((ItemBlockEnergyCube)new ItemStack(MekanismBlocks.EnergyCube).getItem()).getUnchargedItem(tier);
+		return ((EnergyCubeItem)new ItemStack(MekanismBlocks.EnergyCube).getItem()).getUnchargedItem(tier);
 	}
 
 	/**
@@ -304,7 +304,7 @@ public final class MekanismUtils
 	 */
 	public static ItemStack getEmptyGasTank(GasTankTier tier)
 	{
-		return ((ItemBlockGasTank)new ItemStack(MekanismBlocks.GasTank).getItem()).getEmptyItem(tier);
+		return ((GasTankItem)new ItemStack(MekanismBlocks.GasTank).getItem()).getEmptyItem(tier);
 	}
 
 	public static ItemStack getEmptyFluidTank(FluidTankTier tier)
@@ -1303,7 +1303,7 @@ public final class MekanismUtils
 	public static ItemStack getFullGasTank(GasTankTier tier, Gas gas)
 	{
 		ItemStack tank = getEmptyGasTank(tier);
-		ItemBlockGasTank item = (ItemBlockGasTank)tank.getItem();
+		GasTankItem item = (GasTankItem)tank.getItem();
 		item.setGas(tank, new GasStack(gas, item.MAX_GAS));
 
 		return tank;

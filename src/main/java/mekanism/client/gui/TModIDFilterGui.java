@@ -9,11 +9,11 @@ import mekanism.common.OreDictCache;
 import mekanism.common.content.transporter.TModIDFilter;
 import mekanism.common.content.transporter.TransporterFilter;
 import mekanism.common.inventory.container.FilterContainer;
-import mekanism.common.network.PacketEditFilter.EditFilterMessage;
+import mekanism.common.network.EditFilterPacket.EditFilterMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.SorterGuiPacket;
-import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.network.NewFilterPacket.NewFilterMessage;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -32,7 +32,7 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class TModIDFilterGui extends GuiMekanism
 {
-	public TileEntityLogisticalSorter tileEntity;
+	public LogisticalSorterTileEntity tileEntity;
 
 	public boolean isNew = false;
 
@@ -54,7 +54,7 @@ public class TModIDFilterGui extends GuiMekanism
 
 	public String status = EnumColor.DARK_GREEN + LangUtils.localize("gui.allOK");
 
-	public TModIDFilterGui(EntityPlayer player, TileEntityLogisticalSorter tentity, int index)
+	public TModIDFilterGui(EntityPlayer player, LogisticalSorterTileEntity tentity, int index)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
@@ -65,7 +65,7 @@ public class TModIDFilterGui extends GuiMekanism
 		updateStackList(filter.modID);
 	}
 
-	public TModIDFilterGui(EntityPlayer player, TileEntityLogisticalSorter tentity)
+	public TModIDFilterGui(EntityPlayer player, LogisticalSorterTileEntity tentity)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;

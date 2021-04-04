@@ -10,9 +10,7 @@ import mekanism.common.base.IHasSound;
 import mekanism.common.base.IRedstoneControl;
 import mekanism.common.integration.IComputerIntegration;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.NoisyElectricBlockTileEntity;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.util.CableUtils;
 import mekanism.common.util.MekanismUtils;
 import cpw.mods.fml.relauncher.Side;
@@ -24,7 +22,7 @@ import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-public abstract class GeneratorTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, IActiveState, IHasSound, ISoundSource, IRedstoneControl, ISecurityTile
+public abstract class GeneratorTileEntity extends NoisyElectricBlockTileEntity implements IComputerIntegration, IActiveState, IHasSound, ISoundSource, IRedstoneControl
 {
 	/** Output per tick this generator can transfer. */
 	public double output;
@@ -40,8 +38,6 @@ public abstract class GeneratorTileEntity extends NoisyElectricBlockTileEntity i
 
 	/** This machine's current RedstoneControl type. */
 	public RedstoneControl controlType;
-
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	/**
 	 * Generator -- a block that produces energy. It has a certain amount of fuel it can store as well as an output rate.
@@ -166,8 +162,8 @@ public abstract class GeneratorTileEntity extends NoisyElectricBlockTileEntity i
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(controlType.ordinal());
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(controlType.ordinal()));
 
 		return data;
 	}
@@ -226,11 +222,5 @@ public abstract class GeneratorTileEntity extends NoisyElectricBlockTileEntity i
 	public boolean canPulse()
 	{
 		return false;
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 }

@@ -14,16 +14,15 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiUpgradeTab;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerRotaryCondensentrator;
+import mekanism.common.inventory.container.RotaryCondensentratorContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityRotaryCondensentrator;
+import mekanism.common.tile.RotaryCondensentratorTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -38,14 +37,13 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class RotaryCondensentratorGui extends GuiMekanism
 {
-	public TileEntityRotaryCondensentrator tileEntity;
+	public RotaryCondensentratorTileEntity tileEntity;
 
-	public RotaryCondensentratorGui(InventoryPlayer inventory, TileEntityRotaryCondensentrator tentity)
+	public RotaryCondensentratorGui(InventoryPlayer inventory, RotaryCondensentratorTileEntity tentity)
 	{
-		super(tentity, new ContainerRotaryCondensentrator(inventory, tentity));
+		super(tentity, new RotaryCondensentratorContainer(inventory, tentity));
 		tileEntity = tentity;
 
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png")));
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png")));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "RotaryCondensentratorGui.png"), 4, 24).with(SlotOverlay.PLUS));

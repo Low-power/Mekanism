@@ -14,7 +14,7 @@ import mekanism.common.inventory.container.FilterContainer;
 import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.tile.ContainerTileEntity;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -36,13 +36,13 @@ public class LogisticalSorterGuiPacket implements IMessageHandler<LogisticalSort
 		{
 			World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.object3D.dimensionId);
 
-			if(world != null && message.object3D.getTileEntity(world) instanceof TileEntityLogisticalSorter)
+			if(world != null && message.object3D.getTileEntity(world) instanceof LogisticalSorterTileEntity)
 			{
 				LogisticalSorterGuiMessage.openServerGui(message.packetType, message.guiType, world, (EntityPlayerMP)player, message.object3D, message.index);
 			}
 		}
 		else {
-			if(message.object3D.getTileEntity(player.worldObj) instanceof TileEntityLogisticalSorter)
+			if(message.object3D.getTileEntity(player.worldObj) instanceof LogisticalSorterTileEntity)
 			{
 				try {
 					if(message.packetType == SorterGuiPacket.CLIENT)
@@ -133,49 +133,49 @@ public class LogisticalSorterGuiPacket implements IMessageHandler<LogisticalSort
 		{
 			if(type == 0)
 			{
-				return new LogisticalSorterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+				return new LogisticalSorterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 			}
 			else if(type == 4)
 			{
-				return new TFilterSelectGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+				return new TFilterSelectGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 			}
 			else {
 				if(packetType == SorterGuiPacket.CLIENT)
 				{
 					if(type == 1)
 					{
-						return new TItemStackFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+						return new TItemStackFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 					}
 					else if(type == 2)
 					{
-						return new TOreDictFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+						return new TOreDictFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 					}
 					else if(type == 3)
 					{
-						return new TMaterialFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+						return new TMaterialFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 					}
 					else if(type == 5)
 					{
-						return new TModIDFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z));
+						return new TModIDFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z));
 					}
 				}
 				else if(packetType == SorterGuiPacket.CLIENT_INDEX)
 				{
 					if(type == 1)
 					{
-						return new TItemStackFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z), index);
+						return new TItemStackFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z), index);
 					}
 					else if(type == 2)
 					{
-						return new TOreDictFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z), index);
+						return new TOreDictFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z), index);
 					}
 					else if(type == 3)
 					{
-						return new TMaterialFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z), index);
+						return new TMaterialFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z), index);
 					}
 					else if(type == 5)
 					{
-						return new TModIDFilterGui(player, (TileEntityLogisticalSorter)world.getTileEntity(x, y, z), index);
+						return new TModIDFilterGui(player, (LogisticalSorterTileEntity)world.getTileEntity(x, y, z), index);
 					}
 				}
 			}

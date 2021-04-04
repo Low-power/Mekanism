@@ -1,8 +1,5 @@
 package mekanism.common.multipart;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.api.Range4D;
@@ -16,14 +13,16 @@ import mekanism.common.content.transporter.TransporterStack;
 import mekanism.common.content.transporter.TransporterStack.Path;
 import mekanism.common.multipart.PartSidedPipe.ConnectionType;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.InventoryUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.TransporterUtils;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MultipartTransporter extends MultipartTransmitter<IInventory, InventoryNetwork> implements ILogisticalTransporter
 {
@@ -55,7 +54,7 @@ public class MultipartTransporter extends MultipartTransmitter<IInventory, Inven
 			{
 				return;
 			}
-			
+
 			Set<TransporterStack> remove = new HashSet<TransporterStack>();
 
 			getPart().pullItems();
@@ -297,7 +296,7 @@ public class MultipartTransporter extends MultipartTransmitter<IInventory, Inven
 	}
 
 	@Override
-	public ItemStack insertRR(TileEntityLogisticalSorter outputter, ItemStack itemStack, EnumColor color, boolean doEmit, int min)
+	public ItemStack insertRR(LogisticalSorterTileEntity outputter, ItemStack itemStack, EnumColor color, boolean doEmit, int min)
 	{
 		ForgeDirection from = coord().sideDifference(Coord4D.get(outputter)).getOpposite();
 

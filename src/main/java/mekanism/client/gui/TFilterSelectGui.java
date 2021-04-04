@@ -6,7 +6,7 @@ import mekanism.common.Mekanism;
 import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.SorterGuiPacket;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -19,9 +19,9 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class TFilterSelectGui extends GuiMekanism
 {
-	public TileEntityLogisticalSorter tileEntity;
+	public LogisticalSorterTileEntity tileEntity;
 
-	public TFilterSelectGui(EntityPlayer player, TileEntityLogisticalSorter tentity)
+	public TFilterSelectGui(EntityPlayer player, LogisticalSorterTileEntity tentity)
 	{
 		super(tentity, new NullContainer(player, tentity));
 

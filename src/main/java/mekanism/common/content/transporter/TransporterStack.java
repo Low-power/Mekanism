@@ -1,24 +1,21 @@
 package mekanism.common.content.transporter;
 
-import io.netty.buffer.ByteBuf;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
 import mekanism.common.PacketHandler;
 import mekanism.common.base.ILogisticalTransporter;
 import mekanism.common.base.ITransporterTile;
 import mekanism.common.content.transporter.TransporterPathfinder.Destination;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.TransporterUtils;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-
 import org.apache.commons.lang3.tuple.Pair;
+import io.netty.buffer.ByteBuf;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransporterStack
 {
@@ -29,7 +26,7 @@ public class TransporterStack
 	public EnumColor color = null;
 
 	public boolean initiatedPath = false;
-	
+
 	public ForgeDirection idleDir = ForgeDirection.UNKNOWN;
 
 	private List<Coord4D> pathToTarget = new ArrayList<Coord4D>();
@@ -46,23 +43,23 @@ public class TransporterStack
 	{
 		if(color != null)
 		{
-			data.add(TransporterUtils.colors.indexOf(color));
+			data.add(Integer.valueOf(TransporterUtils.colors.indexOf(color)));
 		}
 		else {
-			data.add(-1);
+			data.add(Integer.valueOf(-1));
 		}
 
-		data.add(progress);
+		data.add(Integer.valueOf(progress));
 		originalLocation.write(data);
-		data.add(pathType.ordinal());
+		data.add(Integer.valueOf(pathType.ordinal()));
 
 		if(pathToTarget.indexOf(transporter.coord()) > 0)
 		{
-			data.add(true);
+			data.add(Boolean.valueOf(true));
 			getNext(transporter).write(data);
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		getPrev(transporter).write(data);
@@ -151,7 +148,7 @@ public class TransporterStack
 
 		return stack;
 	}
-	
+
 	public void setPath(List<Coord4D> path, Path type)
 	{
 		//Make sure old path isn't null
@@ -159,10 +156,10 @@ public class TransporterStack
 		{
 			TransporterManager.remove(this);
 		}
-		
+
 		pathToTarget = path;
 		pathType = type;
-		
+
 		if(pathType != Path.NONE)
 		{
 			TransporterManager.add(this);
@@ -173,7 +170,7 @@ public class TransporterStack
 	{
 		return getPath() != null && getPath().size() >= 2;
 	}
-	
+
 	public List<Coord4D> getPath()
 	{
 		return pathToTarget;
@@ -195,7 +192,7 @@ public class TransporterStack
 		return newPath.rejected;
 	}
 
-	public ItemStack recalculateRRPath(TileEntityLogisticalSorter outputter, ILogisticalTransporter transporter, int min)
+	public ItemStack recalculateRRPath(LogisticalSorterTileEntity outputter, ILogisticalTransporter transporter, int min)
 	{
 		Destination newPath = TransporterPathfinder.getNewRRPath(transporter, this, outputter, min);
 
@@ -219,12 +216,12 @@ public class TransporterStack
 		{
 			return false;
 		}
-		
+
 		if(newPath.getRight() == Path.HOME)
 		{
 			idleDir = ForgeDirection.UNKNOWN;
 		}
-		
+
 		setPath(newPath.getLeft(), newPath.getRight());
 
 		originalLocation = transporter.coord();

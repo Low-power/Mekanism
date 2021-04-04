@@ -25,7 +25,7 @@ import mekanism.common.item.ItemJetpack;
 import mekanism.common.item.ItemMekanism;
 import mekanism.common.item.ItemNetworkReader;
 import mekanism.common.item.ItemOtherDust;
-import mekanism.common.item.ItemPortableTeleporter;
+import mekanism.common.item.PortableTeleporter;
 import mekanism.common.item.ItemProxy;
 import mekanism.common.item.RobitItem;
 import mekanism.common.item.ItemScubaTank;
@@ -73,7 +73,7 @@ public class MekanismItems
 	public static final ItemEnergized EnergyTablet = (ItemEnergized)new ItemEnergized(1000000).setUnlocalizedName("EnergyTablet");
 	public static final RobitItem Robit = (RobitItem)(new RobitItem().setUnlocalizedName("Robit"));
 	public static final ItemAtomicDisassembler AtomicDisassembler = (ItemAtomicDisassembler)new ItemAtomicDisassembler().setUnlocalizedName("AtomicDisassembler");
-	public static final ItemPortableTeleporter PortableTeleporter = (ItemPortableTeleporter)new ItemPortableTeleporter().setUnlocalizedName("PortableTeleporter");
+	public static final PortableTeleporter PortableTeleporter = (PortableTeleporter)(new PortableTeleporter().setUnlocalizedName("PortableTeleporter"));
 	public static final Configurator Configurator = (Configurator)(new Configurator().setUnlocalizedName("Configurator"));
 	public static final ItemNetworkReader NetworkReader = (ItemNetworkReader)new ItemNetworkReader().setUnlocalizedName("NetworkReader");
 	public static final Item WalkieTalkie = new ItemWalkieTalkie().setUnlocalizedName("WalkieTalkie");

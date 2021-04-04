@@ -7,11 +7,11 @@ import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.content.transporter.TItemStackFilter;
 import mekanism.common.inventory.container.FilterContainer;
-import mekanism.common.network.PacketEditFilter.EditFilterMessage;
+import mekanism.common.network.EditFilterPacket.EditFilterMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.LogisticalSorterGuiMessage;
 import mekanism.common.network.LogisticalSorterGuiPacket.SorterGuiPacket;
-import mekanism.common.network.PacketNewFilter.NewFilterMessage;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.network.NewFilterPacket.NewFilterMessage;
+import mekanism.common.tile.LogisticalSorterTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -29,7 +29,7 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class TItemStackFilterGui extends GuiMekanism
 {
-	public TileEntityLogisticalSorter tileEntity;
+	public LogisticalSorterTileEntity tileEntity;
 
 	public boolean isNew = false;
 
@@ -44,7 +44,7 @@ public class TItemStackFilterGui extends GuiMekanism
 	private GuiTextField minField;
 	private GuiTextField maxField;
 
-	public TItemStackFilterGui(EntityPlayer player, TileEntityLogisticalSorter tentity, int index)
+	public TItemStackFilterGui(EntityPlayer player, LogisticalSorterTileEntity tentity, int index)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;
@@ -53,7 +53,7 @@ public class TItemStackFilterGui extends GuiMekanism
 		filter = ((TItemStackFilter)tileEntity.filters.get(index)).clone();
 	}
 
-	public TItemStackFilterGui(EntityPlayer player, TileEntityLogisticalSorter tentity)
+	public TItemStackFilterGui(EntityPlayer player, LogisticalSorterTileEntity tentity)
 	{
 		super(tentity, new FilterContainer(player.inventory, tentity));
 		tileEntity = tentity;

@@ -32,7 +32,6 @@ import mekanism.common.tile.TileEntityInductionPort;
 import mekanism.common.tile.TileEntityInductionProvider;
 import mekanism.common.tile.TileEntityMultiblock;
 import mekanism.common.tile.PressureDisperserTileEntity;
-import mekanism.common.tile.TileEntitySecurityDesk;
 import mekanism.common.tile.TileEntityStructuralGlass;
 import mekanism.common.tile.TileEntitySuperheatingElement;
 import mekanism.common.tile.TileEntityThermalEvaporationBlock;
@@ -40,7 +39,6 @@ import mekanism.common.tile.TileEntityThermalEvaporationController;
 import mekanism.common.tile.TileEntityThermalEvaporationValve;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.util.SecurityUtils;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -98,7 +96,6 @@ import java.util.Random;
  * 1:6: Pressure Disperser
  * 1:7: Boiler Casing
  * 1:8: Boiler Valve
- * 1:9: Security Desk
  * @author AidanBrady
  *
  */
@@ -482,24 +479,6 @@ public class BasicBlock extends Block implements IBlockCTM, ICustomBlockIcon
 				return true;
 			}
 		}
-		else if(tile instanceof TileEntitySecurityDesk)
-		{
-			String owner = ((TileEntitySecurityDesk)tile).owner;
-			if(!player.isSneaking())
-			{
-				if(!world.isRemote)
-				{
-					if(owner == null || player.getCommandSenderName().equals(owner))
-					{
-						player.openGui(Mekanism.instance, 57, world, x, y, z);
-					}
-					else {
-						SecurityUtils.displayNoAccess(player);
-					}
-				}
-				return true;
-			}
-		}
 		else if(tile instanceof BinTileEntity)
 		{
 			BinTileEntity bin = (BinTileEntity)world.getTileEntity(x, y, z);
@@ -828,10 +807,6 @@ public class BasicBlock extends Block implements IBlockCTM, ICustomBlockIcon
 
 			tileEntity.setFacing((short)change);
 			tileEntity.redstone = world.isBlockIndirectlyGettingPowered(x, y, z);
-			if(tileEntity instanceof TileEntitySecurityDesk)
-			{
-				((TileEntitySecurityDesk)tileEntity).owner = entity.getCommandSenderName();
-			}
 
 			if(tileEntity instanceof IBoundingBlock)
 			{
@@ -875,6 +850,7 @@ public class BasicBlock extends Block implements IBlockCTM, ICustomBlockIcon
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
 	{
 		BasicType type = BasicType.get(this, world.getBlockMetadata(x, y, z));
+		if(type == null) return null;
 		ItemStack ret = new ItemStack(this, 1, type.meta);
 
 		if(type == BasicType.BIN)
@@ -1034,7 +1010,7 @@ public class BasicBlock extends Block implements IBlockCTM, ICustomBlockIcon
 	@Override
 	public boolean shouldRenderBlock(IBlockAccess world, int x, int y, int z, int meta)
 	{
-		return BasicType.get(this, world.getBlockMetadata(x, y, z)) != BasicType.SECURITY_DESK;
+		return true;
 	}
 
 	public static enum BasicType
@@ -1063,8 +1039,7 @@ public class BasicBlock extends Block implements IBlockCTM, ICustomBlockIcon
 		SUPERHEATING_ELEMENT(BasicBlockType.BASIC_BLOCK_2, 5, "SuperheatingElement", TileEntitySuperheatingElement.class, true),
 		PRESSURE_DISPERSER(BasicBlockType.BASIC_BLOCK_2, 6, "PressureDisperser", PressureDisperserTileEntity.class, true),
 		BOILER_CASING(BasicBlockType.BASIC_BLOCK_2, 7, "BoilerCasing", TileEntityBoilerCasing.class, true),
-		BOILER_VALVE(BasicBlockType.BASIC_BLOCK_2, 8, "BoilerValve", TileEntityBoilerValve.class, true),
-		SECURITY_DESK(BasicBlockType.BASIC_BLOCK_2, 9, "SecurityDesk", TileEntitySecurityDesk.class, true);
+		BOILER_VALVE(BasicBlockType.BASIC_BLOCK_2, 8, "BoilerValve", TileEntityBoilerValve.class, true);
 
 		public BasicBlockType block_type;
 		public int meta;

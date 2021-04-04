@@ -5,10 +5,10 @@ import mekanism.api.EnumColor;
 import mekanism.common.tile.TileEntityAdvancedBoundingBlock;
 import mekanism.common.tile.BinTileEntity;
 import mekanism.common.tile.TileEntityBoundingBlock;
-import mekanism.common.tile.TileEntityEnergyCube;
+import mekanism.common.tile.EnergyCubeTileEntity;
 import mekanism.common.tile.FactoryTileEntity;
-import mekanism.common.tile.TileEntityFluidTank;
-import mekanism.common.tile.TileEntityGasTank;
+import mekanism.common.tile.FluidTankTileEntity;
+import mekanism.common.tile.GasTankTileEntity;
 import mekanism.common.tile.TileEntityInductionCell;
 import mekanism.common.tile.TileEntityInductionProvider;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -38,10 +38,10 @@ public class WailaDataProvider implements IWailaDataProvider
 		registrar.registerHeadProvider(provider, FactoryTileEntity.class);
 		registrar.registerHeadProvider(provider, TileEntityBoundingBlock.class);
 		registrar.registerHeadProvider(provider, TileEntityAdvancedBoundingBlock.class);
-		registrar.registerHeadProvider(provider, TileEntityFluidTank.class);
-		registrar.registerHeadProvider(provider, TileEntityGasTank.class);
+		registrar.registerHeadProvider(provider, FluidTankTileEntity.class);
+		registrar.registerHeadProvider(provider, GasTankTileEntity.class);
 		registrar.registerHeadProvider(provider, BinTileEntity.class);
-		registrar.registerHeadProvider(provider, TileEntityEnergyCube.class);
+		registrar.registerHeadProvider(provider, EnergyCubeTileEntity.class);
 	}
 
 	@Override
@@ -68,21 +68,21 @@ public class WailaDataProvider implements IWailaDataProvider
 		{
 			currenttip.set(0, EnumColor.WHITE + ((FactoryTileEntity)tile).getInventoryName());
 		}
-		else if(tile instanceof TileEntityFluidTank)
+		else if(tile instanceof FluidTankTileEntity)
 		{
-			currenttip.set(0, EnumColor.WHITE + ((TileEntityFluidTank)tile).getInventoryName());
+			currenttip.set(0, EnumColor.WHITE + ((FluidTankTileEntity)tile).getInventoryName());
 		}
-		else if(tile instanceof TileEntityGasTank)
+		else if(tile instanceof GasTankTileEntity)
 		{
-			currenttip.set(0, EnumColor.WHITE + ((TileEntityGasTank)tile).getInventoryName());
+			currenttip.set(0, EnumColor.WHITE + ((GasTankTileEntity)tile).getInventoryName());
 		}
 		else if(tile instanceof BinTileEntity)
 		{
 			currenttip.set(0, EnumColor.WHITE + ((BinTileEntity)tile).getInventoryName());
 		}
-		else if(tile instanceof TileEntityEnergyCube)
+		else if(tile instanceof EnergyCubeTileEntity)
 		{
-			currenttip.set(0, EnumColor.WHITE + ((TileEntityEnergyCube)tile).getInventoryName());
+			currenttip.set(0, EnumColor.WHITE + ((EnergyCubeTileEntity)tile).getInventoryName());
 		}
 		else if(tile instanceof TileEntityBoundingBlock)
 		{

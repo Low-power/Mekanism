@@ -22,9 +22,7 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.DissolutionRecipe;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.component.AdvancedUpgradeTileComponent;
-import mekanism.common.tile.component.TileComponentSecurity;
 import mekanism.common.tile.component.TileComponentUpgrade;
 import mekanism.common.util.ChargeUtils;
 import mekanism.common.util.InventoryUtils;
@@ -37,7 +35,7 @@ import net.minecraft.tileentity.TileEntity;
 import io.netty.buffer.ByteBuf;
 import java.util.ArrayList;
 
-public class ChemicalDissolutionChamberTileEntity extends NoisyElectricBlockTileEntity implements ITubeConnection, IRedstoneControl, IGasHandler, IUpgradeTile, ISustainedData, ITankManager, ISecurityTile
+public class ChemicalDissolutionChamberTileEntity extends NoisyElectricBlockTileEntity implements ITubeConnection, IRedstoneControl, IGasHandler, IUpgradeTile, ISustainedData, ITankManager
 {
 	public GasTank injectTank = new GasTank(MAX_GAS);
 	public GasTank outputTank = new GasTank(MAX_GAS);
@@ -73,7 +71,6 @@ public class ChemicalDissolutionChamberTileEntity extends NoisyElectricBlockTile
 	public DissolutionRecipe cachedRecipe;
 
 	public TileComponentUpgrade upgradeComponent = new AdvancedUpgradeTileComponent(this, 4);
-	public TileComponentSecurity securityComponent = new TileComponentSecurity(this);
 
 	public RedstoneControl controlType = RedstoneControl.DISABLED;
 
@@ -290,28 +287,30 @@ public class ChemicalDissolutionChamberTileEntity extends NoisyElectricBlockTile
 	{
 		super.getNetworkedData(data);
 
-		data.add(isActive);
-		data.add(controlType.ordinal());
-		data.add(operatingTicks);
+		data.add(Boolean.valueOf(isActive));
+		data.add(Integer.valueOf(controlType.ordinal()));
+		data.add(Integer.valueOf(operatingTicks));
 
+		GasStack gas_stack = injectTank.getGas();
 		if(injectTank.getGas() != null)
 		{
-			data.add(true);
-			data.add(injectTank.getGas().getGas().getID());
-			data.add(injectTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(injectTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
+		gas_stack = outputTank.getGas();
 		if(outputTank.getGas() != null)
 		{
-			data.add(true);
-			data.add(outputTank.getGas().getGas().getID());
-			data.add(outputTank.getStored());
+			data.add(Boolean.valueOf(true));
+			data.add(Integer.valueOf(gas_stack.getGas().getID()));
+			data.add(Integer.valueOf(outputTank.getStored()));
 		}
 		else {
-			data.add(false);
+			data.add(Boolean.valueOf(false));
 		}
 
 		return data;
@@ -495,11 +494,5 @@ public class ChemicalDissolutionChamberTileEntity extends NoisyElectricBlockTile
 	@Override
 	public Object[] getTanks() {
 		return new Object[] {injectTank, outputTank};
-	}
-
-	@Override
-	public TileComponentSecurity getSecurity()
-	{
-		return securityComponent;
 	}
 }

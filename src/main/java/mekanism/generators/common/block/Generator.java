@@ -13,15 +13,12 @@ import mekanism.common.base.ISustainedData;
 import mekanism.common.base.ISustainedInventory;
 import mekanism.common.base.ISustainedTank;
 import mekanism.common.multiblock.IMultiblock;
-import mekanism.common.security.ISecurityItem;
-import mekanism.common.security.ISecurityTile;
 import mekanism.common.tile.BasicBlockTileEntity;
 import mekanism.common.tile.ContainerTileEntity;
 import mekanism.common.tile.TileEntityElectricBlock;
 import mekanism.common.tile.TileEntityMultiblock;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import mekanism.common.util.SecurityUtils;
 import mekanism.generators.common.GeneratorsBlocks;
 import mekanism.generators.common.GeneratorsItems;
 import mekanism.generators.common.MekanismGenerators;
@@ -34,10 +31,10 @@ import mekanism.generators.common.tile.WindGeneratorTileEntity;
 import mekanism.generators.common.tile.turbine.TileEntityElectromagneticCoil;
 import mekanism.generators.common.tile.turbine.TileEntityRotationalComplex;
 import mekanism.generators.common.tile.turbine.TileEntitySaturatingCondenser;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineCasing;
+import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import mekanism.generators.common.tile.turbine.TileEntityTurbineRotor;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineValve;
-import mekanism.generators.common.tile.turbine.TileEntityTurbineVent;
+import mekanism.generators.common.tile.turbine.TurbineValveTileEntity;
+import mekanism.generators.common.tile.turbine.TurbineVentTileEntity;
 import buildcraft.api.tools.IToolWrench;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -262,13 +259,6 @@ public class Generator extends BlockContainer implements ISpecialBounds, IBlockC
 	}
 
 	@Override
-	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z)
-	{
-		TileEntity tile = world.getTileEntity(x, y, z);
-		return SecurityUtils.canAccess(player, tile) ? super.getPlayerRelativeBlockHardness(player, world, x, y, z) : 0F;
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item i, CreativeTabs creativetabs, List list)
 	{
@@ -439,26 +429,20 @@ public class Generator extends BlockContainer implements ISpecialBounds, IBlockC
 
 			if(MekanismUtils.hasUsableWrench(player, x, y, z))
 			{
-				if(SecurityUtils.canAccess(player, tileEntity))
+				if(player.isSneaking())
 				{
-					if(player.isSneaking())
-					{
-						dismantleBlock(world, x, y, z, false);
-						return true;
-					}
-
-					if(MekanismUtils.isBCWrench(tool))
-					{
-						((IToolWrench)tool).wrenchUsed(player, x, y, z);
-					}
-
-					int change = ForgeDirection.ROTATION_MATRIX[ForgeDirection.UP.ordinal()][tileEntity.facing];
-					tileEntity.setFacing((short)change);
-					world.notifyBlocksOfNeighborChange(x, y, z, this);
+					dismantleBlock(world, x, y, z, false);
+					return true;
 				}
-				else {
-					SecurityUtils.displayNoAccess(player);
+
+				if(MekanismUtils.isBCWrench(tool))
+				{
+					((IToolWrench)tool).wrenchUsed(player, x, y, z);
 				}
+
+				int change = ForgeDirection.ROTATION_MATRIX[ForgeDirection.UP.ordinal()][tileEntity.facing];
+				tileEntity.setFacing((short)change);
+				world.notifyBlocksOfNeighborChange(x, y, z, this);
 				return true;
 			}
 		}
@@ -523,13 +507,7 @@ public class Generator extends BlockContainer implements ISpecialBounds, IBlockC
 		{
 			if(!player.isSneaking())
 			{
-				if(SecurityUtils.canAccess(player, tileEntity))
-				{
-					player.openGui(MekanismGenerators.instance, guiId, world, x, y, z);
-				}
-				else {
-					SecurityUtils.displayNoAccess(player);
-				}
+				player.openGui(MekanismGenerators.instance, guiId, world, x, y, z);
 				return true;
 			}
 		}
@@ -644,16 +622,6 @@ public class Generator extends BlockContainer implements ISpecialBounds, IBlockC
 			return null;
 		}
 
-		if(tileEntity instanceof ISecurityTile)
-		{
-			ISecurityItem securityItem = (ISecurityItem)itemStack.getItem();
-			if(securityItem.hasSecurity(itemStack))
-			{
-				securityItem.setOwner(itemStack, ((ISecurityTile)tileEntity).getSecurity().getOwner());
-				securityItem.setSecurity(itemStack, ((ISecurityTile)tileEntity).getSecurity().getMode());
-			}
-		}
-
 		if(tileEntity instanceof TileEntityElectricBlock)
 		{
 			IEnergizedItem electricItem = (IEnergizedItem)itemStack.getItem();
@@ -730,9 +698,9 @@ public class Generator extends BlockContainer implements ISpecialBounds, IBlockC
 		TURBINE_ROTOR(7, "TurbineRotor", -1, -1, TileEntityTurbineRotor.class, false),
 		ROTATIONAL_COMPLEX(8, "RotationalComplex", -1, -1, TileEntityRotationalComplex.class, false),
 		ELECTROMAGNETIC_COIL(9, "ElectromagneticCoil", -1, -1, TileEntityElectromagneticCoil.class, false),
-		TURBINE_CASING(10, "TurbineCasing", -1, -1, TileEntityTurbineCasing.class, false),
-		TURBINE_VALVE(11, "TurbineValve", -1, -1, TileEntityTurbineValve.class, false),
-		TURBINE_VENT(12, "TurbineVent", -1, -1, TileEntityTurbineVent.class, false),
+		TURBINE_CASING(10, "TurbineCasing", -1, -1, TurbineCasingTileEntity.class, false),
+		TURBINE_VALVE(11, "TurbineValve", -1, -1, TurbineValveTileEntity.class, false),
+		TURBINE_VENT(12, "TurbineVent", -1, -1, TurbineVentTileEntity.class, false),
 		SATURATING_CONDENSER(13, "SaturatingCondenser", -1, -1, TileEntitySaturatingCondenser.class, false);
 
 		public int meta;

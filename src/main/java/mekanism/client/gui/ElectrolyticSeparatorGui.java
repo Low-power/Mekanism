@@ -15,17 +15,16 @@ import mekanism.client.gui.element.GuiProgress;
 import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
 import mekanism.client.gui.element.GuiProgress.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.client.gui.element.GuiUpgradeTab;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
-import mekanism.common.inventory.container.ContainerElectrolyticSeparator;
+import mekanism.common.inventory.container.ElectrolyticSeparatorContainer;
 import mekanism.common.network.PacketTileEntity.TileEntityMessage;
-import mekanism.common.tile.TileEntityElectrolyticSeparator;
-import mekanism.common.tile.TileEntityGasTank;
+import mekanism.common.tile.ElectrolyticSeparatorTileEntity;
+import mekanism.common.tile.GasTankTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
@@ -40,11 +39,11 @@ import java.util.List;
 @SideOnly(Side.CLIENT)
 public class ElectrolyticSeparatorGui extends GuiMekanism
 {
-	public TileEntityElectrolyticSeparator tileEntity;
+	public ElectrolyticSeparatorTileEntity tileEntity;
 
-	public ElectrolyticSeparatorGui(InventoryPlayer inventory, TileEntityElectrolyticSeparator tentity)
+	public ElectrolyticSeparatorGui(InventoryPlayer inventory, ElectrolyticSeparatorTileEntity tentity)
 	{
-		super(tentity, new ContainerElectrolyticSeparator(inventory, tentity));
+		super(tentity, new ElectrolyticSeparatorContainer(inventory, tentity));
 
 		tileEntity = tentity;
 
@@ -80,7 +79,6 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 			}
 		}, GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
 		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 164, 15));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png")));
 
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 25, 34));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 51));
@@ -155,17 +153,17 @@ public class ElectrolyticSeparatorGui extends GuiMekanism
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 	}
 
-	private <T> T chooseByMode(TileEntityGasTank.GasMode dumping, T idleOption, T dumpingOption, T dumpingExcessOption)
+	private <T> T chooseByMode(GasTankTileEntity.GasMode dumping, T idleOption, T dumpingOption, T dumpingExcessOption)
 	{
-		if(dumping.equals(TileEntityGasTank.GasMode.IDLE))
+		if(dumping.equals(GasTankTileEntity.GasMode.IDLE))
 		{
 			return idleOption;
 		}
-		else if(dumping.equals(TileEntityGasTank.GasMode.DUMPING))
+		else if(dumping.equals(GasTankTileEntity.GasMode.DUMPING))
 		{
 			return dumpingOption;
 		}
-		else if(dumping.equals(TileEntityGasTank.GasMode.DUMPING_EXCESS))
+		else if(dumping.equals(GasTankTileEntity.GasMode.DUMPING_EXCESS))
 		{
 			return dumpingExcessOption;
 		}

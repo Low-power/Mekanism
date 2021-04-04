@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=Elemento de Superaquecimento
 tile.BasicBlock2.PressureDisperser.name=Dispersor de Pressão
 tile.BasicBlock2.BoilerCasing.name=Carcaça da Caldeira
 tile.BasicBlock2.BoilerValve.name=Válvula da Caldeira
-tile.BasicBlock2.SecurityDesk.name=Mesa de Segurança
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Câmara de Enriquecimento
@@ -482,13 +481,11 @@ gui.thermoelectricBoiler=Caldeira Termoelétrica
 gui.visuals=Aparência
 gui.noEject=Não Ejeta
 gui.undefined=Indefinido
-gui.owner=Proprietário
 gui.public=Público
 gui.private=Privado
 gui.add=Adicionar
 gui.set=Definir
 gui.freq=Freq
-gui.security=Segurança
 gui.index=Índice
 gui.producing=Produzindo
 gui.maxOutput=Saída Máx.
@@ -542,17 +539,7 @@ gui.autoModeToggle=Ligar modo automático
 gui.craftSingle=Montar um item
 gui.craftAvailable=Montar itens disponíveis
 gui.fillEmpty=Encher/Esvaziar grid
-gui.noOwner=Sem dono
-gui.securityOverride=Sobreposição de segurança
 gui.remove=Remover
-gui.trustedPlayers=Jogadores confiáveis
-gui.publicMode=Modo Público
-gui.privateMode=Mode Privado
-gui.trustedMode=Modo de Confiança
-gui.securityOffline=Segurança Offline
-gui.noAccessDesc=Você não tem acesso
-gui.overridden=Sobreposto
-gui.nowOwn=Você é o novo dono
 gui.frequency=Frequência
 gui.mode=Modo
 gui.burnRate=Taxa de queima
@@ -676,11 +663,6 @@ gui.digitalMiner.missingBlock=Falta de Bloco
 recipe.mekanismShaped=Exata
 recipe.mekanismShapeless=Disforme
 
-//Security types
-security.public=Público
-security.private=Privado
-security.trusted=Confiável
-
 //Item and block tooltip text
 tooltip.configurator.configurate=Configurar
 tooltip.configurator.empty=Vazio
@@ -793,7 +775,6 @@ tooltip.SuperheatingElement=Um radiador modular e decentemente pergiso capaz de 
 tooltip.PressureDisperser=Bloco usado para dispersar vapor em um multibloco. Deve formar um tubo horizontal sem deformações para controlar o fluxo de vapor.
 tooltip.BoilerCasing=Um bloco resistente à pressão, usado na construção da Caldeira Termoelétrica.
 tooltip.BoilerValve=Vávula usada na construção da Caldeira Termoelétrica.
-tooltip.SecurityDesk=Central de segurança para todas suas máquinas.
 
 tooltip.EnrichmentChamber=Uma máquina simples usada para enriquecer minérios tornando-os em duas porções de pó, como também realizar muitas outras operações.
 tooltip.OsmiumCompressor=Uma máquina um tanto avançada usada para prensar ósmio com pós de outros materiais parar convertê-los em barras.

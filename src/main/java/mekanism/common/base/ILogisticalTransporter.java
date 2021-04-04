@@ -6,17 +6,17 @@ import mekanism.api.transmitters.IBlockableConnection;
 import mekanism.api.transmitters.IGridTransmitter;
 import mekanism.common.InventoryNetwork;
 import mekanism.common.content.transporter.TransporterStack;
-import mekanism.common.tile.TileEntityLogisticalSorter;
+import mekanism.common.tile.LogisticalSorterTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public interface ILogisticalTransporter extends IGridTransmitter<IInventory, InventoryNetwork>, IBlockableConnection
 {
 	public ItemStack insert(Coord4D original, ItemStack itemStack, EnumColor color, boolean doEmit, int min);
 
-	public ItemStack insertRR(TileEntityLogisticalSorter outputter, ItemStack itemStack, EnumColor color, boolean doEmit, int min);
+	public ItemStack insertRR(LogisticalSorterTileEntity outputter, ItemStack itemStack, EnumColor color, boolean doEmit, int min);
 
 	public void entityEntering(TransporterStack stack, int progress);
 

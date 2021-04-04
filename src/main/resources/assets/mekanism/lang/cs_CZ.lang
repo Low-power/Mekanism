@@ -114,7 +114,6 @@ tile.BasicBlock2.SuperheatingElement.name=Superohřívací Element
 tile.BasicBlock2.PressureDisperser.name=Rozprašovač Tlaku
 tile.BasicBlock2.BoilerCasing.name=Plášť Bojleru
 tile.BasicBlock2.BoilerValve.name=Ventil Bojleru
-tile.BasicBlock2.SecurityDesk.name=Bezpečnostní Pult
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Obohacovací Komora
@@ -482,13 +481,11 @@ gui.thermoelectricBoiler=Termoelektrický Bojler
 gui.visuals=Vizuály
 gui.noEject=Nelze Vyhodit
 gui.undefined=Nedefinovaný
-gui.owner=Vlastník
 gui.public=Veřejný
 gui.private=Soukromý
 gui.add=Přidat
 gui.set=Nastavit
 gui.freq=Frekv
-gui.security=Bezpečnost
 gui.index=Index
 gui.producing=Vyrábí
 gui.maxOutput=Max Výstup
@@ -542,17 +539,7 @@ gui.autoModeToggle=Sepnout Auto-mód
 gui.craftSingle=Vyrobit Jeden Předmět
 gui.craftAvailable=Vyrobit Dostupné Předměty
 gui.fillEmpty=Naplnit/Vyprázdnit Mřížku
-gui.noOwner=Žádný Vlastník
-gui.securityOverride=Přepis Bezpečnosti
 gui.remove=Odebrat
-gui.trustedPlayers=Důvěřovaní Hráči
-gui.publicMode=Veřejný Mód
-gui.privateMode=Privátní Mód
-gui.trustedMode=Důvěřivý Mód
-gui.securityOffline=Bezpečnost Offline
-gui.noAccessDesc=Nemáš přístup.
-gui.overridden=Přepsáno
-gui.nowOwn=Nyní vlastníš tento předmět.
 gui.frequency=Frekvence
 gui.mode=Mód
 gui.burnRate=Rychlost Spalování
@@ -676,11 +663,6 @@ gui.digitalMiner.missingBlock=Chybějící blok
 recipe.mekanismShaped=Tvarovaný
 recipe.mekanismShapeless=Beztvarý
 
-//Security types
-security.public=Veřejný
-security.private=Privátní
-security.trusted=Důvěřivý
-
 //Item and block tooltip text
 tooltip.configurator.configurate=Konfigurovat
 tooltip.configurator.empty=Prázdný
@@ -793,7 +775,6 @@ tooltip.SuperheatingElement=Modulární, nějak nebezpečnýradiátor schopný v
 tooltip.PressureDisperser=Blok používaný k rozptýlení páry v multibloku. Měli by tvořit bezmezerovou horizontální plošinu pro optimální ovládání toku páry.
 tooltip.BoilerCasing=Tlakuvzdorný hustý plášť využitý při stavbě multibloku Termoelektrický Bojler.
 tooltip.BoilerValve=Ventil který lze umístit na multiblok Termoelektrický Bojler, umožnující vstup vody a energie a výstup páry.
-tooltip.SecurityDesk=Centrální ovládací pult na kontrolu bezpečnosti všech vašich strojů.
 
 tooltip.EnrichmentChamber=Jednoduchý stroj obohacující rudy do jejich práškových protějšků a zároveň dělající mnoho dalších operací.
 tooltip.OsmiumCompressor=Poměrně pokročilý stroj kompresující osmium do různorodých prášků za účelem výroby jejich ingotových protějšků.

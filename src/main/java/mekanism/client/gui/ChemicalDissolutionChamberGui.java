@@ -5,7 +5,6 @@ import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
 import mekanism.client.gui.element.GaugeGui;
 import mekanism.client.gui.element.GuiProgress;
@@ -37,7 +36,6 @@ public class ChemicalDissolutionChamberGui extends GuiMekanism
 		super(tentity, new ChemicalDissolutionChamberContainer(inventory, tentity));
 		tileEntity = tentity;
 
-		guiElements.add(new GuiSecurityTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png")));
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {

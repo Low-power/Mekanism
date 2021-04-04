@@ -432,13 +432,11 @@ gui.dynamicTank=Dynamisk Tank
 gui.visuals=Visuelle
 gui.noEject=Kan ikke utløse
 gui.undefined=Udefinert
-gui.owner=Eier
 gui.public=Offentlig
 gui.private=Privat
 gui.add=Legg til
 gui.set=Sett
 gui.freq=Freq
-gui.security=Sikkerhet
 gui.index=Indeks
 
 gui.reactor.injectionRate=Injeksjons Sats

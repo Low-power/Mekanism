@@ -1,12 +1,12 @@
 package mekanism.client.gui;
 
+import mekanism.api.gas.GasStack;
 import mekanism.api.Coord4D;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.RecipeTypeGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
-import mekanism.client.gui.element.GuiSecurityTab;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.SortingTabGui;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
@@ -45,7 +45,6 @@ public class FactoryGui extends GuiMekanism
 		ySize += 11;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, tileEntity.tier.guiLocation));
-		guiElements.add(new GuiSecurityTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new RecipeTypeGui(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, tileEntity.tier.guiLocation));
@@ -79,7 +78,8 @@ public class FactoryGui extends GuiMekanism
 		{
 			if(tileEntity.recipeType.usesFuel())
 			{
-				drawCreativeTabHoveringText(tileEntity.gasTank.getGas() != null ? tileEntity.gasTank.getGas().getGas().getLocalizedName() + ": " + tileEntity.gasTank.getStored() : LangUtils.localize("gui.none"), xAxis, yAxis);
+				GasStack gas_stack = tileEntity.gasTank.getGas();
+				drawCreativeTabHoveringText(gas_stack != null ? gas_stack.getGas().getLocalizedName() + ": " + tileEntity.gasTank.getStored() : LangUtils.localize("gui.none"), xAxis, yAxis);
 			}
 			else if(tileEntity.recipeType == RecipeType.INFUSING)
 			{

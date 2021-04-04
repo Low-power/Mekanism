@@ -1,7 +1,5 @@
 package mekanism.generators.client.gui;
 
-import java.util.List;
-
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.GuiMekanism;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
@@ -16,12 +14,11 @@ import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import mekanism.generators.common.inventory.container.ContainerNeutronCapture;
 import mekanism.generators.common.tile.reactor.TileEntityReactorNeutronCapture;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class NeutronCaptureGui extends GuiMekanism
@@ -32,7 +29,7 @@ public class NeutronCaptureGui extends GuiMekanism
 	{
 		super(new ContainerNeutronCapture(inventory, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
+		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
 			@Override
@@ -42,9 +39,9 @@ public class NeutronCaptureGui extends GuiMekanism
 						LangUtils.localize("gui.storing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getEnergy()),
 						LangUtils.localize("gui.maxOutput") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getMaxOutput()) + "/t");
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 164, 15));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"), 142, 34).with(SlotOverlay.POWER));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 164, 15));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 142, 34).with(SlotOverlay.POWER));
 	}
 
 	@Override
@@ -60,8 +57,8 @@ public class NeutronCaptureGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiBlank.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"));
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

@@ -6,8 +6,8 @@ import mekanism.client.ClientProxy;
 import mekanism.client.MekanismClient;
 import mekanism.client.model.ModelArmoredJetpack;
 import mekanism.client.model.ModelAtomicDisassembler;
-import mekanism.client.model.ModelEnergyCube;
-import mekanism.client.model.ModelEnergyCube.ModelEnergyCore;
+import mekanism.client.model.EnergyCubeModel;
+import mekanism.client.model.EnergyCubeModel.ModelEnergyCore;
 import mekanism.client.model.ModelFlamethrower;
 import mekanism.client.model.ModelFreeRunners;
 import mekanism.client.model.ModelGasMask;
@@ -21,8 +21,8 @@ import mekanism.client.render.RenderGlowPanel;
 import mekanism.client.render.TransmitterPartRenderer;
 import mekanism.client.render.entity.RenderBalloon;
 import mekanism.client.render.tileentity.RenderBin;
-import mekanism.client.render.tileentity.RenderEnergyCube;
-import mekanism.client.render.tileentity.RenderFluidTank;
+import mekanism.client.render.tileentity.EnergyCubeRenderer;
+import mekanism.client.render.tileentity.FluidTankRenderer;
 import mekanism.common.MekanismBlocks;
 import mekanism.common.MekanismItems;
 import mekanism.common.SideData.IOState;
@@ -36,7 +36,7 @@ import mekanism.common.inventory.InventoryBin;
 import mekanism.common.item.ItemAtomicDisassembler;
 import mekanism.common.item.BalloonItem;
 import mekanism.common.item.BasicBlockItem;
-import mekanism.common.item.ItemBlockGasTank;
+import mekanism.common.item.GasTankItem;
 import mekanism.common.item.MachineItem;
 import mekanism.common.item.ItemFlamethrower;
 import mekanism.common.item.ItemFreeRunners;
@@ -48,7 +48,7 @@ import mekanism.common.multipart.ItemGlowPanel;
 import mekanism.common.multipart.ItemPartTransmitter;
 import mekanism.common.multipart.TransmitterType;
 import mekanism.common.tile.BinTileEntity;
-import mekanism.common.tile.TileEntityFluidTank;
+import mekanism.common.tile.FluidTankTileEntity;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -81,7 +81,7 @@ public class ItemRenderingHandler implements IItemRenderer
 
 	public ModelRobit robit = new ModelRobit();
 	public ModelChest personalChest = new ModelChest();
-	public ModelEnergyCube energyCube = new ModelEnergyCube();
+	public EnergyCubeModel energyCube = new EnergyCubeModel();
 	public ModelEnergyCore energyCore = new ModelEnergyCore();
 	public ModelGasTank gasTank = new ModelGasTank();
 	public ModelObsidianTNT obsidianTNT = new ModelObsidianTNT();
@@ -95,7 +95,7 @@ public class ItemRenderingHandler implements IItemRenderer
 
 	private final RenderBalloon balloonRenderer = new RenderBalloon();
 	private final RenderBin binRenderer = (RenderBin)TileEntityRendererDispatcher.instance.mapSpecialRenderers.get(BinTileEntity.class);
-	private final RenderFluidTank portableTankRenderer = (RenderFluidTank)TileEntityRendererDispatcher.instance.mapSpecialRenderers.get(TileEntityFluidTank.class);
+	private final FluidTankRenderer portableTankRenderer = (FluidTankRenderer)TileEntityRendererDispatcher.instance.mapSpecialRenderers.get(FluidTankTileEntity.class);
 	private final RenderItem renderItem = (RenderItem)RenderManager.instance.getEntityClassRenderObject(EntityItem.class);
 
 	@Override
@@ -130,7 +130,7 @@ public class ItemRenderingHandler implements IItemRenderer
 		{
 			EnergyCubeTier tier = ((IEnergyCube)item).getEnergyCubeTier(item_stack);
 			IEnergizedItem energized = (IEnergizedItem)item;
-			mc.renderEngine.bindTexture(RenderEnergyCube.baseTexture);
+			mc.renderEngine.bindTexture(EnergyCubeRenderer.baseTexture);
 
 			GL11.glRotatef(180F, 0F, 0F, 1F);
 			GL11.glRotatef(270F, 0F, -1F, 0F);
@@ -140,14 +140,14 @@ public class ItemRenderingHandler implements IItemRenderer
 			energyCube.render(0.0625F, tier, mc.renderEngine);
 			for(ForgeDirection side : ForgeDirection.VALID_DIRECTIONS)
 			{
-				mc.renderEngine.bindTexture(RenderEnergyCube.baseTexture);
+				mc.renderEngine.bindTexture(EnergyCubeRenderer.baseTexture);
 				energyCube.renderSide(0.0625F, side, side == ForgeDirection.NORTH ? IOState.OUTPUT : IOState.INPUT, tier, mc.renderEngine);
 			}
 			MekanismRenderer.blendOff();
 
 			GL11.glPushMatrix();
 			GL11.glTranslated(0.0, 1.0, 0.0);
-			mc.renderEngine.bindTexture(RenderEnergyCube.coreTexture);
+			mc.renderEngine.bindTexture(EnergyCubeRenderer.coreTexture);
 
 			GL11.glShadeModel(GL11.GL_SMOOTH);
 			GL11.glEnable(GL11.GL_BLEND);
@@ -304,8 +304,8 @@ public class ItemRenderingHandler implements IItemRenderer
 		else if(Block.getBlockFromItem(item) == MekanismBlocks.GasTank)
 		{
 			GL11.glPushMatrix();
-			BaseTier tier = ((ItemBlockGasTank)item).getBaseTier(item_stack);
-			mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.RENDER, "GasTank" + tier.getName() + ".png"));
+			BaseTier tier = ((GasTankItem)item).getBaseTier(item_stack);
+			mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.RENDER, tier.getName() + "GasTank.png"));
 			GL11.glRotatef(180F, 0F, 0F, 1F);
 			GL11.glRotatef(90F, 0F, 1F, 0F);
 			GL11.glTranslatef(0F, -1F, 0F);

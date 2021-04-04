@@ -9,7 +9,7 @@ import mekanism.api.infuse.InfuseType;
 import mekanism.api.transmitters.TransmissionType;
 import mekanism.client.render.tileentity.ConfigurableMachineRenderer;
 import mekanism.client.render.tileentity.RenderDynamicTank;
-import mekanism.client.render.tileentity.RenderFluidTank;
+import mekanism.client.render.tileentity.FluidTankRenderer;
 import mekanism.client.render.tileentity.RenderThermalEvaporationController;
 import mekanism.client.render.tileentity.RenderThermoelectricBoiler;
 import mekanism.common.ObfuscatedNames;
@@ -136,7 +136,7 @@ public class MekanismRenderer {
 			}
 			RenderDynamicTank.resetDisplayInts();
 			RenderThermalEvaporationController.resetDisplayInts();
-			RenderFluidTank.resetDisplayInts();
+			FluidTankRenderer.resetDisplayInts();
 			RenderThermoelectricBoiler.resetDisplayInts();
 		}
 	}
