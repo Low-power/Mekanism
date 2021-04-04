@@ -137,14 +137,11 @@ task MDKZip(type: Zip) {
 	include 'mekanism/api/**'
 }
 
-task releaseJars(type: Copy) {
-	from coreJar
-	from toolsJar
-	from generatorsJar
-	from MDKZip
-	rename '-(.*)jar', '.jar'
-	rename '-(.*)zip', '.zip'
-	into '.'
+task releaseJars {
+	dependsOn "coreJar"
+	dependsOn "toolsJar"
+	dependsOn "generatorsJar"
+	dependsOn "MDKZip"
 }
 
 task fullBuild(type: Delete) {
