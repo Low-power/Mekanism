@@ -7,9 +7,9 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -66,7 +66,7 @@ public class ChemicalDissolutionChamberGui extends GuiMekanism
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 154, 24).with(SlotOverlay.PLUS));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalDissolutionChamberGui.png"), 5, 64).with(SlotOverlay.MINUS));
 
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

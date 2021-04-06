@@ -5,9 +5,9 @@ import mekanism.client.gui.ChemicalOxidizerGui;
 import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -51,7 +51,7 @@ public class ChemicalOxidizerRecipeHandler extends BaseRecipeHandler
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 25, 35));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalOxidizerGui.png"), 154, 24).with(SlotOverlay.PLUS));
 
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

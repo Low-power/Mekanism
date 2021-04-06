@@ -2,8 +2,8 @@ package mekanism.client.gui;
 
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.PowerBarGui.IPowerInfoHandler;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiScrollList;
 import mekanism.client.gui.element.GuiSlot;
@@ -75,7 +75,7 @@ public class TeleporterGui extends GuiMekanism
 		resource = MekanismUtils.getResource(ResourceType.GUI, "TeleporterGui.png");
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, resource));
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public String getTooltip()
 			{
@@ -102,7 +102,7 @@ public class TeleporterGui extends GuiMekanism
 		itemStack = stack;
 		//this.player = player;
 		resource = MekanismUtils.getResource(ResourceType.GUI, "PortableTeleporterGui.png");
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public String getTooltip()
 			{

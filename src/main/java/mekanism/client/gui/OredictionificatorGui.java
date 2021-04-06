@@ -2,9 +2,9 @@ package mekanism.client.gui;
 
 import mekanism.api.Coord4D;
 import mekanism.api.EnumColor;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -48,7 +48,7 @@ public class OredictionificatorGui extends GuiMekanism
 		super(tentity, new OredictionificatorContainer(inventory, tentity));
 		tileEntity = tentity;
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "OredictionificatorGui.png")));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

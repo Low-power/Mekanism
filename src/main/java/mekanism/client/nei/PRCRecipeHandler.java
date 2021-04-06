@@ -6,11 +6,11 @@ import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.PowerBarGui.IPowerInfoHandler;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -61,14 +61,14 @@ public class PRCRecipeHandler extends BaseRecipeHandler
 		guiElements.add(gasInput = GuiGasGauge.getDummy(GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "PRCGui.png"), 28, 10));
 		guiElements.add(gasOutput = GuiGasGauge.getDummy(GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "PRCGui.png"), 140, 40));
 
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
 			{
 				return ticksPassed <= 20 ? ticksPassed / 20F : 1F;
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 164, 15));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

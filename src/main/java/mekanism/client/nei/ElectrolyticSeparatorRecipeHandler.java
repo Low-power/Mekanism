@@ -6,11 +6,11 @@ import mekanism.client.gui.element.GuiElement;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.PowerBarGui.IPowerInfoHandler;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -54,7 +54,7 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 		guiElements.add(fluidInput = GuiFluidGauge.getDummy(GaugeGui.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 5, 10));
 		guiElements.add(leftGas = GuiGasGauge.getDummy(GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 58, 18));
 		guiElements.add(rightGas = GuiGasGauge.getDummy(GaugeGui.Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 18));
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
 			{
@@ -66,7 +66,7 @@ public class ElectrolyticSeparatorRecipeHandler extends BaseRecipeHandler
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 100, 51));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "ElectrolyticSeparatorGui.png"), 142, 34).with(SlotOverlay.POWER));
 
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

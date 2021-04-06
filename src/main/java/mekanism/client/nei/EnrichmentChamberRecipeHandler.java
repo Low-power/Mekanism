@@ -1,12 +1,11 @@
 package mekanism.client.nei;
 
-import java.util.Collection;
-
-import mekanism.client.gui.GuiEnrichmentChamber;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.EnrichmentChamberGui;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.EnrichmentRecipe;
 import mekanism.common.util.LangUtils;
+import java.util.Collection;
 
 public class EnrichmentChamberRecipeHandler extends MachineRecipeHandler
 {
@@ -27,7 +26,7 @@ public class EnrichmentChamberRecipeHandler extends MachineRecipeHandler
 	{
 		return "chamber";
 	}
-	
+
 	@Override
 	public ProgressBar getProgressType()
 	{
@@ -43,6 +42,6 @@ public class EnrichmentChamberRecipeHandler extends MachineRecipeHandler
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiEnrichmentChamber.class;
+		return EnrichmentChamberGui.class;
 	}
 }

@@ -14,8 +14,8 @@ import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiFuelTab;
-import mekanism.generators.client.gui.element.GuiHeatTab;
+import mekanism.generators.client.gui.element.FuelTab;
+import mekanism.generators.client.gui.element.HeatTab;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -44,9 +44,9 @@ public class ReactorStatsGui extends GuiMekanism
 						LangUtils.localize("gui.storing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getEnergy()),
 						LangUtils.localize("gui.producing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getReactor().getPassiveGeneration(false, true)) + "/t") : new ArrayList();
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
-		guiElements.add(new GuiHeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
-		guiElements.add(new GuiFuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
+		guiElements.add(new HeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
+		guiElements.add(new FuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ReactorStatsGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

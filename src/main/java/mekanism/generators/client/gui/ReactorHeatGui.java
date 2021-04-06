@@ -14,9 +14,9 @@ import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiNumberGauge;
 import mekanism.client.gui.element.GuiNumberGauge.INumberInfoHandler;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.inventory.container.NullContainer;
@@ -24,7 +24,7 @@ import mekanism.common.network.SimpleGuiPacket.SimpleGuiMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiFuelTab;
+import mekanism.generators.client.gui.element.FuelTab;
 import mekanism.generators.client.gui.element.GuiStatTab;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
 import cpw.mods.fml.relauncher.Side;
@@ -55,7 +55,7 @@ public class ReactorHeatGui extends GuiMekanism
 						LangUtils.localize("gui.storing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getEnergy()),
 						LangUtils.localize("gui.producing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getReactor().getPassiveGeneration(false, true)) + "/t") : new ArrayList();
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
 		guiElements.add(new GuiNumberGauge(new INumberInfoHandler()
 		{
 			@Override
@@ -81,15 +81,15 @@ public class ReactorHeatGui extends GuiMekanism
 			{
 				return "Plasma: " + MekanismUtils.getTemperatureDisplay(level, TemperatureUnit.KELVIN);
 			}
-		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 7, 50));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 7, 50));
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
 				return tileEntity.getPlasmaTemp() > tileEntity.getCaseTemp() ? 1 : 0;
 			}
-		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 27, 75));
+		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 27, 75));
 		guiElements.add(new GuiNumberGauge(new INumberInfoHandler()
 		{
 			@Override
@@ -115,23 +115,23 @@ public class ReactorHeatGui extends GuiMekanism
 			{
 				return "Case: " + MekanismUtils.getTemperatureDisplay(level, TemperatureUnit.KELVIN);
 			}
-		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 61, 50));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 61, 50));
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
 				return tileEntity.getCaseTemp() > 0 ? 1 : 0;
 			}
-		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 81, 60));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 81, 60));
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
 				return (tileEntity.getCaseTemp() > 0 && tileEntity.waterTank.getFluidAmount() > 0 && tileEntity.steamTank.getFluidAmount() < tileEntity.steamTank.getCapacity()) ? 1 : 0;
 			}
-		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 81, 90));
+		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 81, 90));
 		guiElements.add(new GuiFluidGauge(new IFluidInfoHandler()
 		{
 			@Override
@@ -139,7 +139,7 @@ public class ReactorHeatGui extends GuiMekanism
 			{
 				return tentity.waterTank;
 			}
-		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 115, 84));
+		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 115, 84));
 		guiElements.add(new GuiFluidGauge(new IFluidInfoHandler()
 		{
 			@Override
@@ -147,7 +147,7 @@ public class ReactorHeatGui extends GuiMekanism
 			{
 				return tentity.steamTank;
 			}
-		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 151, 84));
+		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 151, 84));
 		guiElements.add(new GuiEnergyGauge(new IEnergyInfoHandler()
 		{
 			@Override
@@ -155,9 +155,9 @@ public class ReactorHeatGui extends GuiMekanism
 			{
 				return tileEntity;
 			}
-		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 115, 46));
-		guiElements.add(new GuiFuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
-		guiElements.add(new GuiStatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
+		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 115, 46));
+		guiElements.add(new FuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
+		guiElements.add(new GuiStatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class ReactorHeatGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

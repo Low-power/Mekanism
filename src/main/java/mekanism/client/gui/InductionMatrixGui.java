@@ -1,24 +1,21 @@
 package mekanism.client.gui;
 
-import java.util.List;
-
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiMatrixTab;
-import mekanism.client.gui.element.GuiMatrixTab.MatrixTab;
+import mekanism.client.gui.element.MatrixTab;
+import mekanism.client.gui.element.MatrixTab.MatrixTabType;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.common.inventory.container.ContainerInductionMatrix;
 import mekanism.common.tile.TileEntityInductionCasing;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.entity.player.InventoryPlayer;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import org.lwjgl.opengl.GL11;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class InductionMatrixGui extends GuiMekanism
@@ -29,7 +26,7 @@ public class InductionMatrixGui extends GuiMekanism
 	{
 		super(tentity, new ContainerInductionMatrix(inventory, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiMatrixTab(this, tileEntity, MatrixTab.STAT, 6, MekanismUtils.getResource(ResourceType.GUI, "InductionMatrixGui.png")));
+		guiElements.add(new MatrixTab(this, tileEntity, MatrixTabType.STAT, 6, MekanismUtils.getResource(ResourceType.GUI, "InductionMatrixGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
 			@Override
@@ -70,7 +67,7 @@ public class InductionMatrixGui extends GuiMekanism
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 
 		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "InductionMatrixGui.png"));
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
 		drawTexturedModalRect(guiWidth, guiHeight, 0, 0, xSize, ySize);

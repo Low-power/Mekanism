@@ -3,27 +3,24 @@ package mekanism.client.nei;
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.List;
-
-import mekanism.client.gui.GuiThermalEvaporationController;
+import mekanism.client.gui.ThermalEvaporationControllerGui;
 import mekanism.common.ObfuscatedNames;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.ThermalEvaporationRecipe;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraftforge.fluids.FluidStack;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import org.lwjgl.opengl.GL11;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.List;
 
 public class ThermalEvaporationRecipeHandler extends BaseRecipeHandler
 {
@@ -47,13 +44,13 @@ public class ThermalEvaporationRecipeHandler extends BaseRecipeHandler
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/nei/GuiThermalEvaporationController.png";
+		return "mekanism:gui/nei/ThermalEvaporationControllerGui.png";
 	}
 
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiThermalEvaporationController.class;
+		return ThermalEvaporationControllerGui.class;
 	}
 
 	public String getRecipeId()
@@ -65,7 +62,7 @@ public class ThermalEvaporationRecipeHandler extends BaseRecipeHandler
 	{
 		return Recipe.THERMAL_EVAPORATION_PLANT.get().values();
 	}
-	
+
 	@Override
 	public void loadTransferRects()
 	{
@@ -75,7 +72,7 @@ public class ThermalEvaporationRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(-2, 0, 3, yOffset, 170, 62);
 	}
@@ -85,7 +82,7 @@ public class ThermalEvaporationRecipeHandler extends BaseRecipeHandler
 	{
 		CachedIORecipe recipe = (CachedIORecipe)arecipes.get(i);
 
-		drawProgressBar(49-xOffset, 64-yOffset, 176, 59, 78, 8, ticksPassed < 20 ? ticksPassed % 20 / 20.0F : 1.0F, 0);
+		drawProgressBar(49-xOffset, 64-yOffset, 176, 59, 78, 8, ticksPassed < 20 ? ticksPassed % 20 / 20F : 1F, 0);
 
 		if(recipe.fluidInput != null)
 		{

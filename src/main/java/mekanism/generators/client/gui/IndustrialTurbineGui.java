@@ -7,9 +7,9 @@ import mekanism.api.util.ListUtils;
 import mekanism.client.gui.GuiMekanism;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiRateBar;
-import mekanism.client.gui.element.GuiRateBar.IRateInfoHandler;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.RateBarGui;
+import mekanism.client.gui.element.RateBarGui.IRateInfoHandler;
 import mekanism.client.render.MekanismRenderer;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
@@ -19,8 +19,8 @@ import mekanism.common.tile.GasTankTileEntity;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiTurbineTab;
-import mekanism.generators.client.gui.element.GuiTurbineTab.TurbineTab;
+import mekanism.generators.client.gui.element.TurbineTab;
+import mekanism.generators.client.gui.element.TurbineTab.TurbineTabType;
 import mekanism.generators.common.content.turbine.TurbineUpdateProtocol;
 import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import cpw.mods.fml.relauncher.Side;
@@ -40,9 +40,9 @@ public class IndustrialTurbineGui extends GuiMekanism
 	{
 		super(tentity, new FilterContainer(inventory, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiTurbineTab(this, tileEntity, TurbineTab.STAT, 6, MekanismUtils.getResource(ResourceType.GUI, "IndustrialTurbineGui.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "IndustrialTurbineGui.png"), 164, 16));
-		guiElements.add(new GuiRateBar(this, new IRateInfoHandler()
+		guiElements.add(new TurbineTab(this, tileEntity, TurbineTabType.STAT, 6, MekanismUtils.getResource(ResourceType.GUI, "IndustrialTurbineGui.png")));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "IndustrialTurbineGui.png"), 164, 16));
+		guiElements.add(new RateBarGui(this, new IRateInfoHandler()
 		{
 			@Override
 			public String getTooltip()

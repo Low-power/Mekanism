@@ -11,7 +11,7 @@ import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GaugeGui.Type;
 import mekanism.client.gui.element.GuiHeatInfo;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -55,7 +55,7 @@ public class HeatGeneratorGui extends GuiMekanism
 				return tileEntity.lavaTank;
 			}
 		}, Type.WIDE, this, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"), 55, 18));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"), 164, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"), 164, 15));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"), 16, 34));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "HeatGeneratorGui.png"), 142, 34).with(SlotOverlay.POWER));
 		guiElements.add(new GuiHeatInfo(new IInfoHandler() {

@@ -6,7 +6,7 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -41,7 +41,7 @@ public class FluidicPlenisherGui extends GuiMekanism
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, guiLocation, 27, 19));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, guiLocation, 27, 50));
 		guiElements.add(new GuiSlot(SlotType.POWER, this, guiLocation, 142, 34).with(SlotOverlay.POWER));
-		guiElements.add(new GuiPowerBar(this, tileEntity, guiLocation, 164, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, guiLocation, 164, 15));
 		guiElements.add(new GuiFluidGauge(new IFluidInfoHandler() {
 			@Override
 			public FluidTank getTank()

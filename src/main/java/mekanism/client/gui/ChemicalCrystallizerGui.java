@@ -10,10 +10,10 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
 import mekanism.client.gui.element.GaugeGui;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
@@ -59,7 +59,7 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 160, 23));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 160, 23));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
@@ -81,7 +81,7 @@ public class ChemicalCrystallizerGui extends GuiMekanism
 		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 154, 4).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, "ChemicalCrystallizerGui.png"), 130, 56));
 
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()

@@ -8,7 +8,7 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
 import mekanism.client.gui.element.GaugeGui.Type;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -50,7 +50,7 @@ public class GasGeneratorGui extends GuiMekanism
 				return tileEntity.fuelTank;
 			}
 		}, Type.WIDE, this, MekanismUtils.getResource(ResourceType.GUI, "GasGeneratorGui.png"), 55, 18));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GasGeneratorGui.png"), 164, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GasGeneratorGui.png"), 164, 15));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GasGeneratorGui.png"), 16, 34).with(SlotOverlay.MINUS));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GasGeneratorGui.png"), 142, 34).with(SlotOverlay.POWER));
 	}

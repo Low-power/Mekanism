@@ -2,23 +2,16 @@ package mekanism.client.nei;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
-
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import mekanism.api.infuse.InfuseObject;
 import mekanism.api.infuse.InfuseRegistry;
 import mekanism.api.infuse.InfuseType;
 import mekanism.client.gui.MetallurgicInfuserGui;
 import mekanism.client.gui.element.GuiElement;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.PowerBarGui.IPowerInfoHandler;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -28,18 +21,21 @@ import mekanism.common.recipe.machines.MetallurgicInfuserRecipe;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 {
 	private int ticksPassed;
-	
+
 	@Override
 	public void addGuiElements()
 	{
@@ -48,18 +44,18 @@ public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 142, 34).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.OUTPUT, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 108, 42));
 
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
 			{
-				return ticksPassed <= 20 ? ticksPassed / 20.0F : 1.0F;
+				return ticksPassed <= 20 ? ticksPassed / 20F : 1F;
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 164, 15));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler() {
+		guiElements.add(new ProgressGui(new IProgressInfoHandler() {
 			@Override
 			public double getProgress()
 			{
-				return ticksPassed >= 40 ? (ticksPassed - 40) % 20 / 20.0F : 0.0F;
+				return ticksPassed >= 40 ? (ticksPassed - 40) % 20 / 20F : 0F;
 			}
 		}, ProgressBar.MEDIUM, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 70, 46));
 	}
@@ -116,10 +112,9 @@ public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(0, 0, 5, 15, 166, 56);
-		
 		for(GuiElement e : guiElements)
 		{
 			e.renderBackground(0, 0, -5, -15);
@@ -131,8 +126,8 @@ public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 	{
 		InfuseType type = ((CachedIORecipe)arecipes.get(i)).infusionType;
 
-		float f = ticksPassed >= 20 && ticksPassed < 40 ? (ticksPassed - 20) % 20 / 20.0F : 1.0F;
-		if(ticksPassed < 20) f = 0.0F;
+		float f = ticksPassed >= 20 && ticksPassed < 40 ? (ticksPassed - 20) % 20 / 20F : 1F;
+		if(ticksPassed < 20) f = 0F;
 
 		int display = (int)(52F*f);
 		changeTexture(MekanismRenderer.getBlocksTexture());
@@ -195,11 +190,8 @@ public class MetallurgicInfuserRecipeHandler extends BaseRecipeHandler
 			{
 				arecipes.add(new CachedIORecipe(irecipe, getInfuseStacks(irecipe.getInput().infuse.type), irecipe.getInput().infuse.type));
 			}
-			
 			List<ItemStack> infuses;
-			
-			for(ItemStack stack : getInfuseStacks(irecipe.getInput().infuse.type)) 
-			{
+			for(ItemStack stack : getInfuseStacks(irecipe.getInput().infuse.type)) {
 				if(NEIServerUtils.areStacksSameTypeCrafting(stack, ingredient))
 				{
 					infuses = new ArrayList<ItemStack>();

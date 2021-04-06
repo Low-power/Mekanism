@@ -4,7 +4,7 @@ import mekanism.api.MekanismConfig.usage;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -31,7 +31,7 @@ public class SeismicVibratorGui extends GuiMekanism
 		tileEntity = tentity;
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png"), 164, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "SeismicVibratorGui.png"), 164, 15));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()

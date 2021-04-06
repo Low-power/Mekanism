@@ -6,10 +6,10 @@ import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.GuiEnergyGauge;
 import mekanism.client.gui.element.GuiEnergyGauge.IEnergyInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiMatrixTab;
-import mekanism.client.gui.element.GuiMatrixTab.MatrixTab;
-import mekanism.client.gui.element.GuiRateBar;
-import mekanism.client.gui.element.GuiRateBar.IRateInfoHandler;
+import mekanism.client.gui.element.MatrixTab;
+import mekanism.client.gui.element.MatrixTab.MatrixTabType;
+import mekanism.client.gui.element.RateBarGui;
+import mekanism.client.gui.element.RateBarGui.IRateInfoHandler;
 import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.tile.TileEntityInductionCasing;
 import mekanism.common.util.LangUtils;
@@ -30,7 +30,7 @@ public class MatrixStatsGui extends GuiMekanism
 	{
 		super(tentity, new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiMatrixTab(this, tileEntity, MatrixTab.MAIN, 6, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png")));
+		guiElements.add(new MatrixTab(this, tileEntity, MatrixTabType.MAIN, 6, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png")));
 		guiElements.add(new GuiEnergyGauge(new IEnergyInfoHandler()
 		{
 			@Override
@@ -39,7 +39,7 @@ public class MatrixStatsGui extends GuiMekanism
 				return tileEntity;
 			}
 		}, GuiEnergyGauge.Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png"), 6, 13));
-		guiElements.add(new GuiRateBar(this, new IRateInfoHandler()
+		guiElements.add(new RateBarGui(this, new IRateInfoHandler()
 		{
 			@Override
 			public String getTooltip()
@@ -53,7 +53,7 @@ public class MatrixStatsGui extends GuiMekanism
 				return tileEntity.structure.lastInput/tileEntity.structure.transferCap;
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png"), 30, 13));
-		guiElements.add(new GuiRateBar(this, new IRateInfoHandler()
+		guiElements.add(new RateBarGui(this, new IRateInfoHandler()
 		{
 			@Override
 			public String getTooltip()

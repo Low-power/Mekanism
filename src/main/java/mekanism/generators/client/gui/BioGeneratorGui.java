@@ -5,7 +5,7 @@ import mekanism.api.util.ListUtils;
 import mekanism.client.gui.GuiMekanism;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -41,7 +41,7 @@ public class BioGeneratorGui extends GuiMekanism
 						LangUtils.localize("gui.maxOutput") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getMaxOutput()) + "/t");
 			}
 		}, this, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png"), 164, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png"), 164, 15));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png"), 16, 34));
 		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "BioGeneratorGui.png"), 142, 34).with(SlotOverlay.POWER));
 	}

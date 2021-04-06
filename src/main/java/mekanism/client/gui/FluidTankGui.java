@@ -1,6 +1,6 @@
 package mekanism.client.gui;
 
-import mekanism.client.gui.element.GuiContainerEditMode;
+import mekanism.client.gui.element.ContainerEditModeGui;
 import mekanism.client.gui.element.GuiFluidGauge;
 import mekanism.client.gui.element.GuiFluidGauge.IFluidInfoHandler;
 import mekanism.client.gui.element.GuiSlot;
@@ -26,7 +26,7 @@ public class FluidTankGui extends GuiMekanism
 	{
 		super(tentity, new FluidTankContainer(inventory, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiContainerEditMode(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+		guiElements.add(new ContainerEditModeGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 		guiElements.add(new GuiFluidGauge(new IFluidInfoHandler()
 		{
 			@Override

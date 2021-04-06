@@ -62,7 +62,7 @@ public abstract class AdvancedElectricMachineTileEntity<RECIPE extends AdvancedM
 	 */
 	public AdvancedElectricMachineTileEntity(String soundPath, String name, double perTick, int secondaryPerTick, int ticksRequired, double maxEnergy)
 	{
-		super(soundPath, name, MekanismUtils.getResource(ResourceType.GUI, "GuiAdvancedMachine.png"), perTick, ticksRequired, maxEnergy);
+		super(soundPath, name, MekanismUtils.getResource(ResourceType.GUI, "AdvancedMachineGui.png"), perTick, ticksRequired, maxEnergy);
 
 		configComponent = new ConfigTileComponent(this, TransmissionType.ITEM, TransmissionType.ENERGY);
 		configComponent.addOutput(TransmissionType.ITEM, new SideData("None", EnumColor.GREY, InventoryUtils.EMPTY));

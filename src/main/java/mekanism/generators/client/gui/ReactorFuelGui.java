@@ -9,9 +9,9 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.GuiGasGauge;
 import mekanism.client.gui.element.GuiGasGauge.IGasInfoHandler;
 import mekanism.client.gui.element.GaugeGui.Type;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.sound.SoundHandler;
 import mekanism.common.Mekanism;
 import mekanism.common.inventory.container.NullContainer;
@@ -20,7 +20,7 @@ import mekanism.common.network.PacketTileEntity.TileEntityMessage;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiHeatTab;
+import mekanism.generators.client.gui.element.HeatTab;
 import mekanism.generators.client.gui.element.GuiStatTab;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
 import cpw.mods.fml.relauncher.Side;
@@ -52,7 +52,7 @@ public class ReactorFuelGui extends GuiMekanism
 						LangUtils.localize("gui.storing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getEnergy()),
 						LangUtils.localize("gui.producing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getReactor().getPassiveGeneration(false, true)) + "/t") : new ArrayList();
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler()
 		{
 			@Override
@@ -60,7 +60,7 @@ public class ReactorFuelGui extends GuiMekanism
 			{
 				return tentity.deuteriumTank;
 			}
-		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 25, 64));
+		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 25, 64));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler()
 		{
 			@Override
@@ -68,7 +68,7 @@ public class ReactorFuelGui extends GuiMekanism
 			{
 				return tentity.fuelTank;
 			}
-		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 79, 50));
+		}, Type.STANDARD, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 79, 50));
 		guiElements.add(new GuiGasGauge(new IGasInfoHandler()
 		{
 			@Override
@@ -76,25 +76,25 @@ public class ReactorFuelGui extends GuiMekanism
 			{
 				return tentity.tritiumTank;
 			}
-		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 133, 64));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		}, Type.SMALL, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 133, 64));
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
 				return tileEntity.getActive() ? 1 : 0;
 			}
-		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 45, 75));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		}, ProgressBar.SMALL_RIGHT, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 45, 75));
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
 				return tileEntity.getActive() ? 1 : 0;
 			}
-		}, ProgressBar.SMALL_LEFT, this, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"), 99, 75));
-		guiElements.add(new GuiHeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
-		guiElements.add(new GuiStatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png")));
+		}, ProgressBar.SMALL_LEFT, this, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"), 99, 75));
+		guiElements.add(new HeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
+		guiElements.add(new GuiStatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "TallGui.png")));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class ReactorFuelGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiTall.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "TallGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

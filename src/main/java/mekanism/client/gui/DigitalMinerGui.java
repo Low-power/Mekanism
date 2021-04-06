@@ -5,7 +5,7 @@ import mekanism.api.EnumColor;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
@@ -49,7 +49,7 @@ public class DigitalMinerGui extends GuiMekanism
 
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
 		guiElements.add(new GuiUpgradeTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png"), 163, 23));
+		guiElements.add(new PowerBarGui(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png"), 163, 23));
 		guiElements.add(new VisualsTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "DigitalMinerGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override

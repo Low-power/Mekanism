@@ -1,14 +1,10 @@
 package mekanism.client.nei;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.util.ListUtils;
-import mekanism.client.gui.GuiPurificationChamber;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.PurificationChamberGui;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.common.Tier.GasTankTier;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.PurificationRecipe;
@@ -16,6 +12,9 @@ import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class PurificationChamberRecipeHandler extends AdvancedMachineRecipeHandler
 {
@@ -42,7 +41,7 @@ public class PurificationChamberRecipeHandler extends AdvancedMachineRecipeHandl
 	{
 		return Recipe.PURIFICATION_CHAMBER.get().values();
 	}
-	
+
 	@Override
 	public ProgressBar getProgressType()
 	{
@@ -66,6 +65,6 @@ public class PurificationChamberRecipeHandler extends AdvancedMachineRecipeHandl
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiPurificationChamber.class;
+		return PurificationChamberGui.class;
 	}
 }

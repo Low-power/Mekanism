@@ -2,20 +2,14 @@ package mekanism.client.nei;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
-
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasStack;
 import mekanism.client.gui.element.GuiElement;
-import mekanism.client.gui.element.GuiPowerBar;
-import mekanism.client.gui.element.GuiPowerBar.IPowerInfoHandler;
-import mekanism.client.gui.element.GuiProgress;
-import mekanism.client.gui.element.GuiProgress.IProgressInfoHandler;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.element.PowerBarGui;
+import mekanism.client.gui.element.PowerBarGui.IPowerInfoHandler;
+import mekanism.client.gui.element.ProgressGui;
+import mekanism.client.gui.element.ProgressGui.IProgressInfoHandler;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.client.gui.element.GuiSlot;
 import mekanism.client.gui.element.GuiSlot.SlotOverlay;
 import mekanism.client.gui.element.GuiSlot.SlotType;
@@ -24,17 +18,19 @@ import mekanism.common.recipe.inputs.AdvancedMachineInput;
 import mekanism.common.recipe.machines.AdvancedMachineRecipe;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
-
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.List;
 
 public abstract class AdvancedMachineRecipeHandler extends BaseRecipeHandler
 {
@@ -45,9 +41,9 @@ public abstract class AdvancedMachineRecipeHandler extends BaseRecipeHandler
 	public abstract Collection<? extends AdvancedMachineRecipe> getRecipes();
 
 	public abstract List<ItemStack> getFuelStacks(Gas gasType);
-	
+
 	public abstract ProgressBar getProgressType();
-	
+
 	@Override
 	public void addGuiElements()
 	{
@@ -55,20 +51,19 @@ public abstract class AdvancedMachineRecipeHandler extends BaseRecipeHandler
 		guiElements.add(new GuiSlot(SlotType.POWER, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 30, 34).with(SlotOverlay.POWER));
 		guiElements.add(new GuiSlot(SlotType.EXTRA, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 55, 52));
 		guiElements.add(new GuiSlot(SlotType.OUTPUT_LARGE, this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 111, 30));
-		
-		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
+		guiElements.add(new PowerBarGui(this, new IPowerInfoHandler() {
 			@Override
 			public double getLevel()
 			{
-				return ticksPassed <= 20 ? ticksPassed / 20.0F : 1.0F;
+				return ticksPassed <= 20 ? ticksPassed / 20F : 1F;
 			}
 		}, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 164, 15));
-		guiElements.add(new GuiProgress(new IProgressInfoHandler()
+		guiElements.add(new ProgressGui(new IProgressInfoHandler()
 		{
 			@Override
 			public double getProgress()
 			{
-				return ticksPassed >= 40 ? (ticksPassed - 40) % 20 / 20.0F : 0.0F;
+				return ticksPassed >= 40 ? (ticksPassed - 40) % 20 / 20F : 0F;
 			}
 		}, getProgressType(), this, MekanismUtils.getResource(ResourceType.GUI, stripTexture()), 77, 37));
 	}
@@ -76,10 +71,9 @@ public abstract class AdvancedMachineRecipeHandler extends BaseRecipeHandler
 	@Override
 	public void drawBackground(int i)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1F, 1F, 1F, 1F);
 		changeTexture(getGuiTexture());
 		drawTexturedModalRect(12, 0, 28, 5, 144, 68);
-		
 		for(GuiElement e : guiElements)
 		{
 			e.renderBackground(0, 0, -16, -5);
@@ -137,11 +131,11 @@ public abstract class AdvancedMachineRecipeHandler extends BaseRecipeHandler
 			}
 		}
 	}
-	
+
 	@Override
 	public String getGuiTexture()
 	{
-		return "mekanism:gui/GuiAdvancedMachine.png";
+		return "mekanism:gui/AdvancedMachineGui.png";
 	}
 
 	@Override

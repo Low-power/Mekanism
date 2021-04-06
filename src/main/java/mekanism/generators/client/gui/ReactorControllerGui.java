@@ -9,8 +9,8 @@ import mekanism.client.gui.element.GuiSlot.SlotType;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiFuelTab;
-import mekanism.generators.client.gui.element.GuiHeatTab;
+import mekanism.generators.client.gui.element.FuelTab;
+import mekanism.generators.client.gui.element.HeatTab;
 import mekanism.generators.client.gui.element.GuiStatTab;
 import mekanism.generators.common.inventory.container.ContainerReactorController;
 import mekanism.generators.common.tile.reactor.TileEntityReactorController;
@@ -43,8 +43,8 @@ public class ReactorControllerGui extends GuiMekanism
 				}
 			}, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 			guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png"), 79, 38));
-			guiElements.add(new GuiHeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
-			guiElements.add(new GuiFuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+			guiElements.add(new HeatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
+			guiElements.add(new FuelTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 			guiElements.add(new GuiStatTab(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "BlankGui.png")));
 		}
 	}

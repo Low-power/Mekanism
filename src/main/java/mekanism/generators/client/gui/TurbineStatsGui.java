@@ -11,8 +11,8 @@ import mekanism.common.inventory.container.NullContainer;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
 import mekanism.common.util.MekanismUtils.ResourceType;
-import mekanism.generators.client.gui.element.GuiTurbineTab;
-import mekanism.generators.client.gui.element.GuiTurbineTab.TurbineTab;
+import mekanism.generators.client.gui.element.TurbineTab;
+import mekanism.generators.client.gui.element.TurbineTab.TurbineTabType;
 import mekanism.generators.common.content.turbine.TurbineUpdateProtocol;
 import mekanism.generators.common.tile.turbine.TurbineCasingTileEntity;
 import cpw.mods.fml.relauncher.Side;
@@ -30,7 +30,7 @@ public class TurbineStatsGui extends GuiMekanism
 	{
 		super(tentity, new NullContainer(inventory.player, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiTurbineTab(this, tileEntity, TurbineTab.MAIN, 6, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png")));
+		guiElements.add(new TurbineTab(this, tileEntity, TurbineTabType.MAIN, 6, MekanismUtils.getResource(ResourceType.GUI, "NullGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
 			@Override

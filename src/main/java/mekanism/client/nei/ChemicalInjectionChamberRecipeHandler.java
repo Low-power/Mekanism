@@ -1,21 +1,20 @@
 package mekanism.client.nei;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.gas.GasRegistry;
 import mekanism.api.util.ListUtils;
-import mekanism.client.gui.GuiChemicalInjectionChamber;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.ChemicalInjectionChamberGui;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.common.Tier.GasTankTier;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.InjectionRecipe;
 import mekanism.common.util.LangUtils;
 import mekanism.common.util.MekanismUtils;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.item.ItemStack;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ChemicalInjectionChamberRecipeHandler extends AdvancedMachineRecipeHandler
 {
@@ -55,7 +54,6 @@ public class ChemicalInjectionChamberRecipeHandler extends AdvancedMachineRecipe
 			{
 				fuels.add(MekanismUtils.getFullGasTank(tier, GasRegistry.getGas("sulfuricAcid")));
 			}
-			
 			return fuels;
 		}
 		else if(gasType == GasRegistry.getGas("water"))
@@ -69,18 +67,16 @@ public class ChemicalInjectionChamberRecipeHandler extends AdvancedMachineRecipe
 		{
 			List<ItemStack> fuels = new ArrayList<ItemStack>();
 			fuels.addAll(OreDictionary.getOres("dustSalt"));
-			
 			for(GasTankTier tier : GasTankTier.values())
 			{
 				fuels.add(MekanismUtils.getFullGasTank(tier, GasRegistry.getGas("hydrogenChloride")));
 			}
-			
 			return fuels;
 		}
 
 		return new ArrayList<ItemStack>();
 	}
-	
+
 	@Override
 	public ProgressBar getProgressType()
 	{
@@ -90,6 +86,6 @@ public class ChemicalInjectionChamberRecipeHandler extends AdvancedMachineRecipe
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiChemicalInjectionChamber.class;
+		return ChemicalInjectionChamberGui.class;
 	}
 }

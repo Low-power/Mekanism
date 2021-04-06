@@ -4,7 +4,7 @@ import mekanism.api.Coord4D;
 import mekanism.api.util.ListUtils;
 import mekanism.client.gui.element.GuiElement.IInfoHandler;
 import mekanism.client.gui.element.EnergyInfoGui;
-import mekanism.client.gui.element.GuiPowerBar;
+import mekanism.client.gui.element.PowerBarGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
 import mekanism.client.gui.element.GuiSlot;
@@ -47,7 +47,7 @@ public class FormulaicAssemblicatorGui extends GuiMekanism
 		guiElements.add(new GuiRedstoneControl(this, tileEntity, guiLocation));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, guiLocation));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, guiLocation));
-		guiElements.add(new GuiPowerBar(this, tileEntity, guiLocation, 159, 15));
+		guiElements.add(new PowerBarGui(this, tileEntity, guiLocation, 159, 15));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()

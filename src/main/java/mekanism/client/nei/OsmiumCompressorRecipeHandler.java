@@ -1,17 +1,16 @@
 package mekanism.client.nei;
 
-import java.util.Collection;
-import java.util.List;
-
 import mekanism.api.gas.Gas;
 import mekanism.api.util.ListUtils;
-import mekanism.client.gui.GuiOsmiumCompressor;
-import mekanism.client.gui.element.GuiProgress.ProgressBar;
+import mekanism.client.gui.OsmiumCompressorGui;
+import mekanism.client.gui.element.ProgressGui.ProgressBar;
 import mekanism.common.MekanismItems;
 import mekanism.common.recipe.RecipeHandler.Recipe;
 import mekanism.common.recipe.machines.OsmiumCompressorRecipe;
 import mekanism.common.util.LangUtils;
 import net.minecraft.item.ItemStack;
+import java.util.Collection;
+import java.util.List;
 
 public class OsmiumCompressorRecipeHandler extends AdvancedMachineRecipeHandler
 {
@@ -38,7 +37,7 @@ public class OsmiumCompressorRecipeHandler extends AdvancedMachineRecipeHandler
 	{
 		return Recipe.OSMIUM_COMPRESSOR.get().values();
 	}
-	
+
 	@Override
 	public ProgressBar getProgressType()
 	{
@@ -54,6 +53,6 @@ public class OsmiumCompressorRecipeHandler extends AdvancedMachineRecipeHandler
 	@Override
 	public Class getGuiClass()
 	{
-		return GuiOsmiumCompressor.class;
+		return OsmiumCompressorGui.class;
 	}
 }
