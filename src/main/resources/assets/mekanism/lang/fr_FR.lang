@@ -551,7 +551,6 @@ gui.upgrades.effect=Effet
 
 gui.chemicalInfuser.short=Infus. chim.
 gui.chemicalDissolutionChamber.short=Ch. de dissol. chim.
-gui.solarEvaporationController.short=Ctrl d'évap. solaire
 
 gui.dictionary.noKey=Pas de clef.
 
@@ -616,14 +615,6 @@ gui.robit.togglePickup=Basculer en mode 'Récupérer'
 gui.robit.following=Suis
 gui.robit.dropPickup=Récupère
 gui.robit.owner=Propriétaire
-
-gui.password.setPassword=Mettre un mot de passe
-gui.password.enterPassword=Entrez le mot de passe
-gui.password.fieldsEmpty=Champs(s) vide(s)
-gui.password.notMatching=Ne correspondent pas
-gui.password.identical=Identiques
-gui.password.invalid=Non-valides
-gui.password=Mot de passe
 
 gui.logisticalSorter.default=Défaut
 gui.logisticalSorter.auto=Auto
@@ -785,7 +776,6 @@ tooltip.PurificationChamber=An advanced machine capable of processing !nores int
 tooltip.EnergizedSmelter=A simple machine that serves as a Mekanism-based !nfurnace that runs off of energy.
 tooltip.Teleporter=A machine capable of teleporting players to various !nlocations defined by another teleporter.
 tooltip.ElectricPump=An advanced pump capable of pumping !nout an entire lava lake.
-tooltip.ElectricChest=A portable, 54-slot chest that uses energy to lock !nitself from others by means of password protection.
 tooltip.Chargepad=A universal chargepad that can charge !nany energized item from any mod.
 tooltip.LogisticalSorter=A filter-based, advanced sorting machine that !ncan auto-eject specified items out of and into !nadjacent inventories and Logistical Transporters.
 tooltip.RotaryCondensentrator=A machine capable of converting gasses into !ntheir fluid form and vice versa.

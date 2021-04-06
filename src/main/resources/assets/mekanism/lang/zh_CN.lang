@@ -127,7 +127,6 @@ tile.MachineBlock.PurificationChamber.name=净化仓
 tile.MachineBlock.EnergizedSmelter.name=充能冶炼炉
 tile.MachineBlock.Teleporter.name=传送机
 tile.MachineBlock.ElectricPump.name=电动泵
-tile.MachineBlock.ElectricChest.name=电动箱子
 tile.MachineBlock.Chargepad.name=充电台
 tile.MachineBlock.LogisticalSorter.name=物流整理机
 tile.MachineBlock.DigitalMiner.name=数字型采矿机
@@ -554,7 +553,6 @@ gui.upgrades.effect=效果
 
 gui.chemicalInfuser.short=化学灌注器
 gui.chemicalDissolutionChamber.short=化学溶解室
-gui.solarEvaporationController.short=盐化控制器
 
 gui.dictionary.noKey=无关键字.
 
@@ -614,13 +612,6 @@ gui.robit.togglePickup=切换 '拾取掉落物'模式
 gui.robit.following=正在跟随
 gui.robit.dropPickup=拾取掉落物
 gui.robit.owner=主人
-gui.password.setPassword=设置密码
-gui.password.enterPassword=输入密码
-gui.password.fieldsEmpty=字段为空
-gui.password.notMatching=不匹配
-gui.password.identical=恒等
-gui.password.invalid=无效
-gui.password=密码
 gui.logisticalSorter.default=默认
 gui.logisticalSorter.auto=自动
 gui.logisticalSorter.roundRobin=循环模式
@@ -770,7 +761,6 @@ tooltip.PurificationChamber=一台能够将矿石加工成三块矿石疙瘩的�
 tooltip.EnergizedSmelter=一台简单的消耗通用机器能量的熔炉.
 tooltip.Teleporter=一台能够将玩家传送到其他传送器标定的各种位置的设备.
 tooltip.ElectricPump=一台能支持升级,过滤,自动弹射的高级泵
-tooltip.ElectricChest=便携的54格容量的箱子,!n具有耗能的密码锁功能.
 tooltip.Chargepad=通用充能板,能够为各种模组中的物品补充能量.
 tooltip.LogisticalSorter=一台以过滤为基础功能的高级整理机器, !n能够自动将指定物品弹射到依附的物品栏或物流管道中.
 tooltip.RotaryCondensentrator=一台能够将气体和其液态形式,!n相互转化的机器.

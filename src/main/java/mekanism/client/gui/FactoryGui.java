@@ -8,7 +8,7 @@ import mekanism.client.gui.element.EnergyInfoGui;
 import mekanism.client.gui.element.RecipeTypeGui;
 import mekanism.client.gui.element.GuiRedstoneControl;
 import mekanism.client.gui.element.GuiSideConfigurationTab;
-import mekanism.client.gui.element.SortingTabGui;
+import mekanism.client.gui.element.SortingTab;
 import mekanism.client.gui.element.GuiTransporterConfigTab;
 import mekanism.client.gui.element.GuiUpgradeTab;
 import mekanism.client.render.MekanismRenderer;
@@ -49,7 +49,7 @@ public class FactoryGui extends GuiMekanism
 		guiElements.add(new RecipeTypeGui(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiSideConfigurationTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new GuiTransporterConfigTab(this, 34, tileEntity, tileEntity.tier.guiLocation));
-		guiElements.add(new SortingTabGui(this, tileEntity, tileEntity.tier.guiLocation));
+		guiElements.add(new SortingTab(this, tileEntity, tileEntity.tier.guiLocation));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler() {
 			@Override
 			public List<String> getInfo()

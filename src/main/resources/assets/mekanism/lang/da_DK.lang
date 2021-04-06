@@ -126,7 +126,6 @@ tile.MachineBlock.PurificationChamber.name=Rensningskammer
 tile.MachineBlock.EnergizedSmelter.name=Energibaseret Smelteværk
 tile.MachineBlock.Teleporter.name=Teleporter
 tile.MachineBlock.ElectricPump.name=Elektrisk Pumpe
-tile.MachineBlock.ElectricChest.name=Elektrisk Kiste
 tile.MachineBlock.Chargepad.name=Chargepad
 tile.MachineBlock.LogisticalSorter.name=Logistisk Sorterer
 tile.MachineBlock.DigitalMiner.name=Digital Miner
@@ -551,7 +550,6 @@ gui.upgrades.effect=Effekt
 
 gui.chemicalInfuser.short=K. Infuser
 gui.chemicalDissolutionChamber.short=K. Opløsningskammer
-gui.solarEvaporationController.short=Sol E. Kontrollør
 
 gui.dictionary.noKey=Ingen nøgle.
 
@@ -616,14 +614,6 @@ gui.robit.togglePickup=Skift 'saml ting op'-modus
 gui.robit.following=Følger
 gui.robit.dropPickup=Saml ting op
 gui.robit.owner=Ejer
-
-gui.password.setPassword=Sæt adgangskode
-gui.password.enterPassword=Skriv adgangskode
-gui.password.fieldsEmpty=Felt(er) tomme
-gui.password.notMatching=Matcher ikke
-gui.password.identical=Idenstisk
-gui.password.invalid=Ugyldig
-gui.password=Adgangskode
 
 gui.logisticalSorter.default=Standard
 gui.logisticalSorter.auto=Auto
@@ -785,7 +775,6 @@ tooltip.PurificationChamber=En avanceret maskine i stand til at processere malm 
 tooltip.EnergizedSmelter=En simpel maskine der bruges som en Mekanism-baseret ovn, der kører på energy.
 tooltip.Teleporter=En maskine i stand til at teleportere spillere til forskellige steder defineret af en anden teleporter.
 tooltip.ElectricPump=En avanceret pumpe i stand til at pumpe en hele lavasø op.
-tooltip.ElectricChest=En mobil kiste, med 54 pladser, der bruger energi til at låse sig selv fra andre vha. adgangskodebeskyttelse.
 tooltip.Chargepad=En universal chargepad der kan lade enhver energibaseret ting fra enhver mod.
 tooltip.LogisticalSorter=En filterbaseret, avanceret sorteringsmaskine, der automatisk kan ustøde specifikke ting ud fra og ind i inventarer og Logistiske Transporters ved siden af.
 tooltip.RotaryCondensentrator=En maskine i stand til at konvertere gasser om til deres flydende form og vice versa.

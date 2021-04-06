@@ -80,7 +80,7 @@ public class MFilterSelectGui extends GuiMekanism
 	{
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiFilterSelect.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "FilterSelectGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

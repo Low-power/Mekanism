@@ -625,14 +625,6 @@ gui.robit.following=Following
 gui.robit.dropPickup=Drop pickup
 gui.robit.owner=Owner
 
-gui.password.setPassword=Set password
-gui.password.enterPassword=Enter password
-gui.password.fieldsEmpty=Field(s) empty
-gui.password.notMatching=Not matching
-gui.password.identical=Identical
-gui.password.invalid=Invalid
-gui.password=Password
-
 gui.logisticalSorter.default=Default
 gui.logisticalSorter.auto=Auto
 gui.logisticalSorter.roundRobin=Round-robin

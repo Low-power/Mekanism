@@ -80,11 +80,8 @@ tile.BasicBlock.DynamicGlass.name=Vetro dinamico
 tile.BasicBlock.DynamicValve.name=Valvola dinamica
 tile.BasicBlock.CopperBlock.name=Blocco di rame
 tile.BasicBlock.TinBlock.name=Blocco di stagno
-tile.BasicBlock.SolarEvaporationController.name=Regolatore per evaporazione solare
-tile.BasicBlock.SolarEvaporationValve.name=Valvola per evaporazione solare
 
 //Basic Block 2 (second ID iteration)
-tile.BasicBlock2.SolarEvaporationBlock.name=Blocco per evaporazione solare
 tile.BasicBlock2.InductionCasing.name=Involucro di induzione
 tile.BasicBlock2.InductionPort.name=Porta di induzione
 tile.BasicBlock2.InductionCellBasic.name=Cella di induzione base
@@ -107,7 +104,6 @@ tile.MachineBlock.PurificationChamber.name=Camera di purificazione
 tile.MachineBlock.EnergizedSmelter.name=Fonderia energizata
 tile.MachineBlock.Teleporter.name=Teleportatore
 tile.MachineBlock.ElectricPump.name=Pompa elettrica
-tile.MachineBlock.ElectricChest.name=Baule elettrico
 tile.MachineBlock.Chargepad.name=Piattaforma di ricarica
 tile.MachineBlock.LogisticalSorter.name=Smistatore logistico
 tile.MachineBlock.DigitalMiner.name=Scavatrice digitale
@@ -490,7 +486,6 @@ gui.upgrades.effect=Effetto
 
 gui.chemicalInfuser.short=Infusore c.
 gui.chemicalDissolutionChamber.short=C. di dissoluz. chimica
-gui.solarEvaporationController.short=Regolatore per e. solare
 
 gui.dictionary.noKey=Nessuna parola chiave
 
@@ -554,14 +549,6 @@ gui.robit.togglePickup=Attiva/disattiva modalità 'raccolta oggetti'
 gui.robit.following=Seguendo
 gui.robit.dropPickup=Raccoglie oggetti
 gui.robit.owner=Propriet.
-
-gui.password.setPassword=Imposta password
-gui.password.enterPassword=Inserisci password
-gui.password.fieldsEmpty=Campo/i vuoto
-gui.password.notMatching=Non corrispondenti
-gui.password.identical=Identico
-gui.password.invalid=Invalido
-gui.password=Password
 
 gui.logisticalSorter.default=Predefinito
 gui.logisticalSorter.auto=Auto
@@ -696,7 +683,6 @@ tooltip.PurificationChamber=Un macchinario avanzato capace di !nlavorare i miner
 tooltip.EnergizedSmelter=Un semplice macchinario che funziona !ncome una fornace che va a corrente.
 tooltip.Teleporter=Un macchinario capace di teleportare giocatori !nin vari luoghi con un altro teleportatore.
 tooltip.ElectricPump=Una pompa avanzata capace di prosciugare !nun intero lago di lava.
-tooltip.ElectricChest=Un baule portatile di 54 slot che usa corrente !nper chiudersi con una password.
 tooltip.Chargepad=Una piattaforma universale che può ricaricare !nqualsiasi oggetto di qualsiasi mod.
 tooltip.LogisticalSorter=Un macchinario avanzato che smista !noggetti grazie a filtri e che espelle da !nsolo oggetti specifici in inventari !nadiacenti e in Trasportatori logistici.
 tooltip.RotaryCondensentrator=Un macchinario capace di convertire gas !nnella loro forma liquida e viceversa.

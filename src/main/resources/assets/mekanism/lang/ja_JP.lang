@@ -555,7 +555,6 @@ gui.upgrades.effect=効果
 
 gui.chemicalInfuser.short=化学混成機
 gui.chemicalDissolutionChamber.short=化学溶解機
-gui.solarEvaporationController.short=太陽中性子反応機
 
 gui.dictionary.noKey=対応する鉱石辞書名がありません。
 
@@ -620,14 +619,6 @@ gui.robit.togglePickup=アイテム回収モードに切り替え
 gui.robit.following=フォロー中
 gui.robit.dropPickup=ドロップ回収
 gui.robit.owner=オーナー
-
-gui.password.setPassword=パスワードを設定
-gui.password.enterPassword=パスワードを入力
-gui.password.fieldsEmpty=入力欄が空です
-gui.password.notMatching=パスワードが一致しません
-gui.password.identical=同じ
-gui.password.invalid=無効
-gui.password=パスワード
 
 gui.logisticalSorter.default=デフォルト
 gui.logisticalSorter.auto=自動

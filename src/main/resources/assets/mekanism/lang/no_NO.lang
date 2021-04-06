@@ -79,11 +79,8 @@ tile.BasicBlock.DynamicGlass.name=Dynamisk Glass
 tile.BasicBlock.DynamicValve.name=Dynamisk Ventil
 tile.BasicBlock.CopperBlock.name=Kobber Blokk
 tile.BasicBlock.TinBlock.name=Tin Blokk
-tile.BasicBlock.SolarEvaporationController.name=Sol Fordampnings Controller
-tile.BasicBlock.SolarEvaporationValve.name=Sol Fordampnings Ventil
 
 //Basic Block 2 (second ID iteration)
-tile.BasicBlock2.SolarEvaporationBlock.name=Sol Fordampnings Blokk
 tile.BasicBlock2.InductionCasing.name=Induksjons Kasse
 tile.BasicBlock2.InductionPort.name=Induksjons Port
 tile.BasicBlock2.InductionCellBasic.name=Grunnleggende Induksjons Celle
@@ -108,7 +105,6 @@ tile.MachineBlock.PurificationChamber.name=Purification Chamber
 tile.MachineBlock.EnergizedSmelter.name=Energized Smelter
 tile.MachineBlock.Teleporter.name=Teleporter
 tile.MachineBlock.ElectricPump.name=Elektrisk Pumpe
-tile.MachineBlock.ElectricChest.name=Elektrisk Kiste
 tile.MachineBlock.Chargepad.name=Ladepad
 tile.MachineBlock.LogisticalSorter.name=Logistical Sorterer
 tile.MachineBlock.DigitalMiner.name=Digital Graver
@@ -450,7 +446,6 @@ gui.upgrades.effect=Effekt
 
 gui.chemicalInfuser.short=C. Infuser
 gui.chemicalDissolutionChamber.short=C. Oppløsnings Kammer
-gui.solarEvaporationController.short=Sol E. Kontroller
 
 gui.dictionary.noKey=Ingen nøkkel.
 
@@ -512,14 +507,6 @@ gui.robit.togglePickup=Bytt 'plukk opp ting' modus
 gui.robit.following=Følger
 gui.robit.dropPickup=Plukk opp ting
 gui.robit.owner=Eier
-
-gui.password.setPassword=Sett passord
-gui.password.enterPassword=Skriv inn passord
-gui.password.fieldsEmpty=Felt(er) tomme
-gui.password.notMatching=Samsvarer ikke
-gui.password.identical=Idenstisk
-gui.password.invalid=Ugyldig
-gui.password=Passord
 
 gui.logisticalSorter.default=Standard
 gui.logisticalSorter.auto=Auto
@@ -652,7 +639,6 @@ tooltip.PurificationChamber=En avansert maskin i stand til å prosessere en !nma
 tooltip.EnergizedSmelter=En enkel maskin som fungerer som en Mekanism-basert !novn som kjører på energi.
 tooltip.Teleporter=En maskin som er i stand til å teleportere spillere til forskjellige !nsteder definert av en annen teleportør.
 tooltip.ElectricPump=En avansert pumpe som er i stand til å pumpe !nopp en hel lava sjø.
-tooltip.ElectricChest=En mobil, 54-slots kiste som bruker energi til å låse !seg selv fra andre spillere ved hjelp av passordbeskyttelse.
 tooltip.Chargepad=En universal ladepad som kan lade !nalle energi baserte ting fra alle modder.
 tooltip.LogisticalSorter=En filter-basert, avansert sorterings maskin som !kan auto-utløse spesifiserte ting ut av seg og inn i !ntilstøtende inventarer and Logistical Transporters.
 tooltip.RotaryCondensentrator=En maskin i stand til å convertere gasser til !nderes flytende form og omvendt.

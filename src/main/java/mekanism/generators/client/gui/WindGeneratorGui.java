@@ -34,7 +34,7 @@ public class WindGeneratorGui extends GuiMekanism
 	{
 		super(new WindGeneratorContainer(inventory, tentity));
 		tileEntity = tentity;
-		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png")));
+		guiElements.add(new GuiRedstoneControl(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "WindTurbineGui.png")));
 		guiElements.add(new EnergyInfoGui(new IInfoHandler()
 		{
 			@Override
@@ -44,9 +44,9 @@ public class WindGeneratorGui extends GuiMekanism
 						LangUtils.localize("gui.producing") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.isActive ? generators.windGenerationMin*tileEntity.currentMultiplier : 0) + "/t",
 						LangUtils.localize("gui.maxOutput") + ": " + MekanismUtils.getEnergyDisplay(tileEntity.getMaxOutput()) + "/t");
 			}
-		}, this, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png")));
-		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png"), 164, 15));
-		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png"), 142, 34).with(SlotOverlay.POWER));
+		}, this, MekanismUtils.getResource(ResourceType.GUI, "WindTurbineGui.png")));
+		guiElements.add(new GuiPowerBar(this, tileEntity, MekanismUtils.getResource(ResourceType.GUI, "WindTurbineGui.png"), 164, 15));
+		guiElements.add(new GuiSlot(SlotType.NORMAL, this, MekanismUtils.getResource(ResourceType.GUI, "WindTurbineGui.png"), 142, 34).with(SlotOverlay.POWER));
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class WindGeneratorGui extends GuiMekanism
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTick, int mouseX, int mouseY)
 	{
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiWindTurbine.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "WindTurbineGui.png"));
 		GL11.glColor4f(1F, 1F, 1F, 1F);
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;

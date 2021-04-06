@@ -101,7 +101,7 @@ public class TeleporterGui extends GuiMekanism
 		super(new NullContainer());
 		itemStack = stack;
 		//this.player = player;
-		resource = MekanismUtils.getResource(ResourceType.GUI, "GuiPortableTeleporter.png");
+		resource = MekanismUtils.getResource(ResourceType.GUI, "PortableTeleporterGui.png");
 		guiElements.add(new GuiPowerBar(this, new IPowerInfoHandler() {
 			@Override
 			public String getTooltip()

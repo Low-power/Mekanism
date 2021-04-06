@@ -621,14 +621,6 @@ gui.robit.following=Následuje
 gui.robit.dropPickup=Sbírá dropy
 gui.robit.owner=Vlastník
 
-gui.password.setPassword=Nastavit heslo
-gui.password.enterPassword=Zadat heslo
-gui.password.fieldsEmpty=Pole je(jsou) prázdné
-gui.password.notMatching=Neshoduje se
-gui.password.identical=Identické
-gui.password.invalid=Neplatné
-gui.password=Heslo
-
 gui.logisticalSorter.default=Výchozí
 gui.logisticalSorter.auto=Auto
 gui.logisticalSorter.roundRobin=Zaoblená-červenka

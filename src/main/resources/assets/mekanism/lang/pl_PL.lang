@@ -56,11 +56,6 @@ tile.BasicBlock.DynamicGlass.name=Szyba zbiornika
 tile.BasicBlock.DynamicValve.name=Zawór zbiornika
 tile.BasicBlock.CopperBlock.name=Blok miedzi
 tile.BasicBlock.TinBlock.name=Blok cyny
-tile.BasicBlock.SalinationController.name=Regulator zbiornika zasalania
-tile.BasicBlock.SalinationValve.name=Zawór zbiornika zasalania
-
-//Basic Block 2 (second ID iteration)
-tile.BasicBlock2.SalinationBlock.name=Zbiornik zasalania
 
 //Machine Block
 tile.MachineBlock.EnrichmentChamber.name=Komora wzbogacania
@@ -75,7 +70,6 @@ tile.MachineBlock.PurificationChamber.name=Komora oczyszczająca
 tile.MachineBlock.EnergizedSmelter.name=Energetyzowana huta
 tile.MachineBlock.Teleporter.name=Teleport
 tile.MachineBlock.ElectricPump.name=Elektryczna pompa
-tile.MachineBlock.ElectricChest.name=Elektryczna skrzynia
 tile.MachineBlock.Chargepad.name=Ładowarka
 tile.MachineBlock.LogisticalSorter.name=Inteligentny sortownik
 tile.MachineBlock.DigitalMiner.name=Kombajn górniczy
@@ -318,14 +312,6 @@ gui.robit.rename=Zmień nazwę Robita
 gui.robit.teleport=Przeteleportuj do domu
 gui.robit.togglePickup=Przełącz podnoszenie przedmiotów
 
-gui.password.setPassword=Ustaw hasło
-gui.password.enterPassword=Wprowadź hasło
-gui.password.fieldsEmpty=Puste pole(a)
-gui.password.notMatching=Niepoprawne hasło
-gui.password.identical=Identyczne
-gui.password.invalid=Błędne
-gui.password=Hasło
-
 gui.logisticalSorter.default=Domyślnie
 gui.logisticalSorter.auto=Automatycznie
 gui.logisticalSorter.roundRobin=Okrężnie
@@ -377,7 +363,6 @@ tooltip.PurificationChamber=Maszyna służąca do przetwarzania rud na trzy !nbr
 tooltip.EnergizedSmelter=Maszyna służąca za piec, wykorzystująca !nenergię do pracy.
 tooltip.Teleporter=Maszyna służąca do teleportacji graczy !nmiędzy innymi teleportami.
 tooltip.ElectricPump=Zaawansowana pompa potrafiąca szybko !nwypompować duże jeziora lawy.
-tooltip.ElectricChest=Przenośna skrzynia z 54 miejscami używająca energii !ndo zabezpieczenia hasłem przed niechcianymi oczami.
 tooltip.Chargepad=Uniwersalna ładowarka potrafiąca naładować każdy !nprzedmiot z różnych modów wymagających energii.
 tooltip.LogisticalSorter=Inteligentny sorter z filtrem sortowania potrafiący !nautomatycznie wyjmować przedmioty ze skrzyń i kierować !nje do odpowiedniego miejsca poprzez transportery.
 tooltip.RotaryCondensentrator=Maszyna zmieniająca stan skupienia !ngazów w ciecze i na odwrót.

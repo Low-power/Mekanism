@@ -50,7 +50,7 @@ public class SideConfigurationGui extends GuiMekanism
 
 		for(TransmissionType type : configurable.getConfig().transmissions)
 		{
-			GuiConfigTypeTab tab = new GuiConfigTypeTab(this, (TileEntity)configurable, type, MekanismUtils.getResource(ResourceType.GUI, "GuiConfiguration.png"));
+			GuiConfigTypeTab tab = new GuiConfigTypeTab(this, (TileEntity)configurable, type, MekanismUtils.getResource(ResourceType.GUI, "ConfigurationGui.png"));
 			guiElements.add(tab);
 			configTabs.add(tab);
 		}

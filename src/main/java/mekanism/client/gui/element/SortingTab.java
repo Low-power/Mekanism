@@ -16,13 +16,13 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 
 @SideOnly(Side.CLIENT)
-public class SortingTabGui extends GuiElement
+public class SortingTab extends GuiElement
 {
 	public FactoryTileEntity tileEntity;
 
-	public SortingTabGui(IGuiWrapper gui, FactoryTileEntity tile, ResourceLocation def)
+	public SortingTab(IGuiWrapper gui, FactoryTileEntity tile, ResourceLocation def)
 	{
-		super(MekanismUtils.getResource(ResourceType.GUI_ELEMENT, "SortingTabGui.png"), gui, def);
+		super(MekanismUtils.getResource(ResourceType.GUI_ELEMENT, "SortingTab.png"), gui, def);
 
 		tileEntity = tile;
 	}

@@ -621,14 +621,6 @@ gui.robit.following=Folgend
 gui.robit.dropPickup=Wirf Gesammeltes ab
 gui.robit.owner=Eigentümer
 
-gui.password.setPassword=Passwort einstellen
-gui.password.enterPassword=Gib Passwort ein
-gui.password.fieldsEmpty=Feld(er) leer
-gui.password.notMatching=Passt nicht
-gui.password.identical=Identisch
-gui.password.invalid=Ungültig
-gui.password=Passwort
-
 gui.logisticalSorter.default=Standard
 gui.logisticalSorter.auto=Auto
 gui.logisticalSorter.roundRobin=Round-Robin
