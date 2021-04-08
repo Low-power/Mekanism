@@ -294,7 +294,6 @@ public class CommonProxy implements IGuiProvider
 		general.superheatingHeatTransfer = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "SuperheatingHeatTransfer", 10000D).getDouble();
 		general.heatPerFuelTick = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "HeatPerFuelTick", 4D).getDouble();
 		general.allowTransmitterAlloyUpgrade = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "AllowTransmitterAlloyUpgrade", true).getBoolean();
-		general.allowProtection = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "AllowProtection", true).getBoolean();
 
 		general.blacklistIC2 = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "BlacklistIC2Power", false).getBoolean();
 		general.blacklistRF = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "BlacklistRFPower", false).getBoolean();
@@ -457,7 +456,6 @@ public class CommonProxy implements IGuiProvider
 				return new TeleporterContainer(player.inventory, (TeleporterTileEntity)tileEntity);
 			case 14:
 				ItemStack itemStack = player.getCurrentEquippedItem();
-
 				if(itemStack != null && itemStack.getItem() instanceof PortableTeleporter)
 				{
 					return new NullContainer();
@@ -472,35 +470,30 @@ public class CommonProxy implements IGuiProvider
 				return new ContainerDynamicTank(player.inventory, (TileEntityDynamicTank)tileEntity);
 			case 21:
 				Robit robit = (Robit)world.getEntityByID(x);
-
 				if(robit != null)
 				{
 					return new RobitMainContainer(player.inventory, robit);
 				}
 			case 22:
 				robit = (Robit)world.getEntityByID(x);
-
 				if(robit != null)
 				{
 					return new RobitCraftingContainer(player.inventory, robit);
 				}
 			case 23:
 				robit = (Robit)world.getEntityByID(x);
-
 				if(robit != null)
 				{
 					return new RobitInventoryContainer(player.inventory, robit);
 				}
 			case 24:
 				robit = (Robit)world.getEntityByID(x);
-
 				if(robit != null)
 				{
 					return new RobitSmeltingContainer(player.inventory, robit);
 				}
 			case 25:
 				robit = (Robit)world.getEntityByID(x);
-
 				if(robit != null)
 				{
 					return new RobitRepairContainer(player.inventory, robit);

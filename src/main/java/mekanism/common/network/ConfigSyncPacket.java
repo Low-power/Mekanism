@@ -1,6 +1,5 @@
 package mekanism.common.network;
 
-import io.netty.buffer.ByteBuf;
 import mekanism.api.MekanismConfig.general;
 import mekanism.api.MekanismConfig.machines;
 import mekanism.api.MekanismConfig.usage;
@@ -9,23 +8,23 @@ import mekanism.common.Mekanism;
 import mekanism.common.Tier;
 import mekanism.common.base.IModule;
 import mekanism.common.block.Machine.MachineType;
-import mekanism.common.network.PacketConfigSync.ConfigSyncMessage;
+import mekanism.common.network.ConfigSyncPacket.ConfigSyncMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
 
-public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMessage>
+public class ConfigSyncPacket implements IMessageHandler<ConfigSyncMessage, IMessage>
 {
 	@Override
-	public IMessage onMessage(ConfigSyncMessage message, MessageContext context) 
-	{
+	public IMessage onMessage(ConfigSyncMessage message, MessageContext context) {
 		return null;
 	}
-	
+
 	public static class ConfigSyncMessage implements IMessage
 	{
 		public ConfigSyncMessage() {}
-		
+
 		@Override
 		public void toBytes(ByteBuf dataStream)
 		{
@@ -72,13 +71,10 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 			dataStream.writeDouble(general.superheatingHeatTransfer);
 			dataStream.writeDouble(general.heatPerFuelTick);
 			dataStream.writeBoolean(general.allowTransmitterAlloyUpgrade);
-			dataStream.writeBoolean(general.allowProtection);
-			
 			for(MachineType type : MachineType.getValidMachines())
 			{
 				dataStream.writeBoolean(machines.isEnabled(type.name));
 			}
-	
 			dataStream.writeDouble(usage.enrichmentChamberUsage);
 			dataStream.writeDouble(usage.osmiumCompressorUsage);
 			dataStream.writeDouble(usage.combinerUsage);
@@ -102,9 +98,7 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 			dataStream.writeDouble(usage.gasCentrifugeUsage);
 			dataStream.writeDouble(usage.heavyWaterElectrolysisUsage);
 			dataStream.writeDouble(usage.formulaicAssemblicatorUsage);
-			
 			Tier.writeConfig(dataStream);
-	
 			try {
 				for(IModule module : Mekanism.modulesLoaded)
 				{
@@ -114,7 +108,7 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 				e.printStackTrace();
 			}
 		}
-	
+
 		@Override
 		public void fromBytes(ByteBuf dataStream)
 		{
@@ -161,13 +155,10 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 			general.superheatingHeatTransfer = dataStream.readDouble();
 			general.heatPerFuelTick = dataStream.readDouble();
 			general.allowTransmitterAlloyUpgrade = dataStream.readBoolean();
-			general.allowProtection = dataStream.readBoolean();
-			
 			for(MachineType type : MachineType.getValidMachines())
 			{
 				machines.setEntry(type.name, dataStream.readBoolean());
 			}
-	
 			usage.enrichmentChamberUsage = dataStream.readDouble();
 			usage.osmiumCompressorUsage = dataStream.readDouble();
 			usage.combinerUsage = dataStream.readDouble();
@@ -191,9 +182,7 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 			usage.gasCentrifugeUsage = dataStream.readDouble();
 			usage.heavyWaterElectrolysisUsage = dataStream.readDouble();
 			usage.formulaicAssemblicatorUsage = dataStream.readDouble();
-			
 			Tier.readConfig(dataStream);
-	
 			try {
 				for(IModule module : Mekanism.modulesLoaded)
 				{
@@ -202,7 +191,6 @@ public class PacketConfigSync implements IMessageHandler<ConfigSyncMessage, IMes
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-	
 			Mekanism.proxy.onConfigSync(true);
 		}
 	}

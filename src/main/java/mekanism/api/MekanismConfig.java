@@ -1,10 +1,9 @@
 package mekanism.api;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import mekanism.api.util.UnitDisplayUtils.EnergyType;
 import mekanism.api.util.UnitDisplayUtils.TempType;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MekanismConfig
 {
@@ -66,7 +65,6 @@ public class MekanismConfig
 		public static double superheatingHeatTransfer = 10000;
 		public static double heatPerFuelTick = 4;
 		public static boolean allowTransmitterAlloyUpgrade;
-		public static boolean allowProtection = true;
 	}
 
 	public static class client

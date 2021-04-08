@@ -1,17 +1,17 @@
 package mekanism.common;
 
 import mekanism.common.network.PacketBoxBlacklist.BoxBlacklistMessage;
-import mekanism.common.network.PacketConfigSync.ConfigSyncMessage;
+import mekanism.common.network.ConfigSyncPacket.ConfigSyncMessage;
 import mekanism.common.network.PacketJetpackData.JetpackDataMessage;
 import mekanism.common.network.PacketJetpackData.JetpackPacket;
 import mekanism.common.network.PacketScubaTankData.ScubaTankDataMessage;
 import mekanism.common.network.PacketScubaTankData.ScubaTankPacket;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class CommonPlayerTracker
 {
