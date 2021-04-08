@@ -299,25 +299,21 @@ public class CommonProxy implements IGuiProvider
 		general.blacklistIC2 = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "BlacklistIC2Power", false).getBoolean();
 		general.blacklistRF = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "BlacklistRFPower", false).getBoolean();
 
-		String s = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "EnergyType", "J", null, new String[]{"J", "RF", "MJ", "EU"}).getString();
-
+		String s = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "EnergyUnit", "J", null, new String[]{"J", "RF", "EU"}).getString();
 		if(s != null)
 		{
-			if(s.trim().equalsIgnoreCase("j") || s.trim().equalsIgnoreCase("joules"))
+			s = s.trim();
+			if(s.equalsIgnoreCase("j") || s.equalsIgnoreCase("joules"))
 			{
 				general.energyUnit = EnergyType.J;
 			}
-			else if(s.trim().equalsIgnoreCase("rf") || s.trim().equalsIgnoreCase("te") || s.trim().equalsIgnoreCase("thermal expansion"))
+			else if(s.equalsIgnoreCase("rf") || s.equalsIgnoreCase("te") || s.equalsIgnoreCase("thermal expansion"))
 			{
 				general.energyUnit = EnergyType.RF;
 			}
-			else if(s.trim().equalsIgnoreCase("eu") || s.trim().equalsIgnoreCase("ic2"))
+			else if(s.equalsIgnoreCase("eu") || s.equalsIgnoreCase("ic2"))
 			{
 				general.energyUnit = EnergyType.EU;
-			}
-			else if(s.trim().equalsIgnoreCase("mj") || s.trim().equalsIgnoreCase("bc") || s.trim().equalsIgnoreCase("buildcraft"))
-			{
-				general.energyUnit = EnergyType.MJ;
 			}
 		}
 
