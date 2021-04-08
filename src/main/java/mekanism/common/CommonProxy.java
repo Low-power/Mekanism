@@ -321,27 +321,27 @@ public class CommonProxy implements IGuiProvider
 			}
 		}
 
-		s = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "Temperature Units", "K", null, new String[]{"K", "C", "R", "F"}).getString();
-
+		s = Mekanism.configuration.get(Configuration.CATEGORY_GENERAL, "TemperatureUnit", "K", null, new String[]{"K", "C", "R", "F"}).getString();
 		if(s != null)
 		{
-			if(s.trim().equalsIgnoreCase("k") || s.trim().equalsIgnoreCase("kelvin"))
+			s = s.trim();
+			if(s.equalsIgnoreCase("k") || s.equalsIgnoreCase("kelvin"))
 			{
 				general.tempUnit = TempType.K;
 			}
-			else if(s.trim().equalsIgnoreCase("c") || s.trim().equalsIgnoreCase("celsius") || s.trim().equalsIgnoreCase("centigrade"))
+			else if(s.equalsIgnoreCase("c") || s.equalsIgnoreCase("celsius") || s.equalsIgnoreCase("centigrade"))
 			{
 				general.tempUnit = TempType.C;
 			}
-			else if(s.trim().equalsIgnoreCase("r") || s.trim().equalsIgnoreCase("rankine"))
+			else if(s.equalsIgnoreCase("r") || s.equalsIgnoreCase("rankine"))
 			{
 				general.tempUnit = TempType.R;
 			}
-			else if(s.trim().equalsIgnoreCase("f") || s.trim().equalsIgnoreCase("fahrenheit"))
+			else if(s.equalsIgnoreCase("f") || s.equalsIgnoreCase("fahrenheit"))
 			{
 				general.tempUnit = TempType.F;
 			}
-			else if(s.trim().equalsIgnoreCase("a") || s.trim().equalsIgnoreCase("ambient") || s.trim().equalsIgnoreCase("stp"))
+			else if(s.equalsIgnoreCase("a") || s.equalsIgnoreCase("ambient") || s.equalsIgnoreCase("stp"))
 			{
 				general.tempUnit = TempType.STP;
 			}
