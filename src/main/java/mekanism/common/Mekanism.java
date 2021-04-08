@@ -856,7 +856,7 @@ public class Mekanism
 		RecipeHandler.addCrusherRecipe(new ItemStack(Blocks.pumpkin), new ItemStack(MekanismItems.BioFuel, 6));
 
 		//Purification Chamber Recipes
-	RecipeHandler.addPurificationChamberRecipe(new ItemStack(Blocks.gravel), new ItemStack(Items.flint));
+		RecipeHandler.addPurificationChamberRecipe(new ItemStack(Blocks.gravel), new ItemStack(Items.flint));
 
 		// Chemical Injection Chamber Recipes
 		RecipeHandler.addChemicalInjectionChamberRecipe(new ItemStack(Blocks.dirt), "water", new ItemStack(Blocks.clay));
@@ -1064,7 +1064,7 @@ public class Mekanism
 		{
 			try {
 				String[] setNames = {"base", "precious", "nether", "fantasy", "ender", "utility"};
-				for(String setName : setNames )
+				for(String setName : setNames)
 				{
 					for(IOreInfo oreInfo : MetallurgyAPI.getMetalSet(setName).getOreList().values())
 					{
@@ -1262,7 +1262,7 @@ public class Mekanism
 		FMLCommonHandler.instance().bus().register(new CommonPlayerTickHandler());
 
 		//Initialization notification
-		logger.info("Version " + versionNumber + " initializing...");
+		logger.info(String.format("Mekanism Version %s initializing...", versionNumber));
 
 		//Register with ForgeChunkManager
 		ForgeChunkManager.setForcedChunkLoadingCallback(this, new ChunkManager());
