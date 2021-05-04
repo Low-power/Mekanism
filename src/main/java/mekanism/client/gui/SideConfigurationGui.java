@@ -92,7 +92,7 @@ public class SideConfigurationGui extends GuiMekanism
 		super.drawGuiContainerBackgroundLayer(partialTick, mouseX, mouseY);
 
 		GL11.glColor4f(1F, 1F, 1F, 1F);
-		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "GuiConfiguration.png"));
+		mc.renderEngine.bindTexture(MekanismUtils.getResource(ResourceType.GUI, "ConfigurationGui.png"));
 
 		int guiWidth = (width - xSize) / 2;
 		int guiHeight = (height - ySize) / 2;
